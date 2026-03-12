@@ -47,7 +47,6 @@ async function startWhatsApp() {
       keys: makeCacheableSignalKeyStore(state.keys, console as never),
     },
     generateHighQualityLinkPreview: true,
-    usePairingCode: true,
   });
 
   sock.ev.on('creds.update', saveCreds);

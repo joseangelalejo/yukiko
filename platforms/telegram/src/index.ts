@@ -109,11 +109,36 @@ bot.command('start', async (ctx) => {
   }
 });
 
+
+async function wakeHomelabIfNeeded(): Promise<boolean> {
+  try {
+    const res = await fetch(`${process.env.HOMELAB_AGENT_URL}/health`, {
+      signal: AbortSignal.timeout(3000),
+    });
+    return res.ok;
+  } catch {
+    try {
+      await fetch('https://wol.juanje.net/wake/proxmox.miniserver.online', {
+        signal: AbortSignal.timeout(5000),
+      });
+      console.log('🔌 WoL enviado a proxmox.miniserver.online');
+    } catch (e) {
+      console.error('❌ Error enviando WoL:', e);
+    }
+    return false;
+  }
+}
 // ── Command handler factory ───────────────────────────────────
 function setupCommand(commandName: string) {
   bot.command(commandName, async (ctx) => {
     const command = registry.get(commandName);
     if (!command) return;
+
+    const homelabOnline = await wakeHomelabIfNeeded();
+    if (!homelabOnline) {
+      await ctx.reply('😴 Mi servidor está apagado, lo estoy encendiendo... Inténtalo de nuevo en unos minutos.');
+      return;
+    }
 
     const text = ctx.message?.text ?? '';
     const userId = String(ctx.from?.id ?? '');

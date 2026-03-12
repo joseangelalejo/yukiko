@@ -133,12 +133,37 @@ async function registerSlashCommands() {
   }
 }
 
+
+async function wakeHomelabIfNeeded(): Promise<boolean> {
+  try {
+    const res = await fetch(`${process.env.HOMELAB_AGENT_URL}/health`, {
+      signal: AbortSignal.timeout(3000),
+    });
+    return res.ok;
+  } catch {
+    try {
+      await fetch('https://wol.juanje.net/wake/proxmox.miniserver.online', {
+        signal: AbortSignal.timeout(5000),
+      });
+      console.log('🔌 WoL enviado a proxmox.miniserver.online');
+    } catch (e) {
+      console.error('❌ Error enviando WoL:', e);
+    }
+    return false;
+  }
+}
 // ── Handle interactions ──────────────────────────────────────
 client.on('interactionCreate', async interaction => {
   if (!interaction.isChatInputCommand()) return;
 
   const command = registry.get(interaction.commandName);
   if (!command) return;
+
+  const homelabOnline = await wakeHomelabIfNeeded();
+  if (!homelabOnline) {
+    await interaction.reply({ content: '😴 Mi servidor está apagado, lo estoy encendiendo... Inténtalo de nuevo en unos minutos.', ephemeral: true });
+    return;
+  }
 
   const argsStr = interaction.options.getString('args') ?? '';
   const args = argsStr.split(' ').filter(Boolean);

@@ -13,7 +13,7 @@ type Metrics = {
 export default function MonitorPage() {
   const [metrics, setMetrics] = useState<Metrics | null>(null);
   const [history, setHistory] = useState<number[]>([]);
-  const intervalRef = useRef<NodeJS.Timeout>();
+  const intervalRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
   useEffect(() => {
     const fetch_ = () =>

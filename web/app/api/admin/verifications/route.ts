@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { neon } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-http';
-import * as schema from '../../../../db/schema';
-import { eq, and, desc } from 'drizzle-orm';
+import * as schema from '@db/schema';
+import { eq, desc } from 'drizzle-orm';
 
 function getDb() {
   const sql = neon(process.env.DATABASE_URL!);

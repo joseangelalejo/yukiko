@@ -1,4 +1,7 @@
 ================================================================================
+> **Nota:** El informe de implementación completo está en `INFORME_SESION_IMPLEMENTACION.txt`.
+
+================================================================================
 🧪 TESTING LOCAL Y VALIDACION VERCEL
 
 ---

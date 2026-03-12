@@ -1,4 +1,7 @@
 ================================================================================
+> **Referencia del informe de implementación:** consulta `INFORME_SESION_IMPLEMENTACION.txt` para entender por qué se actualizaron los alias.  
+
+================================================================================
 📋 ALIAS + IMPORTS REFERENCE SHEET
 
 ---

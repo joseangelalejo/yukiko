@@ -43,7 +43,7 @@ const client = new Client({
 // ── Build context from Discord interaction ───────────────────
 function buildContext(interaction: ChatInputCommandInteraction, args: string[]): CommandContext {
   const isAdmin = interaction.memberPermissions?.has('Administrator') ?? false;
-  const isGroup = interaction.channel?.type !== ChannelType.DM;
+  const isGroup = (interaction.channel?.type as number) !== (ChannelType.DM as number);
 
   return {
     platform: 'discord',

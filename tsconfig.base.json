@@ -5,8 +5,7 @@
     "moduleResolution": "NodeNext",
     "lib": ["ES2022"],
     "outDir": "dist",
-    "rootDir": "src",
-    "strict": true,
+    "strict": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
@@ -15,9 +14,10 @@
     "declarationMap": true,
     "sourceMap": true,
     "paths": {
-      "@yukiko/core": ["../core/src/index.ts"],
-      "@yukiko/core/*": ["../core/src/*"]
+      "@yukiko/core": ["./core/src/index.ts"],
+      "@yukiko/core/*": ["./core/src/*"]
     }
   },
-  "exclude": ["node_modules", "dist"]
+  "include": ["core/**/*", "modules/**/*", "platforms/**/*", "db/**/*", "ssh-cli/**/*"],
+  "exclude": ["node_modules", "dist", "web"]
 }

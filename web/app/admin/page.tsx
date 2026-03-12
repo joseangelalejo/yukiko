@@ -45,6 +45,9 @@ export default function DashboardPage() {
               </button>
             ))}
             <hr className="border-white/10 my-4" />
+            <a href="/admin/verifications" className="block px-4 py-2 rounded-lg text-sm text-white/60 hover:text-white hover:bg-white/5">
+              🔞 Verificaciones
+            </a>
             <a href="/monitor" className="block px-4 py-2 rounded-lg text-sm text-white/60 hover:text-white hover:bg-white/5">
               📡 Monitor
             </a>
@@ -109,7 +112,7 @@ function ActionButton({ label, endpoint }: { label: string; endpoint: string }) 
 
   const handleClick = async () => {
     setLoading(true);
-    await fetch(endpoint, { method: 'POST' }).catch(() => {});
+    const r = await fetch(endpoint, { method: 'POST', headers: { authorization: `Bearer ${process.env.NEXT_PUBLIC_ADMIN_SECRET ?? ''}` } }).catch(() => null); if (!r?.ok) console.error('Action failed', endpoint);
     setLoading(false);
     setDone(true);
     setTimeout(() => setDone(false), 2000);

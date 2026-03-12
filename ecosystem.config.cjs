@@ -2,8 +2,8 @@ module.exports = {
   apps: [
     {
       name: 'yukiko-discord',
-      script: 'npx',
-      args: 'tsx --env-file=.env platforms/discord/src/index.ts',
+      script: './node_modules/.bin/tsx',
+      args: '--env-file=.env platforms/discord/src/index.ts',
       cwd: '/home/dockerja/docker-compose-files/yukiko',
       watch: false,
       env: { NODE_ENV: 'production', PLATFORM: 'discord' },
@@ -14,8 +14,8 @@ module.exports = {
     },
     {
       name: 'yukiko-telegram',
-      script: 'npx',
-      args: 'tsx --env-file=.env platforms/telegram/src/index.ts',
+      script: './node_modules/.bin/tsx',
+      args: '--env-file=.env platforms/telegram/src/index.ts',
       cwd: '/home/dockerja/docker-compose-files/yukiko',
       watch: false,
       env: { NODE_ENV: 'production', PLATFORM: 'telegram' },
@@ -26,8 +26,8 @@ module.exports = {
     },
     {
       name: 'yukiko-whatsapp',
-      script: 'npx',
-      args: 'tsx --env-file=.env platforms/whatsapp/src/index.ts',
+      script: './node_modules/.bin/tsx',
+      args: '--env-file=.env platforms/whatsapp/src/index.ts',
       cwd: '/home/dockerja/docker-compose-files/yukiko',
       watch: false,
       env: { NODE_ENV: 'production', PLATFORM: 'whatsapp' },

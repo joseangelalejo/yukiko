@@ -1,0 +1,22 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Install system deps
+RUN apk add --no-cache ffmpeg python3 make g++
+
+# Copy package files
+COPY package*.json ./
+COPY core/package*.json ./core/
+COPY platforms/discord/package*.json ./platforms/discord/
+COPY platforms/telegram/package*.json ./platforms/telegram/
+COPY platforms/whatsapp/package*.json ./platforms/whatsapp/
+COPY modules/*/package*.json ./modules/
+
+# Install dependencies
+RUN npm install
+
+# Copy source
+COPY . .
+
+CMD ["echo", "Specify command in docker-compose"]

@@ -1,0 +1,132 @@
+name: Yukiko CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  # Limpieza diaria de tokens expirados
+  schedule:
+    - cron: '0 3 * * *'   # 03:00 UTC cada día
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # ── Lint & Type check ──────────────────────────────────────
+  lint:
+    name: Lint & Type Check
+    runs-on: ubuntu-latest
+    if: github.event_name != 'schedule'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm install
+      - run: npm run lint
+      - run: npx tsc --noEmit -p tsconfig.base.json
+
+  # ── Deploy docs a GitHub Pages ────────────────────────────
+  deploy-docs:
+    name: Deploy Docs (GitHub Pages)
+    runs-on: ubuntu-latest
+    needs: lint
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload docs artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './docs'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  # ── Deploy web a Vercel ───────────────────────────────────
+  deploy-web:
+    name: Deploy Web (Vercel)
+    runs-on: ubuntu-latest
+    needs: lint
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm install -g vercel
+      - run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        working-directory: ./web
+      - run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        working-directory: ./web
+      - run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+        working-directory: ./web
+
+  # ── Deploy bots al homelab via SSH ────────────────────────
+  deploy-bots:
+    name: Deploy Bots (Homelab SSH)
+    runs-on: ubuntu-latest
+    needs: lint
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: Deploy via SSH al homelab Proxmox
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd /home/yukiko/bot
+            git pull origin main
+            npm install --production
+            npm run build:bots
+            pm2 restart yukiko-discord yukiko-telegram yukiko-whatsapp
+            pm2 save
+            echo "✅ Deploy completado: $(date)"
+            pm2 list
+
+  # ── Limpieza diaria de tokens de vinculación expirados ────
+  cleanup-link-tokens:
+    name: Cleanup expired link tokens
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install @neondatabase/serverless
+      - name: Limpiar tokens expirados
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          node --input-type=module << 'EOF'
+          import { neon } from '@neondatabase/serverless';
+          const sql = neon(process.env.DATABASE_URL);
+
+          const r1 = await sql`
+            DELETE FROM link_tokens
+            WHERE expires_at < NOW() - INTERVAL '1 hour' AND used_at IS NULL
+          `;
+          const r2 = await sql`
+            DELETE FROM link_tokens
+            WHERE used_at IS NOT NULL AND used_at < NOW() - INTERVAL '24 hours'
+          `;
+          console.log('✅ Tokens limpiados correctamente');
+          console.log(`   Expirados sin usar: ${r1.count ?? 0}`);
+          console.log(`   Usados >24h: ${r2.count ?? 0}`);
+          EOF

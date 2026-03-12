@@ -1,0 +1,94 @@
+version: '3.9'
+
+services:
+  # ── Redis (cache & rate limiting) ──────────────────────────
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+
+  # ── Discord Bot ────────────────────────────────────────────
+  yukiko-discord:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.bot
+    restart: unless-stopped
+    environment:
+      - PLATFORM=discord
+    env_file: .env
+    depends_on:
+      - redis
+    volumes:
+      - ./sessions:/app/sessions
+    command: tsx platforms/discord/src/index.ts
+
+  # ── Telegram Bot ───────────────────────────────────────────
+  yukiko-telegram:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.bot
+    restart: unless-stopped
+    environment:
+      - PLATFORM=telegram
+    env_file: .env
+    depends_on:
+      - redis
+    command: tsx platforms/telegram/src/index.ts
+
+  # ── WhatsApp Bot ───────────────────────────────────────────
+  yukiko-whatsapp:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.bot
+    restart: unless-stopped
+    environment:
+      - PLATFORM=whatsapp
+    env_file: .env
+    depends_on:
+      - redis
+    volumes:
+      - ./sessions:/app/sessions
+    command: tsx platforms/whatsapp/src/index.ts
+
+  # ── Lavalink (music) ───────────────────────────────────────
+  lavalink:
+    image: ghcr.io/lavalink-devs/lavalink:4
+    restart: unless-stopped
+    ports:
+      - '2333:2333'
+    volumes:
+      - ./docker/lavalink.yml:/opt/Lavalink/application.yml
+    environment:
+      - SERVER_PORT=2333
+      - LAVALINK_SERVER_PASSWORD=${LAVALINK_PASSWORD}
+
+  # ── Prometheus (metrics) ───────────────────────────────────
+  prometheus:
+    image: prom/prometheus:latest
+    restart: unless-stopped
+    ports:
+      - '9090:9090'
+    volumes:
+      - ./docker/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+
+  # ── Grafana (dashboards) ───────────────────────────────────
+  grafana:
+    image: grafana/grafana:latest
+    restart: unless-stopped
+    ports:
+      - '3001:3000'
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+
+volumes:
+  redis_data:
+  prometheus_data:
+  grafana_data:

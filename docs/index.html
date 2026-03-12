@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yukiko Bot — Documentación</title>
+  <meta name="description" content="Yukiko — Tu compañera neko kawaii multiplataforma. Bot para Discord, Telegram y WhatsApp con IA, economía, roleplay y más." />
+
+  <!-- ─── Favicons ───────────────────────────────────────────────── -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/yukiko-favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/yukiko-favicon-64.png" />
+  <link rel="apple-touch-icon" sizes="128x128" href="assets/yukiko-logo-128.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="assets/yukiko-logo-256.png" />
+
+  <!-- ─── Open Graph / Twitter Card ─────────────────────────────── -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://joseangelalejo.github.io/yukiko/" />
+  <meta property="og:title"       content="Yukiko Bot — Tu compañera neko kawaii multiplataforma" />
+  <meta property="og:description" content="Bot para Discord, Telegram y WhatsApp con IA GPT-4o, economía, roleplay, música y más. 100% gratuito y open source." />
+  <meta property="og:image"       content="assets/yukiko-social-og.png" />
+  <meta property="og:image:width"  content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Yukiko Bot" />
+  <meta name="twitter:description" content="Tu compañera neko kawaii multiplataforma — Discord · Telegram · WhatsApp" />
+  <meta name="twitter:image"       content="assets/yukiko-social-og.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Reset & Variables ──────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0b0d17;
+      --bg2:       #111425;
+      --bg3:       #181b2e;
+      --pink:      #ff6b9d;
+      --pink-soft: #ff9ec4;
+      --blue:      #7eb8ff;
+      --cyan:      #67e8f9;
+      --purple:    #b48ef4;
+      --white:     #f0f4ff;
+      --muted:     #7a85a8;
+      --border:    rgba(255,107,157,0.18);
+      --glow:      0 0 30px rgba(255,107,157,0.25);
+      --r:         14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ─── Scrollbar ─────────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--pink); border-radius: 3px; }
+
+    /* ─── Noise overlay ─────────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── Nav ───────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(11,13,23,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .nav-brand span { color: var(--pink); }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--pink); }
+
+    /* ─── Hero ──────────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      overflow: hidden;
+    }
+
+    /* Animated grid */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,107,157,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,107,157,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 20%, transparent 100%);
+      animation: gridPulse 8s ease-in-out infinite;
+    }
+
+    @keyframes gridPulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    /* Floating orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      animation: float 12s ease-in-out infinite;
+    }
+    .orb1 { width: 400px; height: 400px; background: rgba(255,107,157,0.12); top: -100px; left: -100px; }
+    .orb2 { width: 300px; height: 300px; background: rgba(126,184,255,0.1); bottom: -50px; right: -50px; animation-delay: -6s; }
+    .orb3 { width: 200px; height: 200px; background: rgba(180,142,244,0.08); top: 40%; left: 60%; animation-delay: -3s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-30px) scale(1.05); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 750px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,107,157,0.12);
+      border: 1px solid rgba(255,107,157,0.3);
+      color: var(--pink);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 .gradient {
+      background: linear-gradient(135deg, var(--pink), var(--purple), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.2rem;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      font-weight: 400;
+    }
+
+    .hero-sub strong { color: var(--pink-soft); font-weight: 600; }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: 100px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.25s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--pink);
+      color: #0b0d17;
+      box-shadow: 0 0 30px rgba(255,107,157,0.35);
+    }
+    .btn-primary:hover {
+      background: var(--pink-soft);
+      box-shadow: 0 0 50px rgba(255,107,157,0.55);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.06);
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.1);
+      transform: translateY(-2px);
+    }
+
+    /* ─── Sections ──────────────────────────────────────────────── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 5rem 2rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--pink);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin-bottom: 3rem;
+    }
+
+    /* ─── Features grid ─────────────────────────────────────────── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.75rem;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(255,107,157,0.45);
+      box-shadow: var(--glow);
+      transform: translateY(-4px);
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .feature-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-card p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .feature-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 1rem;
+    }
+
+    .tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+      background: rgba(255,107,157,0.1);
+      color: var(--pink);
+      border: 1px solid rgba(255,107,157,0.2);
+    }
+
+    /* ─── Commands section ──────────────────────────────────────── */
+    .commands-section { background: var(--bg2); }
+
+    .cmd-categories {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .cat-btn {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.5rem 1.1rem;
+      border-radius: 100px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .cat-btn.active, .cat-btn:hover {
+      background: rgba(255,107,157,0.15);
+      border-color: rgba(255,107,157,0.4);
+      color: var(--pink);
+    }
+
+    .commands-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .cmd-card {
+      background: var(--bg3);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      padding: 1.2rem;
+      transition: all 0.2s;
+    }
+    .cmd-card:hover {
+      border-color: rgba(255,107,157,0.3);
+    }
+
+    .cmd-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--cyan);
+      margin-bottom: 0.35rem;
+    }
+
+    .cmd-aliases {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .cmd-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .cmd-meta {
+      display: flex;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .cmd-badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+    }
+    .badge-adult   { background: rgba(255,100,100,0.2); color: #ff7070; }
+    .badge-admin   { background: rgba(255,180,50,0.2);  color: #ffb432; }
+    .badge-group   { background: rgba(126,184,255,0.2); color: var(--blue); }
+    .badge-cooldown{ background: rgba(103,232,249,0.15); color: var(--cyan); }
+
+    /* ─── Platforms ─────────────────────────────────────────────── */
+    .platforms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .platform-card {
+      border-radius: var(--r);
+      padding: 2rem;
+      border: 1px solid;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .platform-card:hover { transform: translateY(-4px); }
+
+    .platform-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.05;
+      background-size: cover;
+    }
+
+    .platform-discord { border-color: rgba(88,101,242,0.4); background: rgba(88,101,242,0.06); }
+    .platform-discord:hover { box-shadow: 0 0 40px rgba(88,101,242,0.2); }
+    .platform-telegram { border-color: rgba(41,182,246,0.4); background: rgba(41,182,246,0.06); }
+    .platform-telegram:hover { box-shadow: 0 0 40px rgba(41,182,246,0.2); }
+    .platform-whatsapp { border-color: rgba(37,211,102,0.4); background: rgba(37,211,102,0.06); }
+    .platform-whatsapp:hover { box-shadow: 0 0 40px rgba(37,211,102,0.2); }
+
+    .platform-icon { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+    .platform-card h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .platform-card p { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.25rem; line-height: 1.6; }
+
+    .platform-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .platform-card ul li {
+      font-size: 0.875rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .platform-card ul li::before { content: '→'; color: var(--pink); font-size: 0.8rem; }
+
+    /* ─── Setup steps ───────────────────────────────────────────── */
+    .setup-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      counter-reset: steps;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .step-num {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255,107,157,0.1);
+      border: 2px solid rgba(255,107,157,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      color: var(--pink);
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .step-content h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.35rem; }
+    .step-content p  { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.75rem; }
+
+    /* ─── Code blocks ───────────────────────────────────────────── */
+    pre {
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 1.25rem;
+      overflow-x: auto;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: #c9d1d9;
+    }
+
+    code { font-family: 'Space Mono', monospace; }
+    pre .c { color: var(--muted); font-style: italic; }
+    pre .k { color: var(--cyan); }
+    pre .s { color: var(--pink-soft); }
+    pre .v { color: var(--blue); }
+    pre .co{ color: #7ec8e3; }
+
+    /* ─── Stack / Free services ─────────────────────────────────── */
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .stack-item {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+    }
+
+    .stack-emoji { font-size: 1.6rem; flex-shrink: 0; }
+
+    .stack-info h4 { font-size: 0.92rem; font-weight: 700; margin-bottom: 0.2rem; }
+    .stack-info p  { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+
+    .free-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      background: rgba(100,220,100,0.15);
+      color: #6dda6d;
+      margin-top: 0.35rem;
+    }
+
+    .homelab-badge {
+      background: rgba(126,184,255,0.15);
+      color: var(--blue);
+    }
+
+    /* ─── Structure tree ────────────────────────────────────────── */
+    .tree {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--r);
+      padding: 2rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.82rem;
+      line-height: 2;
+      overflow-x: auto;
+    }
+
+    .tree .dir  { color: var(--blue); }
+    .tree .file { color: var(--muted); }
+    .tree .desc { color: rgba(255,107,157,0.7); }
+    .tree .root { color: var(--pink); font-weight: 700; }
+
+    /* ─── Footer ────────────────────────────────────────────────── */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+
+    .footer-logo { font-size: 2rem; margin-bottom: 0.5rem; }
+    .footer-name { font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 0.25rem; }
+    .footer-sub  { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.25rem; }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--pink); }
+
+    .footer-copy {
+      margin-top: 1.5rem;
+      font-size: 0.8rem;
+      color: rgba(122,133,168,0.6);
+    }
+
+    /* ─── Responsive ────────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .step { grid-template-columns: 36px 1fr; gap: 1rem; }
+      .step-num { width: 36px; height: 36px; font-size: 0.75rem; }
+    }
+
+    /* ─── Animations ────────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-badge   { animation: fadeUp 0.6s ease both; }
+    .hero h1      { animation: fadeUp 0.6s ease 0.1s both; }
+    .hero-sub     { animation: fadeUp 0.6s ease 0.2s both; }
+    .hero-ctas    { animation: fadeUp 0.6s ease 0.3s both; }
+
+    /* Intersection observer fade */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAV ──────────────────────────────────────────────────── -->
+  <nav>
+    <a class="nav-brand" href="#">
+      <img src="assets/yukiko-logo-128.png" alt="Yukiko" style="height:32px;width:32px;border-radius:50%;object-fit:cover;" />
+      <span>Yukiko</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Módulos</a></li>
+      <li><a href="#commands">Comandos</a></li>
+      <li><a href="#platforms">Plataformas</a></li>
+      <li><a href="#setup">Setup</a></li>
+      <li><a href="#stack">Stack</a></li>
+      <li><a href="https://github.com/joseangelalejo/yukiko" target="_blank">GitHub →</a></li>
+    </ul>
+  </nav>
+
+  <!-- ─── HERO ─────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+
+    <!-- Vídeo animado de fondo del hero -->
+    <video
+      autoplay muted loop playsinline
+      style="
+        position: absolute;
+        inset: 0;
+        width: 100%; height: 100%;
+        object-fit: cover;
+        opacity: 0.08;
+        pointer-events: none;
+        z-index: 0;
+      "
+    >
+      <source src="assets/yukiko-animated2.mp4" type="video/mp4" />
+    </video>
+
+    <div class="hero-content" style="position:relative;z-index:1;display:flex;align-items:center;gap:3rem;flex-wrap:wrap;justify-content:center;">
+
+      <!-- Personaje Yukiko -->
+      <div style="flex-shrink:0;animation:floatChar 4s ease-in-out infinite;">
+        <img
+          src="assets/yukiko-character-chatgpt.png"
+          alt="Yukiko — personaje neko kawaii"
+          style="
+            width: 280px;
+            height: 280px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 32px rgba(255,107,157,0.5));
+          "
+        />
+      </div>
+
+      <!-- Texto -->
+      <div style="flex:1;min-width:280px;text-align:left;">
+        <div class="hero-badge">🐱 Open Source · 100% Gratuito</div>
+        <h1>
+          <span class="gradient">Yukiko</span><br/>Bot
+        </h1>
+        <p class="hero-sub">
+          Tu compañera <strong>neko kawaii</strong> multiplataforma.<br/>
+          Discord, Telegram y WhatsApp — un solo bot, todo gratis.
+        </p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#setup">🚀 Empezar</a>
+          <a class="btn btn-secondary" href="https://github.com/joseangelalejo/yukiko" target="_blank">⭐ Ver en GitHub</a>
+          <a class="btn btn-secondary" href="https://github.com/joseangelalejo/yukiko/blob/main/docs/PLATFORM_SETUP.md" target="_blank">📖 Guía completa</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <style>
+    @keyframes floatChar {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-14px); }
+    }
+  </style>
+
+  <!-- ─── FEATURES ─────────────────────────────────────────────── -->
+  <section id="features">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">// módulos</p>
+        <h2 class="section-title">Todo lo que Yukiko sabe hacer</h2>
+        <p class="section-desc">Cada módulo está disponible en las tres plataformas. Sin diferencias, sin limitaciones según la plataforma.</p>
+      </div>
+      <div class="features-grid reveal">
+        <div class="feature-card">
+          <span class="feature-icon">🎭</span>
+          <h3>Roleplay</h3>
+          <p>Abrazos, besos, palmaditas y más de 10 acciones con GIFs animados via Tenor. Contadores de quién da y recibe más.</p>
+          <div class="feature-tags">
+            <span class="tag">hug</span>
+            <span class="tag">kiss</span>
+            <span class="tag">pat</span>
+            <span class="tag">slap</span>
+            <span class="tag">dance</span>
+            <span class="tag">+8 más</span>
+          </div>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">💰</span>
+          <h3>Economía</h3>
+          <p>Sistema de monedas con recompensas diarias, transferencias, tienda de ítems, mascotas, matrimonios y clasificaciones.</p>
+          <div class="feature-tags">
+            <span class="tag">balance</span>
+            <span class="tag">daily</span>
+            <span class="tag">transfer</span>
+            <span class="tag">shop</span>
+            <span class="tag">pet</span>
+            <span class="tag">top</span>
+          </div>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🤖</span>
+          <h3>Inteligencia Artificial</h3>
+          <p>Chat con GPT-4o con personalidad kawaii, generación de imágenes con DALL-E 3, roleplay IA y traducción instantánea.</p>
+          <div class="feature-tags">
+            <span class="tag">ask</span>
+            <span class="tag">imagine</span>
+            <span class="tag">rp</span>
+            <span class="tag">translate</span>
+          </div>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🔨</span>
+          <h3>Moderación</h3>
+          <p>Advertencias, baneos, limpieza de mensajes, cambio de prefijo por grupo y estadísticas de uso de comandos.</p>
+          <div class="feature-tags">
+            <span class="tag">warn</span>
+            <span class="tag">ban</span>
+            <span class="tag">clear</span>
+            <span class="tag">prefix</span>
+            <span class="tag">stats</span>
+          </div>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🔞</span>
+          <h3>Contenido +18</h3>
+          <p>Sistema de verificación por capas: solo en grupos, activado por admin y cada usuario confirma edad en privado. Fuentes: Danbooru + RedGifs.</p>
+          <div class="feature-tags">
+            <span class="tag">hentai</span>
+            <span class="tag">redgifs</span>
+            <span class="tag">verify18</span>
+            <span class="tag">adult on/off</span>
+          </div>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🎵</span>
+          <h3>Música</h3>
+          <p>Reproducción via Lavalink con soporte de YouTube y Spotify (metadatos). Cola, pausa, saltar, volumen — en Discord.</p>
+          <div class="feature-tags">
+            <span class="tag">play</span>
+            <span class="tag">queue</span>
+            <span class="tag">skip</span>
+            <span class="tag">volume</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── COMMANDS ─────────────────────────────────────────────── -->
+  <section id="commands" class="commands-section">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">// comandos</p>
+        <h2 class="section-title">Referencia de comandos</h2>
+        <p class="section-desc">Prefijo por defecto: <code>/</code> — configurable por grupo con <code>/prefix</code></p>
+      </div>
+
+      <div class="cmd-categories reveal">
+        <button class="cat-btn active" onclick="filterCmds('all')">Todos</button>
+        <button class="cat-btn" onclick="filterCmds('roleplay')">🎭 Roleplay</button>
+        <button class="cat-btn" onclick="filterCmds('economy')">💰 Economía</button>
+        <button class="cat-btn" onclick="filterCmds('ai')">🤖 IA</button>
+        <button class="cat-btn" onclick="filterCmds('moderation')">🔨 Moderación</button>
+        <button class="cat-btn" onclick="filterCmds('adult')">🔞 +18</button>
+        <button class="cat-btn" onclick="filterCmds('utility')">🔧 Utilidad</button>
+      </div>
+
+      <div class="commands-grid reveal" id="cmdsGrid">
+        <!-- Roleplay -->
+        <div class="cmd-card" data-cat="roleplay">
+          <div class="cmd-name">/hug @usuario</div>
+          <div class="cmd-aliases">alias: abrazo</div>
+          <div class="cmd-desc">Abraza a alguien con un GIF kawaii. Lleva la cuenta de abrazos dados y recibidos.</div>
+          <div class="cmd-meta"><span class="cmd-badge badge-cooldown">⏱ 3s</span></div>
+        </div>
+        <div class="cmd-card" data-cat="roleplay">
+          <div class="cmd-name">/kiss @usuario</div>
+          <div class="cmd-aliases">alias: beso</div>
+          <div class="cmd-desc">Besa a alguien con un GIF animado de anime.</div>
+          <div class="cmd-meta"><span class="cmd-badge badge-cooldown">⏱ 3s</span></div>
+        </div>
+        <div class="cmd-card" data-cat="roleplay">
+          <div class="cmd-name">/pat @usuario</div>
+          <div class="cmd-aliases">alias: caricia, palmadita</div>
+          <div class="cmd-desc">Acaricia la cabeza a alguien. OwO</div>
+          <div class="cmd-meta"><span class="cmd-badge badge-cooldown">⏱ 3s</span></div>
+        </div>
+        <div class="cmd-card" data-cat="roleplay">
+          <div class="cmd-name">/slap @usuario</div>
+          <div class="cmd-aliases">alias: golpear</div>
+          <div class="cmd-desc">Dale una bofetada a alguien. Con cariño (o no).</div>
+          <div class="cmd-meta"><span class="cmd-badge badge-cooldown">⏱ 3s</span></div>
+        </div>
+        <div class="cmd-card" data-cat="roleplay">
+          <div class="cmd-name">/dance</div>
+          <div class="cmd-aliases">alias: bailar</div>
+          <div class="cmd-desc">Yukiko baila para ti con un GIF anime.</div>
+        </div>
+        <!-- Economy -->
+        <div class="cmd-card" data-cat="economy">
+          <div class="cmd-name">/balance</div>
+          <div class="cmd-aliases">alias: bal, coins, dinero</div>
+          <div class="cmd-desc">Muestra tu saldo, nivel, XP y rango actual en el servidor.</div>
+        </div>
+        <div class="cmd-card" data-cat="economy">
+          <div class="cmd-name">/daily</div>
+          <div class="cmd-aliases">alias: diario</div>
+          <div class="cmd-desc">Recoge tu recompensa diaria de monedas. Cadencia de 24 horas.</div>
+          <div class="cmd-meta"><span class="cmd-badge badge-cooldown">⏱ 24h</span></div>
+        </div>
+        <div class="cmd-card" data-cat="economy">
+          <div class="cmd-name">/transfer @usuario cantidad</div>
+          <div class="cmd-aliases">alias: enviar, pagar</div>
+          <div class="cmd-desc">Transfiere monedas a otro usuario del grupo.</div>
+        </div>
+        <div class="cmd-card" data-cat="economy">
+          <div class="cmd-name">/top</div>
+          <div class="cmd-aliases">alias: ranking, leaderboard</div>
+          <div class="cmd-desc">Muestra el top 10 de usuarios con más monedas del servidor.</div>
+        </div>
+        <div class="cmd-card" data-cat="economy">
+          <div class="cmd-name">/shop</div>
+          <div class="cmd-aliases">alias: tienda</div>
+          <div class="cmd-desc">Abre la tienda para comprar ítems, roles y objetos especiales.</div>
+        </div>
+        <!-- AI -->
+        <div class="cmd-card" data-cat="ai">
+          <div class="cmd-name">/ask &lt;pregunta&gt;</div>
+          <div class="cmd-aliases">alias: pregunta, ia, ai, gpt</div>
+          <div class="cmd-desc">Pregúntale cualquier cosa a Yukiko IA (GPT-4o). Responde en español con personalidad kawaii.</div>
+          <div class="cmd-meta"><span class="cmd-badge badge-cooldown">⏱ 5s</span></div>
+        </div>
+        <div class="cmd-card" data-cat="ai">
+          <div class="cmd-name">/imagine &lt;descripción&gt;</div>
+          <div class="cmd-aliases">alias: generar, dream, draw</div>
+          <div class="cmd-desc">Genera una imagen anime con DALL-E 3 a partir de tu descripción.</div>
+          <div class="cmd-meta"><span class="cmd-badge badge-cooldown">⏱ 30s</span></div>
+        </div>
+        <div class="cmd-card" data-cat="ai">
+          <div class="cmd-name">/rp &lt;acción o diálogo&gt;</div>
+          <div class="cmd-aliases">alias: roleplay-ai, rpai</div>
+          <div class="cmd-desc">Roleplay con Yukiko IA como personaje neko. Responde en primera persona.</div>
+          <div class="cmd-meta"><span class="cmd-badge badge-cooldown">⏱ 10s</span></div>
+        </div>
+        <div class="cmd-card" data-cat="ai">
+          <div class="cmd-name">/translate &lt;idioma&gt; &lt;texto&gt;</div>
+          <div class="cmd-aliases">alias: traducir, tr</div>
+          <div class="cmd-desc">Traduce texto a cualquier idioma. Ej: /translate inglés Hola mundo</div>
+          <div class="cmd-meta"><span class="cmd-badge badge-cooldown">⏱ 5s</span></div>
+        </div>
+        <!-- Moderation -->
+        <div class="cmd-card" data-cat="moderation">
+          <div class="cmd-name">/warn @usuario &lt;razón&gt;</div>
+          <div class="cmd-aliases">alias: advertir</div>
+          <div class="cmd-desc">Emite una advertencia a un usuario del grupo. Requiere ser admin.</div>
+          <div class="cmd-meta"><span class="cmd-badge badge-admin">🛡 Admin</span><span class="cmd-badge badge-group">👥 Grupo</span></div>
+        </div>
+        <div class="cmd-card" data-cat="moderation">
+          <div class="cmd-name">/ban @usuario &lt;razón&gt;</div>
+          <div class="cmd-aliases">alias: banear</div>
+          <div class="cmd-desc">Banea a un usuario del bot en el grupo actual. Admin del bot.</div>
+          <div class="cmd-meta"><span class="cmd-badge badge-admin">🛡 Admin</span></div>
+        </div>
+        <div class="cmd-card" data-cat="moderation">
+          <div class="cmd-name">/clear &lt;número&gt;</div>
+          <div class="cmd-aliases">alias: purge, limpiar</div>
+          <div class="cmd-desc">Elimina los últimos N mensajes del chat. Solo Discord.</div>
+          <div class="cmd-meta"><span class="cmd-badge badge-admin">🛡 Admin</span></div>
+        </div>
+        <div class="cmd-card" data-cat="moderation">
+          <div class="cmd-name">/prefix &lt;nuevo&gt;</div>
+          <div class="cmd-aliases">—</div>
+          <div class="cmd-desc">Cambia el prefijo del bot en este grupo (por defecto /).</div>
+          <div class="cmd-meta"><span class="cmd-badge badge-admin">🛡 Admin</span><span class="cmd-badge badge-group">👥 Grupo</span></div>
+        </div>
+        <!-- Adult -->
+        <div class="cmd-card" data-cat="adult">
+          <div class="cmd-name">/adult on|off</div>
+          <div class="cmd-aliases">—</div>
+          <div class="cmd-desc">Activa/desactiva el módulo +18 en el grupo. Solo admins del grupo.</div>
+          <div class="cmd-meta"><span class="cmd-badge badge-adult">🔞 +18</span><span class="cmd-badge badge-admin">🛡 Admin</span><span class="cmd-badge badge-group">👥 Grupo</span></div>
+        </div>
+        <div class="cmd-card" data-cat="adult">
+          <div class="cmd-name">/verify18</div>
+          <div class="cmd-aliases">alias: verify</div>
+          <div class="cmd-desc">Solicita acceso al contenido +18. El admin del bot aprueba/rechaza.</div>
+          <div class="cmd-meta"><span class="cmd-badge badge-adult">🔞 +18</span></div>
+        </div>
+        <div class="cmd-card" data-cat="adult">
+          <div class="cmd-name">/hentai &lt;tags&gt;</div>
+          <div class="cmd-aliases">alias: h, lewd</div>
+          <div class="cmd-desc">Imagen aleatoria de Danbooru por tags. Requiere verificación de edad y grupo activado.</div>
+          <div class="cmd-meta"><span class="cmd-badge badge-adult">🔞 Verificado</span><span class="cmd-badge badge-group">👥 Grupo</span></div>
+        </div>
+        <div class="cmd-card" data-cat="adult">
+          <div class="cmd-name">/redgifs &lt;búsqueda&gt;</div>
+          <div class="cmd-aliases">alias: rgif</div>
+          <div class="cmd-desc">GIF +18 de RedGifs. Requiere verificación de edad y grupo activado.</div>
+          <div class="cmd-meta"><span class="cmd-badge badge-adult">🔞 Verificado</span><span class="cmd-badge badge-group">👥 Grupo</span></div>
+        </div>
+        <!-- Utility -->
+        <div class="cmd-card" data-cat="utility">
+          <div class="cmd-name">/help</div>
+          <div class="cmd-aliases">alias: ayuda, comandos</div>
+          <div class="cmd-desc">Muestra todos los comandos disponibles en la plataforma actual.</div>
+        </div>
+        <div class="cmd-card" data-cat="utility">
+          <div class="cmd-name">/stats</div>
+          <div class="cmd-aliases">alias: estadísticas</div>
+          <div class="cmd-desc">Estadísticas de uso del bot: comandos ejecutados, usuarios activos, uptime.</div>
+        </div>
+        <div class="cmd-card" data-cat="utility">
+          <div class="cmd-name">/ping</div>
+          <div class="cmd-aliases">—</div>
+          <div class="cmd-desc">Verifica que el bot está online y muestra la latencia.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PLATFORMS ─────────────────────────────────────────────── -->
+  <section id="platforms">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">// plataformas</p>
+        <h2 class="section-title">Tres plataformas, un bot</h2>
+        <p class="section-desc">Yukiko funciona de forma nativa en las tres plataformas con la misma experiencia.</p>
+      </div>
+      <div class="platforms-grid reveal">
+        <div class="platform-card platform-discord">
+          <span class="platform-icon">💜</span>
+          <h3>Discord</h3>
+          <p>Integración completa con slash commands, embeds ricos, música con Lavalink y moderación avanzada.</p>
+          <ul>
+            <li>Slash commands nativos (/)  </li>
+            <li>Embeds con imágenes y botones</li>
+            <li>Módulo de música completo</li>
+            <li>Roles y permisos nativos</li>
+            <li>Guild commands para testing</li>
+          </ul>
+        </div>
+        <div class="platform-card platform-telegram">
+          <span class="platform-icon">🔵</span>
+          <h3>Telegram</h3>
+          <p>Bot nativo via Grammy con soporte de grupos e inline queries. Comandos registrados en BotFather.</p>
+          <ul>
+            <li>Comandos registrados en BotFather</li>
+            <li>Soporte de grupos y supergrupos</li>
+            <li>Privacidad configurable (DISABLE)</li>
+            <li>Respuestas con GIFs e imágenes</li>
+            <li>Sin token de pago requerido</li>
+          </ul>
+        </div>
+        <div class="platform-card platform-whatsapp">
+          <span class="platform-icon">💚</span>
+          <h3>WhatsApp</h3>
+          <p>Via Baileys (protocolo WhatsApp Web). Autenticación por QR, sin API oficial necesaria.</p>
+          <ul>
+            <li>Auth por QR code (como WA Web)</li>
+            <li>Sesión persistente en disco</li>
+            <li>Prefijo personalizable por grupo</li>
+            <li>Soporte de stickers y media</li>
+            <li>Uso personal/privado</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SETUP ─────────────────────────────────────────────────── -->
+  <section id="setup" style="background: var(--bg2);">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">// instalación</p>
+        <h2 class="section-title">Puesta en marcha</h2>
+        <p class="section-desc">Desde cero hasta funcionando. Usa los scripts de instalación automática para las dependencias.</p>
+      </div>
+      <div class="setup-steps reveal">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <h3>Clonar el repositorio</h3>
+            <p>Clona el repo y entra en el directorio.</p>
+            <pre><span class="c"># Clonar</span>
+git clone git@github.com:joseangelalejo/yukiko.git
+cd yukiko</pre>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <h3>Instalar dependencias del sistema</h3>
+            <p>Usa el script automático según tu SO. También disponible para Windows.</p>
+            <pre><span class="c"># Arch Linux (usa pacman)</span>
+bash scripts/install-arch.sh
+
+<span class="c"># Windows (PowerShell como Admin)</span>
+<span class="k">Set-ExecutionPolicy</span> Bypass -Scope Process
+.\scripts\install-windows.ps1
+
+<span class="c"># Windows (alternativa con Python)</span>
+python scripts/install-windows.py</pre>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <h3>Configurar variables de entorno</h3>
+            <p>Copia el ejemplo y rellena tus tokens. Todo lo gratuito viene marcado.</p>
+            <pre>cp .env.example .env
+<span class="c"># Edita .env con tu editor favorito</span>
+nano .env   <span class="c"># o: code .env</span></pre>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <h3>Base de datos — Neon PostgreSQL (gratuito)</h3>
+            <p>Crea un proyecto en neon.tech, copia la connection string y aplica las migraciones.</p>
+            <pre><span class="c"># Instalar dependencias Node</span>
+npm install
+
+<span class="c"># Aplicar migraciones (Drizzle ORM)</span>
+npx drizzle-kit push
+
+<span class="c"># Ver tablas en el navegador</span>
+bash scripts/db-studio.sh</pre>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">05</div>
+          <div class="step-content">
+            <h3>Tokens de bots</h3>
+            <p>Discord en developer.discord.com · Telegram con @BotFather · WhatsApp usa QR (sin token).</p>
+            <pre><span class="c"># Ver guía completa de configuración de cada plataforma:</span>
+cat docs/PLATFORM_SETUP.md</pre>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">06</div>
+          <div class="step-content">
+            <h3>Arrancar en desarrollo</h3>
+            <p>Levanta todos los bots y la web de administración a la vez.</p>
+            <pre><span class="c"># Todo junto</span>
+npm run dev
+
+<span class="c"># O por separado</span>
+npm run dev:discord
+npm run dev:telegram
+npm run dev:whatsapp
+npm run dev:web    <span class="c"># → http://localhost:3000</span></pre>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">07</div>
+          <div class="step-content">
+            <h3>Producción — Homelab / VPS</h3>
+            <p>Para 24/7 usa PM2 en tu servidor. El CI/CD de GitHub Actions lo automatiza.</p>
+            <pre><span class="c"># En tu servidor (Ubuntu homelab / VPS)</span>
+npm install -g pm2 tsx
+pm2 start ecosystem.config.cjs
+pm2 save && pm2 startup
+
+<span class="c"># La web va a Vercel (gratuito):</span>
+cd web && npx vercel --prod</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── STACK ─────────────────────────────────────────────────── -->
+  <section id="stack">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">// stack tecnológico</p>
+        <h2 class="section-title">100% gratuito en producción</h2>
+        <p class="section-desc">Cada servicio tiene plan gratuito generoso. Lo que no lo tiene lo levantamos en el homelab Proxmox.</p>
+      </div>
+      <div class="stack-grid reveal">
+        <div class="stack-item">
+          <span class="stack-emoji">🐘</span>
+          <div class="stack-info">
+            <h4>Neon PostgreSQL</h4>
+            <p>Base de datos serverless. 0.5 GB gratis, conexión nativa con Vercel.</p>
+            <span class="free-badge">GRATIS</span>
+          </div>
+        </div>
+        <div class="stack-item">
+          <span class="stack-emoji">▲</span>
+          <div class="stack-info">
+            <h4>Vercel</h4>
+            <p>Hosting de la web Next.js. CI/CD automático desde GitHub.</p>
+            <span class="free-badge">GRATIS</span>
+          </div>
+        </div>
+        <div class="stack-item">
+          <span class="stack-emoji">🔴</span>
+          <div class="stack-info">
+            <h4>Redis</h4>
+            <p>Cache y rate limiting. Self-hosted en homelab con Docker.</p>
+            <span class="free-badge homelab-badge">HOMELAB</span>
+          </div>
+        </div>
+        <div class="stack-item">
+          <span class="stack-emoji">🎭</span>
+          <div class="stack-info">
+            <h4>Tenor API</h4>
+            <p>GIFs para roleplay (hugs, kisses, etc). API Key gratuita via Google Cloud.</p>
+            <span class="free-badge">GRATIS</span>
+          </div>
+        </div>
+        <div class="stack-item">
+          <span class="stack-emoji">📈</span>
+          <div class="stack-info">
+            <h4>Grafana + Prometheus</h4>
+            <p>Monitorización y dashboards. Self-hosted en homelab Proxmox.</p>
+            <span class="free-badge homelab-badge">HOMELAB</span>
+          </div>
+        </div>
+        <div class="stack-item">
+          <span class="stack-emoji">🤖</span>
+          <div class="stack-info">
+            <h4>OpenAI (opcional)</h4>
+            <p>GPT-4o + DALL-E 3. De pago pero &lt;$1/mes con uso moderado.</p>
+            <span class="free-badge" style="background:rgba(255,180,50,0.15);color:#ffb432;">OPCIONAL $</span>
+          </div>
+        </div>
+        <div class="stack-item">
+          <span class="stack-emoji">🐳</span>
+          <div class="stack-info">
+            <h4>Docker + Compose</h4>
+            <p>Contenedores para bots, Redis, Lavalink, Grafana, Prometheus.</p>
+            <span class="free-badge">GRATIS</span>
+          </div>
+        </div>
+        <div class="stack-item">
+          <span class="stack-emoji">🎵</span>
+          <div class="stack-info">
+            <h4>Lavalink</h4>
+            <p>Servidor de audio para música Discord. Self-hosted, open source.</p>
+            <span class="free-badge homelab-badge">HOMELAB</span>
+          </div>
+        </div>
+        <div class="stack-item">
+          <span class="stack-emoji">🖥️</span>
+          <div class="stack-info">
+            <h4>Homelab Proxmox VE</h4>
+            <p>32 GB DDR4. Bots 24/7 via PM2 o Docker en VM Ubuntu.</p>
+            <span class="free-badge homelab-badge">HOMELAB</span>
+          </div>
+        </div>
+        <div class="stack-item">
+          <span class="stack-emoji">⚡</span>
+          <div class="stack-info">
+            <h4>GitHub Actions</h4>
+            <p>CI/CD: lint → deploy web (Vercel) → deploy bots (SSH al homelab).</p>
+            <span class="free-badge">GRATIS</span>
+          </div>
+        </div>
+        <div class="stack-item">
+          <span class="stack-emoji">📄</span>
+          <div class="stack-info">
+            <h4>GitHub Pages</h4>
+            <p>Esta página de documentación. Deploy automático con GitHub Actions.</p>
+            <span class="free-badge">GRATIS</span>
+          </div>
+        </div>
+        <div class="stack-item">
+          <span class="stack-emoji">🔞</span>
+          <div class="stack-info">
+            <h4>Danbooru + RedGifs</h4>
+            <p>APIs gratuitas para contenido +18 con cuenta (tier gratuito suficiente).</p>
+            <span class="free-badge">GRATIS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── STRUCTURE ─────────────────────────────────────────────── -->
+  <section style="background: var(--bg2);">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">// arquitectura</p>
+        <h2 class="section-title">Estructura del proyecto</h2>
+        <p class="section-desc">Monorepo con workspaces npm. Cada plataforma y módulo es independiente.</p>
+      </div>
+      <div class="tree reveal">
+<span class="root">yukiko/</span>
+├── <span class="dir">core/</span>                  <span class="desc"># Tipos, registry y utils compartidos entre plataformas</span>
+│   └── <span class="dir">src/</span>
+│       ├── <span class="file">types.ts</span>           <span class="desc"># CommandContext, Command, YukikoUser, YukikoGroup...</span>
+│       ├── <span class="file">registry.ts</span>        <span class="desc"># Registro global de comandos con cooldowns</span>
+│       └── <span class="file">utils.ts</span>           <span class="desc"># Helpers compartidos</span>
+├── <span class="dir">platforms/</span>
+│   ├── <span class="dir">discord/src/index.ts</span>   <span class="desc"># Discord.js — slash commands, embeds, música</span>
+│   ├── <span class="dir">telegram/src/index.ts</span>  <span class="desc"># Grammy — comandos Telegram, BotFather</span>
+│   └── <span class="dir">whatsapp/src/index.ts</span>  <span class="desc"># Baileys — protocolo WA Web, QR auth</span>
+├── <span class="dir">modules/</span>
+│   ├── <span class="dir">roleplay/</span>              <span class="desc"># GIFs via Tenor API</span>
+│   ├── <span class="dir">economy/</span>               <span class="desc"># Monedas, niveles, mascotas, matrimonios</span>
+│   ├── <span class="dir">adult/</span>                 <span class="desc"># Danbooru + RedGifs con sistema de verificación</span>
+│   ├── <span class="dir">ai/</span>                    <span class="desc"># GPT-4o + DALL-E 3 (OpenAI)</span>
+│   └── <span class="dir">moderation/</span>            <span class="desc"># Warn, ban, clear, logs</span>
+├── <span class="dir">web/</span>                       <span class="desc"># Next.js — landing + admin + monitor (→ Vercel)</span>
+│   └── <span class="dir">app/</span>
+│       ├── <span class="file">page.tsx</span>               <span class="desc"># Landing pública</span>
+│       ├── <span class="dir">admin/</span>                 <span class="desc"># Panel de administración</span>
+│       ├── <span class="dir">admin/verifications/</span>   <span class="desc"># Aprobar solicitudes +18</span>
+│       └── <span class="dir">monitor/</span>               <span class="desc"># Métricas en tiempo real</span>
+├── <span class="dir">db/</span>                        <span class="desc"># Schema Drizzle ORM (Neon PostgreSQL)</span>
+│   ├── <span class="file">schema.ts</span>              <span class="desc"># users, groups, economy, adult, logs...</span>
+│   └── <span class="file">index.ts</span>               <span class="desc"># Cliente Drizzle con connection pool</span>
+├── <span class="dir">ssh-cli/</span>                   <span class="desc"># CLI remota para gestionar el bot desde Arch</span>
+├── <span class="dir">docker/</span>                    <span class="desc"># Dockerfile.bot, prometheus.yml, lavalink.yml</span>
+├── <span class="dir">scripts/</span>                   <span class="desc"># setup, dev, health-check, backup, ngrok...</span>
+├── <span class="dir">docs/</span>                      <span class="desc"># Esta documentación (GitHub Pages)</span>
+│   └── <span class="file">index.html</span>             <span class="desc"># ← Estás aquí</span>
+└── <span class="dir">.github/workflows/</span>
+    └── <span class="file">deploy.yml</span>             <span class="desc"># CI/CD: lint → Vercel + SSH homelab + Pages</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ───────────────────────────────────────────────── -->
+  <footer>
+    <div class="footer-logo">
+      <img src="assets/yukiko-logo-128.png" alt="Yukiko" style="height:56px;width:56px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,107,157,0.4);" />
+    </div>
+    <div class="footer-name">Yukiko Bot</div>
+    <div class="footer-sub">Hecho con ❤️ por <a href="https://github.com/joseangelalejo" style="color:var(--pink);text-decoration:none;">joseangelalejo</a></div>
+    <div class="footer-links">
+      <a href="https://github.com/joseangelalejo/yukiko">📦 Repositorio</a>
+      <a href="https://github.com/joseangelalejo/yukiko/blob/main/docs/PLATFORM_SETUP.md">📖 Guía completa</a>
+      <a href="https://github.com/joseangelalejo">👤 GitHub</a>
+      <a href="https://your-domain.com/">🌐 Hub personal</a>
+      <a href="https://github.com/joseangelalejo/yukiko/issues">🐛 Issues</a>
+    </div>
+    <div class="footer-copy">MIT License — 2025 · Yukiko Bot · Documentación generada automáticamente</div>
+  </footer>
+
+  <script>
+    // ─── Intersection Observer (reveal animations)
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ─── Command filter
+    function filterCmds(cat) {
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      document.querySelectorAll('.cmd-card').forEach(card => {
+        card.style.display = (cat === 'all' || card.dataset.cat === cat) ? 'block' : 'none';
+      });
+    }
+  </script>
+
+</body>
+</html>

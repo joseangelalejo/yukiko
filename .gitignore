@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env
+.env.local
+sessions/
+backups/
+.next/
+*.log
+.DS_Store
+*.session.json
+auth_info_*/

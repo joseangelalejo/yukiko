@@ -82,6 +82,10 @@ jobs:
     needs: lint
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
+      - name: Connect Tailscale
+        uses: tailscale/github-action@v2
+        with:
+          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
       - name: Deploy via SSH al homelab Proxmox
         uses: appleboy/ssh-action@v1
         with:

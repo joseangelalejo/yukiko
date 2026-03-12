@@ -1,0 +1,51 @@
+{
+  "name": "yukiko",
+  "version": "1.0.0",
+  "description": "Yukiko — Multi-platform bot for WhatsApp, Discord & Telegram",
+  "private": true,
+  "workspaces": [
+    "core",
+    "platforms/*",
+    "modules/*",
+    "web",
+    "ssh-cli"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:web\" \"npm run dev:discord\" \"npm run dev:telegram\" \"npm run dev:whatsapp\"",
+    "dev:web": "cd web && next dev",
+    "dev:discord": "tsx watch --env-file=.env platforms/discord/src/index.ts",
+    "dev:telegram": "tsx watch --env-file=.env platforms/telegram/src/index.ts",
+    "dev:whatsapp": "tsx watch --env-file=.env platforms/whatsapp/src/index.ts",
+    "build": "npm run build:web && npm run build:bots",
+    "build:web": "cd web && next build",
+    "build:bots": "tsc -b platforms/discord platforms/telegram platforms/whatsapp",
+    "db:migrate": "node scripts/migrate.js",
+    "db:seed": "node scripts/seed.js",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "lint": "eslint . --ext .ts,.tsx",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "19.2.14",
+    "concurrently": "^8.2.0",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0"
+  },
+  "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "@neondatabase/serverless": "^1.0.2",
+    "@whiskeysockets/baileys": "^7.0.0-rc.9",
+    "discord.js": "^14.25.1",
+    "dotenv": "^17.3.1",
+    "drizzle-kit": "^0.31.9",
+    "drizzle-orm": "^0.45.1",
+    "grammy": "^1.41.1",
+    "next": "^16.1.6",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  }
+}

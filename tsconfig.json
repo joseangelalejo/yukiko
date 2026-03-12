@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": false,
+    "skipLibCheck": true,
+    "outDir": "dist",
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "../../core/src/*.js": ["core/src/*.ts"],
+      "../../modules/*/index.js": ["modules/*/index.ts"],
+      "../../core/src/*": ["core/src/*"],
+      "../../modules/*": ["modules/*"]
+    }
+  },
+  "include": [
+    "core/src/**/*",
+    "modules/**/*",
+    "platforms/**/*"
+  ]
+}

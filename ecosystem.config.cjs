@@ -1,0 +1,37 @@
+module.exports = {
+  apps: [
+    {
+      name: 'yukiko-discord',
+      script: 'platforms/discord/src/index.ts',
+      interpreter: 'tsx',
+      watch: false,
+      env: { NODE_ENV: 'production', PLATFORM: 'discord' },
+      error_file: './logs/discord-error.log',
+      out_file: './logs/discord-out.log',
+      restart_delay: 5000,
+      max_restarts: 10,
+    },
+    {
+      name: 'yukiko-telegram',
+      script: 'platforms/telegram/src/index.ts',
+      interpreter: 'tsx',
+      watch: false,
+      env: { NODE_ENV: 'production', PLATFORM: 'telegram' },
+      error_file: './logs/telegram-error.log',
+      out_file: './logs/telegram-out.log',
+      restart_delay: 5000,
+      max_restarts: 10,
+    },
+    {
+      name: 'yukiko-whatsapp',
+      script: 'platforms/whatsapp/src/index.ts',
+      interpreter: 'tsx',
+      watch: false,
+      env: { NODE_ENV: 'production', PLATFORM: 'whatsapp' },
+      error_file: './logs/whatsapp-error.log',
+      out_file: './logs/whatsapp-out.log',
+      restart_delay: 5000,
+      max_restarts: 10,
+    },
+  ],
+};

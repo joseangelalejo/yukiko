@@ -118,7 +118,7 @@ done
 # ── Sesión WhatsApp ───────────────────────────────────────────────────────
 echo -e "\n${BOLD}Sesión WhatsApp${RESET}"
 WA_SESSION="${WHATSAPP_SESSION_PATH:-./sessions/whatsapp}"
-if [[ -d "$WA_SESSION" ]] && ls "$WA_SESSION"/*.json &>/dev/null 2>&1; then
+if [[ -d "$WA_SESSION" ]] && find "$WA_SESSION" -name "creds.json" 2>/dev/null | grep -q .; then
   ok "Sesión guardada en: $WA_SESSION"
 else
   warn "Sin sesión guardada — necesitarás escanear QR al iniciar"

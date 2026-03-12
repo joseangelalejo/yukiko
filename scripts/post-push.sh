@@ -80,13 +80,8 @@ fi
 
 # ── 3. VPS bots ───────────────────────────────────────────────────────────────
 step "Estado del VPS"
-if [[ -n "${SSH_HOST:-}" && "${SSH_HOST}" != "your.server.ip" ]]; then
-  SSH_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=10"
-  if [[ -f "${SSH_KEY_PATH:-}" ]]; then
-    SSH_OPTS="$SSH_OPTS -i $SSH_KEY_PATH"
-  fi
-
-  VPS_STATUS=$(ssh $SSH_OPTS "${SSH_USER:-yukiko}@$SSH_HOST" "pm2 jlist 2>/dev/null" 2>/dev/null || echo "[]")
+if ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 -i ~/.ssh/id_ed25519_github dockerja@100.66.214.108 true 2>/dev/null; then
+  VPS_STATUS=$(ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519_github dockerja@100.66.214.108 "pm2 jlist 2>/dev/null" 2>/dev/null || echo "[]")
   for platform in discord telegram whatsapp; do
     STATUS=$(echo "$VPS_STATUS" | jq -r ".[] | select(.name == \"yukiko-$platform\") | .pm2_env.status" 2>/dev/null || echo "unknown")
     if [[ "$STATUS" == "online" ]]; then

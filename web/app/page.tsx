@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-[#0d0d1a] via-[#1a0d2e] to-[#0d0d1a] text-white">
+    <div className="min-h-screen bg-gradient-to-br from-[#0d0d1a] via-[#1a0d2e] to-[#0d0d1a] text-white">
       {/* Nav */}
       <nav className="flex items-center justify-between px-8 py-5 border-b border-white/10">
         <div className="flex items-center gap-3">
@@ -99,7 +99,7 @@ export default function HomePage() {
         <p>🌨️ Yukiko — Hecho con ❤️ por <a href="https://github.com/joseangelalejo" className="hover:text-white">joseangelalejo</a></p>
         <p className="mt-1">WhatsApp · Discord · Telegram</p>
       </footer>
-    </main>
+    </div>
   );
 }
 

@@ -20,10 +20,9 @@ export default function DashboardPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0d0d1a] text-white">
+    <div className="flex min-h-screen bg-[#0d0d1a] text-white">
       {/* Sidebar */}
-      <div className="flex">
-        <aside className="w-64 min-h-screen bg-white/5 border-r border-white/10 p-6">
+      <aside className="w-64 min-h-screen bg-white/5 border-r border-white/10 p-6">
           <div className="flex items-center gap-2 mb-8">
             <span className="text-2xl">🌨️</span>
             <span className="font-bold text-lg">Yukiko Admin</span>
@@ -53,10 +52,10 @@ export default function DashboardPage() {
               🌐 Web
             </a>
           </nav>
-        </aside>
+      </aside>
 
-        {/* Main */}
-        <main className="flex-1 p-8">
+      {/* Main content */}
+      <div className="flex-1 p-8">
           <h1 className="text-2xl font-bold mb-8">Panel de Administración</h1>
 
           {/* Platform status */}
@@ -89,7 +88,6 @@ export default function DashboardPage() {
               <ActionButton label="💾 Backup DB" endpoint="/api/admin/backup" />
             </div>
           </div>
-        </main>
       </div>
     </div>
   );

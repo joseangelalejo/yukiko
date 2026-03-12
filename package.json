@@ -5,6 +5,7 @@
   "private": true,
   "workspaces": [
     "core",
+    "db",
     "platforms/*",
     "modules/*",
     "web",

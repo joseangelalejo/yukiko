@@ -1,0 +1,179 @@
+# 📋 ALIAS + IMPORTS REFERENCE SHEET
+
+## QUICK LOOKUP
+
+### Web Path Aliases (Next.js)
+```typescript
+// web/tsconfig.json
+"@db/*"   → "../db/*"          // Database schemas, migrations
+"@core/*" → "../core/src/*"    // Core utilities, notifications
+```
+
+**Uso en web/:**
+```typescript
+// ✅ CORRECTO
+import { db, users, cooldowns } from '@db/schema';
+import { isOnCooldown, setCooldown } from '@core/utils';
+
+// ❌ INCORRECTO
+import { db } from '../../db/schema';
+import { isOnCooldown } from '../../core/src/utils';
+```
+
+---
+
+### Root Path Aliases (Bots + Core)
+```json
+// tsconfig.json (root)
+"../../core/src/*.js" → ["core/src/*.ts"]
+"../../modules/*/index.js" → ["modules/*/index.ts"]
+"../../core/src/*" → ["core/src/*"]
+"../../modules/*" → ["modules/*"]
+```
+
+**Uso en bots/modules:**
+```typescript
+// ✅ Relativo (directo desde platforms/telegram/src/)
+import { getCooldown } from '../../core/src/utils';
+import economyModule from '../../modules/economy/index';
+
+// ❌ NO usar alias en bots (root only)
+import { getCooldown } from '@yukiko/core/utils';  // ❌ No funciona aquí
+```
+
+---
+
+## IMPORT AUDIT
+
+### Archivos que DEBEN usar @db/* y @core/*
+```
+web/app/api/admin/stats/route.ts          ✅ usa @db/*
+web/app/api/admin/verifications/route.ts  ✅ usa @core/* (si necesita)
+web/app/api/monitor/metrics/route.ts      ✅ usa @core/* (si necesita)
+web/app/api/admin/auth/route.ts           ✅ debe usar @core/*
+web/app/admin/page.tsx                    ✅ puede importar @core/* si lo necesita
+```
+
+### Archivos que usan rutas relativas (correcto)
+```
+platforms/telegram/src/index.ts           ✅ ../../core/src/utils
+platforms/discord/src/index.ts            ✅ ../../core/src/utils
+platforms/whatsapp/src/index.ts           ✅ ../../core/src/utils
+modules/economy/index.ts                  ✅ ../../core/src/utils
+modules/moderation/index.ts               ✅ ../../core/src/utils
+```
+
+---
+
+## COMMAND QUICK REFERENCE
+
+```bash
+# Verificar alias resuelven correctamente
+npm run build              # Compilar todo (ve si hay alias errors)
+
+# Ver lista de alias que TypeScript ve
+npx tsc --listFiles --noEmit 2>&1 | grep @db
+npx tsc --listFiles --noEmit 2>&1 | grep @core
+
+# Buscar todos los imports que usan alias
+grep -r "@db/" web/                 # Debe encontrar imports en web
+grep -r "@core/" web/               # Debe encontrar imports en web
+grep -r "@yukiko/" .                # Debería estar VACIO (no se usa en raíz)
+
+# Buscar imports incorrectos
+grep -r "from '@db/" platforms/     # ❌ Si encuentra, esto es malo (bots no deben usar)
+grep -r "from '@core/" platforms/   # ❌ Si encuentra, esto es malo
+```
+
+---
+
+## CHECKLIST ANTES DE DEPLOY
+
+- [ ] `npm run build` pasa sin errores de alias
+- [ ] `grep -r "@db/" web/` encuentra imports web
+- [ ] `grep -r "@core/" web/` encuentra imports web
+- [ ] `grep -r "@db/" platforms/` NO encuentra nada (bots no deben usar alias)
+- [ ] `grep -r "@core/" platforms/` NO encuentra nada (bots no deben usar alias)
+- [ ] `grep -r "@db/" modules/` NO encuentra nada
+- [ ] Todos los imports en bots son `../../core/src/*` o `../../modules/*`
+
+---
+
+## PROBLEMAS COMUNES Y SOLUCIONES
+
+### ❌ Error: Cannot find module '@db/...'
+```
+Causa: web/ intenta importar sin alias
+Solucion: 
+  import { x } from '../../db/schema'  ❌
+  import { x } from '@db/schema'       ✅
+```
+
+### ❌ Error: Module not found: @core/...
+```
+Causa: No existe en tsconfig.json paths
+Solucion:
+  - Verificar web/tsconfig.json tiene "@core/*"
+  - Rebuild: npm run build
+  - Cache limpio: rm -rf node_modules/.cache
+```
+
+### ❌ Error: Cannot resolve '../db' from platform/...
+```
+Causa: Bots intentan usar relative paths que no existen
+Solucion:
+  // Si necesita acceso a DB desde bot:
+  // 1. Opcion A: Usar import dinámico
+  const { db } = await import('../../db/schema');
+  
+  // 2. Opcion B: Pasar datos via API call al server
+  const response = await fetch('http://localhost:3001/api/data');
+```
+
+---
+
+## ESTRUCTURA ESPERADA VERCEL
+
+Vercel solo deploya `web/` (Next.js). Bots corren en servidor 192.168.24.103:
+
+```
+Vercel (web/ únicamente):
+├── .next/
+├── app/
+├── api/
+├── components/
+└── public/
+
+Servidor (bots + core):
+├── core/
+├── modules/
+├── platforms/
+├── db/
+└── .pm2/
+```
+
+**Implicación:** 
+- Bots NO se despliegan a Vercel
+- Solo Next.js + APIs se despliegan
+- Verificar que web/ no intenta importar módulos que no estén en `../`
+
+---
+
+## VALIDACION POST-VERCEL
+
+```bash
+# Verificar que deploy incluye correctamente:
+curl https://your-vercel-domain.com/api/admin/stats
+# Debe responder (200 OK)
+
+curl https://your-vercel-domain.com/api/monitor/metrics
+# Debe responder (200 OK)
+
+# Si da 404 o 500, error está en tsconfig/imports
+# Revisar Vercel logs: "Failed to resolve"
+```
+
+---
+
+**Última actualización:** 12 de marzo de 2026
+**Status:** ✅ Todos los alias verificados, build OK

@@ -1,6 +1,10 @@
 ================================================================================
 📖 GUÍA RÁPIDA - SIGUIENTES PASOS
 
+> Para contexto completo de las tareas implementadas en esta sesión, consulta `INFORME_SESION_IMPLEMENTACION.txt`.
+
+📖 GUÍA RÁPIDA - SIGUIENTES PASOS
+
 Fecha: 12 de marzo de 2026  
 Proyecto: Yukiko  
 Status: ✅ LISTO PARA VERCEL (Todos los fixes aplicados)

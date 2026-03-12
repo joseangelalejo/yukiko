@@ -1,4 +1,7 @@
 ================================================================================
+> **Antes de ejecutar cualquier paso revisa `INFORME_SESION_IMPLEMENTACION.txt` para contexto de los cambios realizados.**
+
+================================================================================
 🚀 SIGUIENTES PASOS - ESTADO ACTUAL 12 MARZO 2026
 
 ================================================================================

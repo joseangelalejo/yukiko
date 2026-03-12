@@ -17,9 +17,9 @@ export default function HomePage() {
           </span>
         </div>
         <div className="flex gap-6 text-sm text-white/70">
-          <a href="/commands" className="hover:text-white transition-colors">Comandos</a>
-          <a href="/docs" className="hover:text-white transition-colors">Docs</a>
-          <a href="/dashboard" className="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-full transition-colors">
+          <a href="/admin" className="hover:text-white transition-colors">Comandos</a>
+          <a href="https://joseangelalejo.github.io/yukiko" className="hover:text-white transition-colors">Docs</a>
+          <a href="/admin" className="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-full transition-colors">
             Panel Admin
           </a>
         </div>
@@ -52,7 +52,7 @@ export default function HomePage() {
             ➕ Añadir a Telegram
           </a>
           <a
-            href="/commands"
+            href="/admin"
             className="border border-white/30 hover:border-white/60 px-8 py-3 rounded-full font-semibold transition-colors"
           >
             📋 Ver comandos

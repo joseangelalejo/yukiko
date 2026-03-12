@@ -34,7 +34,8 @@ bash scripts/setup.sh
 sudo pacman -S --needed nodejs npm git docker docker-compose ffmpeg postgresql redis jq curl
 
 # PM2 (process manager para producción)
-npm install -g pm2 tsx
+npm install -g pm2
+# tsx se usa como devDependency local (no instalar globalmente)
 
 # GitHub CLI (opcional pero útil para post-push checks)
 sudo pacman -S github-cli
@@ -459,7 +460,8 @@ sudo apt install -y nodejs  # Ubuntu
 # o: sudo pacman -S nodejs  # Arch
 
 # PM2
-npm install -g pm2 tsx
+npm install -g pm2
+# tsx se instala como devDependency con npm install
 
 # Clonar el repositorio
 git clone git@github.com:joseangelalejo/yukiko.git
@@ -476,33 +478,27 @@ pm2 save
 pm2 startup  # Para que arranque automáticamente al reiniciar el VPS
 ```
 
-### 8.3 Configurar SSH para deploy desde tu Arch
+### 8.3 Acceso al homelab via Tailscale
 
+El deploy usa Tailscale para conectar al homelab de forma segura.
 ```bash
-# En tu Arch, genera clave SSH para el VPS:
-ssh-keygen -t ed25519 -C "yukiko-deploy" -f ~/.ssh/yukiko_rsa
-
-# Copiar clave pública al VPS:
-ssh-copy-id -i ~/.ssh/yukiko_rsa.pub usuario@TU_VPS_IP
+# La clave SSH del homelab está en:
+~/.ssh/id_ed25519_github
 
 # Probar conexión:
-ssh -i ~/.ssh/yukiko_rsa usuario@TU_VPS_IP
+ssh -i ~/.ssh/id_ed25519_github your-username@your-homelab-ip
 
-# En .env:
-SSH_HOST=TU_VPS_IP
-SSH_USER=usuario
-SSH_KEY_PATH=~/.ssh/yukiko_rsa
-SSH_PORT=22
+# Git está configurado globalmente para usar esta clave:
+git config --global core.sshCommand "ssh -i ~/.ssh/id_ed25519_github -o IdentitiesOnly=yes"
 ```
 
 ### 8.4 Deploy manual rápido
-
 ```bash
-# Desde tu Arch (en el repo de Yukiko):
-bash scripts/ssh-cli/yukiko.ts deploy
+# Deploy manual directo al homelab:
+ssh -i ~/.ssh/id_ed25519_github your-username@your-homelab-ip \
+  "cd your-home-path/yukiko && git pull origin main && npm install && pm2 restart all && pm2 save"
 
-# O directamente:
-ssh -i ~/.ssh/yukiko_rsa usuario@TU_IP "cd /home/yukiko/bot && git pull && npm install && pm2 restart all"
+# O simplemente haz push a main y el CI/CD lo hace automáticamente via Tailscale
 ```
 
 ---
@@ -529,10 +525,14 @@ En GitHub → Tu repo → Settings → Secrets and variables → Actions:
 | Secret | Valor |
 |---|---|
 | `VERCEL_TOKEN` | Token de Vercel (Account Settings → Tokens) |
-| `SSH_HOST` | IP de tu VPS |
-| `SSH_USER` | Usuario SSH del VPS |
-| `SSH_PRIVATE_KEY` | Contenido de `~/.ssh/yukiko_rsa` (privada) |
-| `SSH_PORT` | `22` |
+| `VERCEL_PROJECT_ID` | ID del proyecto en Vercel |
+| `VERCEL_ORG_ID` | ID de la organización en Vercel |
+| `HOMELAB_HOST` | IP Tailscale del homelab (`100.66.214.108`) |
+| `HOMELAB_USER` | Usuario SSH (`dockerja`) |
+| `HOMELAB_KEY` | Contenido de `~/.ssh/id_ed25519_github` (privada) |
+| `HOMELAB_PATH` | Ruta del bot (`your-home-path/yukiko`) |
+| `TAILSCALE_AUTHKEY` | Auth key de Tailscale (ephemeral) |
+| `DATABASE_URL` | Connection string de Neon (para cleanup diario) |
 
 ### 9.3 Flujo CI/CD automático
 
@@ -545,38 +545,24 @@ Al hacer `git push origin main`:
 
 ---
 
-## 10. Monitorización con Grafana
+## 10. Monitorización
 
-### 10.1 Local con Docker
-
+La monitorización básica se hace con los scripts incluidos:
 ```bash
-# Levantar Grafana + Prometheus:
-docker-compose up -d prometheus grafana
+# Health check completo (sistema, bots, APIs, BD):
+bash scripts/health-check.sh
 
-# Grafana disponible en:
-# http://localhost:3001
-# Usuario: admin
-# Contraseña: la de GRAFANA_ADMIN_PASSWORD en .env
+# Monitorización continua (refresca cada 30s):
+watch -n 30 bash scripts/health-check.sh
+
+# Logs en tiempo real:
+pm2 logs
+
+# Estado de los procesos:
+pm2 list
 ```
 
-### 10.2 Configurar dashboard
-
-1. Grafana → **Connections → Data Sources → Add → Prometheus**
-2. URL: `http://prometheus:9090`
-3. Save & Test
-
-4. **Dashboards → Import**
-5. Importa el ID `1860` (Node Exporter Full) para métricas del sistema
-
-### 10.3 Alertas
-
-1. Grafana → **Alerting → Alert rules → New rule**
-2. Configura alertas para:
-   - CPU > 85% durante 5 minutos
-   - RAM > 90%
-   - Bot process caído (pm2 status != online)
-3. Contact points: añade tu email o un webhook de Telegram
-
+Para monitorización avanzada con Grafana/Prometheus, es necesario configurar un stack separado (no incluido en este proyecto por defecto).
 ---
 
 ## 11. Solución de problemas comunes
@@ -690,7 +676,7 @@ pm2 set pm2-logrotate:retain 7
 □ 8. bash scripts/health-check.sh— Verificar estado
 □ 9. git push origin main        — Deploy automático
 □ 10. Vercel: conectar Neon      — vercel.com/integrations/neon
-□ 11. VPS: pm2 start             — Bots 24/7
+□ 11. Homelab: pm2 start         — Bots 24/7 via Tailscale
 □ 12. /admin/verifications       — Panel de aprobaciones +18 listo
 ```
 

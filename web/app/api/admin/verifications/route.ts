@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db, users, adultRequests } from '../../../../../db/index.ts';
+import { db, users, adultRequests } from '@db/index.ts';
 import { eq, desc } from 'drizzle-orm';
 
 // GET /api/admin/verifications?status=pending

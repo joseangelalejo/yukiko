@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import os from 'os';
-import { db, commandLogs } from '../../../../db/index.ts';
+import { db, commandLogs } from '@db/index.ts';
 import { gte, eq, count, sql } from 'drizzle-orm';
 
 async function pingLatency(url: string): Promise<number> {

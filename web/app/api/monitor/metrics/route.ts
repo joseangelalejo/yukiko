@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import os from 'os';
 import { db, commandLogs } from '@db/index.ts';
-import { gte, eq, count, sql } from 'drizzle-orm';
+import { gte, eq, count, sql, and } from 'drizzle-orm';
 
 async function pingLatency(url: string): Promise<number> {
   const start = Date.now();
@@ -55,8 +55,7 @@ export async function GET() {
   const [errorsRow] = await db
     .select({ count: count() })
     .from(commandLogs)
-    .where(gte(commandLogs.executedAt, today))
-    .where(eq(commandLogs.success, false));
+    .where(and(gte(commandLogs.executedAt, today), eq(commandLogs.success, false)));
 
   return NextResponse.json({
     uptime: Math.floor(process.uptime()),

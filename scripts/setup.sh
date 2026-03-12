@@ -89,13 +89,9 @@ if [[ "$NODE_VERSION" -lt 20 ]]; then
 fi
 success "Node.js $(node --version)"
 
-# ── pnpm (recomendado) o npm ────────────────────────────────────────────────
-step "Configurando gestor de paquetes"
-if ! command -v pnpm &>/dev/null; then
-  info "Instalando pnpm..."
-  npm install -g pnpm
-fi
-success "pnpm $(pnpm --version)"
+# ── Gestor de paquetes ────────────────────────────────────────────────────
+step "Verificando npm"
+success "npm $(npm --version)"
 
 # ── pm2 ────────────────────────────────────────────────────────────────────
 step "Instalando PM2 (process manager)"

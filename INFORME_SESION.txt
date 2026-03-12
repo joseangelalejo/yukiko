@@ -1,14 +1,14 @@
-# 📊 INFORME DE SESION - ESTADO ACTUAL YUKIKO
+📊 INFORME DE SESION - ESTADO ACTUAL YUKIKO
 
-**Fecha:** 12 de marzo de 2026  
-**Sesión:** Chat Claude + Despliegue Vercel Prep  
-**Status:** ✅ PRODUCCIÓN OPERATIVA (servidor your-homelab-ip)
+Fecha: 12 de marzo de 2026  
+Sesión: Chat Claude + Despliegue Vercel Prep  
+Status: ✅ PRODUCCIÓN OPERATIVA (servidor your-homelab-ip)
 
 ---
 
-## 🎯 SESIÓN COMPLETADA
+🎯 SESIÓN COMPLETADA
 
-### Objetivos Principales ✅
+Objetivos Principales ✅
 1. ✅ Implementar cooldowns persistentes en BD
 2. ✅ Agregar comandos /ban, /warn, /buy, /clear completamente funcionales
 3. ✅ Crear notificaciones +18 (aprobación/rechazo)
@@ -17,23 +17,23 @@
 6. ✅ Desplegar a servidor homelab (your-homelab-ip)
 7. ✅ Preparar deployment a Vercel
 
-### Trabajo Completado
-- **Base de Datos:** Schema actualizado (cooldowns, knownContacts)
-- **Core:** Utils reimplementadas para cooldowns async
-- **Módulos:** Economy y Moderation reescritos completamente
-- **Plataformas:** Telegram, Discord, WhatsApp adaptor con nuevas características
-- **Frontend:** next.js admin dashboard compilando
-- **Deployment:** Todos los 5 procesos PM2 corriendo en producción
+Trabajo Completado
+- Base de Datos: Schema actualizado (cooldowns, knownContacts)
+- Core: Utils reimplementadas para cooldowns async
+- Módulos: Economy y Moderation reescritos completamente
+- Plataformas: Telegram, Discord, WhatsApp adaptor con nuevas características
+- Frontend: next.js admin dashboard compilando
+- Deployment: Todos los 5 procesos PM2 corriendo en producción
 
 ---
 
-## 🖥️ ESTADO SERVIDOR PRODUCCION
+🖥️ ESTADO SERVIDOR PRODUCCION
 
-**Host:** your-homelab-ip  
-**Usuario:** dockerja  
-**Comando conexión:** `ssh dockerja@your-homelab-ip`
+Host: your-homelab-ip  
+Usuario: dockerja  
+Comando conexión: `ssh dockerja@your-homelab-ip`
 
-### Procesos PM2 (Activos)
+Procesos PM2 (Activos)
 ```
 [PM2] yukiko-discord (pid 161767)   ✅ ONLINE
 [PM2] yukiko-telegram (pid 161768)  ✅ ONLINE
@@ -42,13 +42,13 @@
 [PM2] yukiko-web (pid 161838)       ✅ ONLINE
 ```
 
-### Base de Datos
-- **Sistema:** PostgreSQL en Neon (neon.tech)
-- **Migraciones:** Aplicadas ✅
-- **Tablas nuevas:** cooldowns, knownContacts ✅
-- **Conexión:** neon.tech (serverless)
+Base de Datos
+- Sistema: PostgreSQL en Neon (neon.tech)
+- Migraciones: Aplicadas ✅
+- Tablas nuevas: cooldowns, knownContacts ✅
+- Conexión: neon.tech (serverless)
 
-### Build Estado
+Build Estado
 ```
 ✅ npm run build: Sin errores
 ✅ Web: 13 páginas compiladas en 2.5s
@@ -58,9 +58,9 @@
 
 ---
 
-## 📁 ARCHIVOS MODIFICADOS ESTA SESION
+📁 ARCHIVOS MODIFICADOS ESTA SESION
 
-### Core Sistema
+Core Sistema
 | Archivo | Estado | Cambios |
 |---------|--------|---------|
 | db/schema.ts | ✅ DEPLOYED | +cooldowns table, +knownContacts table |
@@ -68,21 +68,21 @@
 | core/src/notifications.ts | ✅ NEW | Notificaciones +18 approval/rejection |
 | core/src/index.ts | ✅ DEPLOYED | Exports de nuevas funciones |
 
-### Módulos
+Módulos
 | Archivo | Estado | Cambios |
 |---------|--------|---------|
 | modules/economy/index.ts | ✅ DEPLOYED | /buy, /inventory, /clear, cooldowns persistentes |
 | modules/moderation/index.ts | ✅ DEPLOYED | /warn, /warns, /ban, /clearban, /unban |
 | modules/adult/index.ts | ✅ DEPLOYED | Notificaciones integradas |
 
-### Plataformas
+Plataformas
 | Archivo | Estado | Cambios |
 |---------|--------|---------|
 | platforms/telegram/src/index.ts | ✅ DEPLOYED | knownContacts tracking, async cooldowns |
 | platforms/whatsapp/src/index.ts | ✅ DEPLOYED | knownContacts tracking (match telegram behavior) |
 | platforms/discord/src/index.ts | ✅ DEPLOYED | Async cooldowns |
 
-### Web Frontend
+Web Frontend
 | Archivo | Estado | Cambios |
 |---------|--------|---------|
 | web/app/api/admin/stats/route.ts | ✅ DEPLOYED | Simplificado para Vercel |
@@ -91,9 +91,9 @@
 
 ---
 
-## 🔒 VARIABLES DE ENTORNO VERIFICADAS
+🔒 VARIABLES DE ENTORNO VERIFICADAS
 
-### En Servidor your-homelab-ip
+En Servidor your-homelab-ip
 ```bash
 .env variables activas:
 ✅ DATABASE_URL=postgres://<user>:<pass>@<neon-host>/neondb
@@ -104,7 +104,7 @@
 ✅ NODE_ENV=production
 ```
 
-### Para Vercel (PENDIENTE SETUP)
+Para Vercel (PENDIENTE SETUP)
 ```
 Necesarios:
 - DATABASE_URL (copiar de Neon)
@@ -114,9 +114,9 @@ Necesarios:
 
 ---
 
-## 🚀 PROXIMO PASO: VERCEL DEPLOYMENT
+🚀 PROXIMO PASO: VERCEL DEPLOYMENT
 
-### Verificaciones Locales Pre-Deploy
+Verificaciones Locales Pre-Deploy
 ```bash
 ✅ npm run build         # Build exitoso sin errores
 ✅ npm run lint          # Linting OK
@@ -124,31 +124,31 @@ Necesarios:
 ✅ git log -1            # Último commit visible
 ```
 
-### Comandos para Testear Local
+Comandos para Testear Local
 ```bash
-# Testing completo
+Testing completo
 npm run dev             # Levanta web + bots
 
-# Testing solo web
+Testing solo web
 npm run dev:web         # Next.js dev server port 3000
 
-# Build final
+Build final
 npm run build           # Simula build Vercel
 ```
 
-### Deploy a Vercel
+Deploy a Vercel
 ```bash
-# Opción 1: CLI
+Opción 1: CLI
 vercel
 
-# Opción 2: GitHub Push (si autodeployment está setup)
+Opción 2: GitHub Push (si autodeployment está setup)
 git push origin main
 
-# Opción 3: Dashboard Vercel
-# dashboard.vercel.com → Select project → Redeploy
+Opción 3: Dashboard Vercel
+dashboard.vercel.com → Select project → Redeploy
 ```
 
-### Post-Deploy Checklist
+Post-Deploy Checklist
 - [ ] URL de Vercel accesible
 - [ ] /api/admin/stats responde 200
 - [ ] /api/monitor/metrics responde 200
@@ -159,22 +159,22 @@ git push origin main
 
 ---
 
-## 📚 ALIAS Y IMPORTS
+📚 ALIAS Y IMPORTS
 
-### Web (Next.js) - Alias configurados
+Web (Next.js) - Alias configurados
 ```typescript
-"@db/*"   → "../db/*"      // Base de datos
-"@core/*" → "../core/src/*"  // Core utilities
+"@db/"   → "../db/"      // Base de datos
+"@core/" → "../core/src/"  // Core utilities
 ```
 
-### Root (Bots/Modules) - Rutas relativas
+Root (Bots/Modules) - Rutas relativas
 ```typescript
 // Correcto en bots:
 import { getCooldown } from '../../core/src/utils';
 import economy from '../../modules/economy/index';
 ```
 
-### Verificación Pre-Deploy
+Verificación Pre-Deploy
 ```bash
 grep -r "@db/" web/          # Debe encontrar (web usa alias)
 grep -r "@core/" web/        # Debe encontrar (web usa alias)
@@ -184,7 +184,7 @@ npm run build                # Compilar y ver si alias se resuelven
 
 ---
 
-## ⚠️ PROBLEMAS CONOCIDOS & SOLUCIONES
+⚠️ PROBLEMAS CONOCIDOS & SOLUCIONES
 
 | Problema | Causa | Solución |
 |----------|-------|----------|
@@ -195,9 +195,9 @@ npm run build                # Compilar y ver si alias se resuelven
 
 ---
 
-## 📋 DOCUMENTOS GENERADOS ESTA SESION
+📋 DOCUMENTOS GENERADOS ESTA SESION
 
-**En repo root:**
+En repo root:
 1. `TESTING_LOCAL_Y_VERCEL.md` - Guía completa de testing local y post-deploy
 2. `ALIAS_REFERENCE.md` - Quick lookup de alias y imports
 3. `INFORME_SESION_IMPLEMENTACION.txt` - Histórico completo (sesión anterior)
@@ -205,31 +205,31 @@ npm run build                # Compilar y ver si alias se resuelven
 
 ---
 
-## 📞 COMANDOS RAPIDOS PARA SIGUIENTE SESION
+📞 COMANDOS RAPIDOS PARA SIGUIENTE SESION
 
 ```bash
-# Ver estado actual
+Ver estado actual
 pm2 logs                    # Ver todos los logs
 pm2 status                  # Ver QPS/CPU/memoria
 pm2 monit                   # Monitor en vivo
 
-# Hacer cambios
+Hacer cambios
 nano .env                   # Editar variables
 git add -A && git commit -m "msg"
 npm run build               # Compilar cambios
 
-# Reiniciar después de cambios
+Reiniciar después de cambios
 pm2 restart all
 pm2 logs --lines 50
 
-# Vercel
+Vercel
 git push origin main        # Auto-redeploy si está setup
 vercel                      # Deploy manual si needed
 ```
 
 ---
 
-## 🎓 ESTADO DE FEATURES
+🎓 ESTADO DE FEATURES
 
 | Feature | Status | Donde | Link |
 |---------|--------|-------|------|
@@ -242,15 +242,15 @@ vercel                      # Deploy manual si needed
 
 ---
 
-## ✨ MEJORAS FUTURAS (NOTAS PARA PROXIMA SESION)
+✨ MEJORAS FUTURAS (NOTAS PARA PROXIMA SESION)
 
-### Prioritario
+Prioritario
 1. [ ] Schedule `cleanExpiredCooldowns()` c/5 min en uno de los bots
-2. [ ] Implementar real queries en web/app/api/* (sacar placeholders)
+2. [ ] Implementar real queries en web/app/api/ (sacar placeholders)
 3. [ ] Agregar admin panel para ver/editar cooldowns y bans
 4. [ ] Rotar tokens diariamente (si needed)
 
-### Opcional
+Opcional
 1. [ ] Agregar rate limiting por IP en web APIs
 2. [ ] Implementar audit log para moderation actions
 3. [ ] Soporte de multi-guild/multi-server en Discord
@@ -258,7 +258,7 @@ vercel                      # Deploy manual si needed
 
 ---
 
-## 💾 COMMITS RECIENTES
+💾 COMMITS RECIENTES
 
 ```
 38bc23b - 🔧 Simplificar API routes, resolver conflictos monorepo drizzle-orm
@@ -268,14 +268,14 @@ a9fa8d4 - 🐛 Fix: Arreglar syntax errors en telegram y stats
 
 ---
 
-## 🔍 ARCHIVOS CLAVE PARA REFERENCIA
+🔍 ARCHIVOS CLAVE PARA REFERENCIA
 
 ```
 ESTRUCTURA:
 - core/src/                 # Core logic (cooldowns, notifications, utils)
 - db/                       # Schema y migraciones  
 - modules/                  # Moderation, economy, adult
-- platforms/*/src/          # Discord, Telegram, WhatsApp bot code
+- platforms//src/          # Discord, Telegram, WhatsApp bot code
 - web/                      # Next.js admin + APIs
 - scripts/                  # Utilidades de deploy/dev
 
@@ -290,7 +290,7 @@ IMPORTANTE:
 
 ---
 
-## 📍 PRÓXIMA SESION CHECKLIST
+📍 PRÓXIMA SESION CHECKLIST
 
 - [ ] Conectar a servidor: `ssh dockerja@your-homelab-ip`
 - [ ] Ver logs: `pm2 logs -n 50`
@@ -301,8 +301,8 @@ IMPORTANTE:
 
 ---
 
-**Sesión iniciada:** ~14:00 (ambiente local exploratorio)  
-**Deployment completado:** ~18:30 (todos procesos online)  
-**Docs generados:** ~19:00  
-**Status final:** ✅ READY FOR VERCEL
+Sesión iniciada: ~14:00 (ambiente local exploratorio)  
+Deployment completado: ~18:30 (todos procesos online)  
+Docs generados: ~19:00  
+Status final: ✅ READY FOR VERCEL
 

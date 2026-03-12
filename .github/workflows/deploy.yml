@@ -96,7 +96,7 @@ jobs:
           script: |
             cd ${{ secrets.HOMELAB_PATH }}
             git pull origin main
-            npm install --production
+            npm install
             npm run build:bots
             pm2 restart yukiko-discord yukiko-telegram yukiko-whatsapp
             pm2 save

@@ -14,15 +14,24 @@ export async function GET() {
       .from(commandLogs)
       .where(gte(commandLogs.executedAt, today));
 
+    // Consultar estado real de bots al agente del homelab
+    let platforms = { discord: false, telegram: false, whatsapp: false };
+    const agentUrl = process.env.HOMELAB_AGENT_URL;
+    if (agentUrl) {
+      try {
+        const r = await fetch(`${agentUrl}/status`, {
+          headers: { authorization: `Bearer ${process.env.ADMIN_SECRET}` },
+          signal: AbortSignal.timeout(3000),
+        });
+        if (r.ok) platforms = await r.json();
+      } catch { /* agente no disponible, mantiene false */ }
+    }
+
     return NextResponse.json({
       totalUsers: totalUsers.count,
       totalGroups: totalGroups.count,
       commandsToday: commandsToday.count,
-      platforms: {
-        discord: true,   // TODO: ping actual bot process
-        telegram: true,
-        whatsapp: true,
-      },
+      platforms,
     });
   } catch (error) {
     return NextResponse.json({ error: 'DB error' }, { status: 500 });

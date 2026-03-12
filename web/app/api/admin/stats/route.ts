@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { db, users, groups, commandLogs } from '../../../../db/index.ts';
+import { db, users, groups, commandLogs } from '@db/index.ts';
 import { gte, count } from 'drizzle-orm';
 
 export async function GET() {

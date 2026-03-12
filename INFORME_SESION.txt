@@ -52,8 +52,9 @@ Build Estado
 ```
 ✅ npm run build: Sin errores
 ✅ Web: 13 páginas compiladas en 2.5s
-✅ Bots: TypeScript compilado 
+✅ Bots: TypeScript compilado sin errores de sintaxis
 ✅ Cache: Limpio y optimizado
+✅ Imports: Extensiones .ts removidas de @yukiko/* paths
 ```
 
 ---
@@ -78,16 +79,17 @@ Módulos
 Plataformas
 | Archivo | Estado | Cambios |
 |---------|--------|---------|
-| platforms/telegram/src/index.ts | ✅ DEPLOYED | knownContacts tracking, async cooldowns |
-| platforms/whatsapp/src/index.ts | ✅ DEPLOYED | knownContacts tracking (match telegram behavior) |
+| platforms/telegram/src/index.ts | ✅ FIXED | Sintaxis corregida (línea 119-120: extra brace y typo awaitng), imports sin .ts, knownContacts tracking |
+| platforms/whatsapp/src/index.ts | ✅ FIXED | Imports sin .ts (@yukiko/db), knownContacts tracking |
 | platforms/discord/src/index.ts | ✅ DEPLOYED | Async cooldowns |
 
 Web Frontend
 | Archivo | Estado | Cambios |
-|---------|--------|---------|
+|---------|--------|---------| 
 | web/app/api/admin/stats/route.ts | ✅ DEPLOYED | Simplificado para Vercel |
 | web/app/api/admin/verifications/route.ts | ✅ DEPLOYED | Placeholders + console.log |
 | web/app/api/monitor/metrics/route.ts | ✅ DEPLOYED | Health check simplificado |
+| web/app/page.tsx | ✅ FIXED | Enlace Telegram bot corregido a @YukikoNeko_bot |
 
 ---
 

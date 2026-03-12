@@ -50,7 +50,7 @@ fi
 echo -e "${BOLD}📋 Herramientas que se instalarán:${RESET}"
 echo -e "  ${CYAN}Pacman:${RESET}  nodejs npm git docker docker-compose redis ffmpeg jq curl wget unzip"
 echo -e "  ${CYAN}AUR:${RESET}     yay (si no está)"
-echo -e "  ${CYAN}npm -g:${RESET}  pm2 tsx vercel drizzle-kit"
+echo -e "  ${CYAN}npm -g:${RESET}  pm2"
 echo -e "  ${CYAN}Extras:${RESET}  github-cli, openssh, ngrok (AUR)"
 echo ""
 read -rp "$(echo -e ${YELLOW}¿Continuar? [S/n] ${RESET})" confirm
@@ -146,14 +146,14 @@ echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━�
 echo -e "${BOLD}[5/7] Instalando herramientas globales npm...${RESET}"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
 
-NPM_GLOBALS=(pm2 tsx vercel)
+NPM_GLOBALS=(pm2)
 
 for pkg in "${NPM_GLOBALS[@]}"; do
   echo -e "  Instalando ${CYAN}${pkg}${RESET}..."
   npm install -g "$pkg" --silent
 done
 
-echo -e "${GREEN}✓ pm2, tsx, vercel instalados globalmente${RESET}"
+echo -e "${GREEN}✓ pm2 instalado globalmente${RESET}"
 
 echo ""
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"

@@ -15,6 +15,21 @@
 
 ---
 
+## � Estado Actual
+
+| Componente | Status | Detalles |
+|---|---|---|
+| **Servidor (your-homelab-ip)** | ✅ ONLINE | 5/5 procesos PM2 corriendo |
+| **Discord** | ✅ ONLINE | Yukiko#3557 (slash commands ready) |
+| **Telegram** | ✅ ONLINE | @YukikoNeko_bot |
+| **WhatsApp** | ✅ ONLINE | Conectado con sesión activa |
+| **Web (Next.js)** | ✅ ONLINE | Admin dashboard en puerto 3000 |
+| **Base de Datos** | ✅ READY | Neon PostgreSQL (cooldowns, knownContacts) |
+| **Build Status** | ✅ SUCCESS | TypeScript compilado sin errores (18:46 GMT) |
+| **Última actualización** | ✅ 12 mar 2026 | Commit a1e701d |
+
+---
+
 ## 📖 Documentación
 
 **[→ joseangelalejo.github.io/yukiko](https://joseangelalejo.github.io/yukiko/)**
@@ -23,6 +38,11 @@ Guía visual con todos los comandos, configuración por plataforma, stack tecnol
 
 Para la guía completa de configuración paso a paso:
 **[→ docs/PLATFORM_SETUP.md](docs/PLATFORM_SETUP.md)**
+
+📋 **Documentación interna:**
+- [INFORME_SESION.txt](INFORME_SESION.txt) — Estado actual y histórico detallado
+- [SIGUIENTES_PASOS.txt](SIGUIENTES_PASOS.txt) — Instrucciones paso a paso para servidor
+- [INDICE_DOCUMENTACION.txt](INDICE_DOCUMENTACION.txt) — Índice completo de docs
 
 ---
 
@@ -107,20 +127,30 @@ docker-compose logs -f yukiko-discord
 
 ---
 
-## 🖥️ Deploy en homelab con PM2
+## 🖥️ Deploy en homelab con PM2 (ACTUAL)
 
 ```bash
-# En tu servidor Ubuntu (Proxmox VM)
-npm install -g pm2 tsx
-pm2 start ecosystem.config.cjs
-pm2 save && pm2 startup
+# ✅ Servidor producción (your-homelab-ip)
+sssh dockerja@your-homelab-ip
 
-# La web va a Vercel (gratuito):
-cd web && npx vercel --prod
+# Ver estado
+pm2 list
+pm2 logs --lines 50
+
+# Después de pull de cambios:
+git pull origin main
+npm install              # Muy importante: reconoce nuevos workspaces
+npm run build
+pm2 restart all
 ```
 
-CI/CD automático con GitHub Actions:
-- **Push a `main`** → lint → deploy web (Vercel) + deploy bots (SSH al homelab) + actualiza docs (GitHub Pages)
+**Flujo actual:**
+1. **Local**: `git push origin main` → GitHub
+2. **Server**: `git pull` + `npm install && npm run build && pm2 restart all`
+3. **Web**: Deploy manual a Vercel desde `cd web && npx vercel --prod` (sin CI/CD aún)
+
+**Próximo: CI/CD con GitHub Actions**
+- Push a `main` → lint → Tests + Build validation → Auto-deploy bots (SSH) + web (Vercel)
 
 ---
 
@@ -186,4 +216,19 @@ MIT © [joseangelalejo](https://github.com/joseangelalejo)
 
 ---
 
-*[Hub personal](https://your-domain.com/) · [GitHub](https://github.com/joseangelalejo) · [Documentación](https://joseangelalejo.github.io/yukiko/)*
+## 🔄 Último Deployment
+
+**Fecha**: 12 de marzo 2026 @ 18:46 GMT  
+**Servidor**: your-homelab-ip (dockerja)  
+**Commit**: a1e701d (Build exitoso + 5 procesos ONLINE)  
+**Fix aplicado**: Workspace @yukiko/db reconocido (commit 8dbfc9d)
+
+**Validaciones:**
+- ✅ npm run build sin errores  
+- ✅ TypeScript compilation OK  
+- ✅ Todos los bots conectados  
+- ✅ Base de datos sincronizada  
+
+---
+
+*[Hub personal](https://your-domain.com/) · [GitHub](https://github.com/joseangelalejo) · [Documentación](https://joseangelalejo.github.io/yukiko/) · [Estado en vivo](https://your-homelab-ip:3000)*

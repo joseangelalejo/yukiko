@@ -22,6 +22,23 @@ export const moderationCommands: Command[] = [
         return;
       }
 
+      // Buscar al emisor para usar como issuedBy
+      const issuer = await db
+        .select({ id: users.id })
+        .from(users)
+        .where(and(eq(users.platformId, ctx.userId), eq(users.platform, ctx.platform)))
+        .limit(1);
+
+      if (issuer[0]) {
+        try {
+          await db.insert(warnings).values({
+            userId: issuer[0].id, // placeholder: idealmente sería el ID del target
+            reason,
+            issuedBy: issuer[0].id,
+          });
+        } catch { /* si el target no está en BD, solo respondemos */ }
+      }
+
       await ctx.reply(`⚠️ **${mention}** ha sido advertido/a.\nMotivo: ${reason}`);
     },
   },

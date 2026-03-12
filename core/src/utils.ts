@@ -90,13 +90,23 @@ export async function addXp(userId: string, amount: number): Promise<{ leveled: 
 export async function logCommand(opts: {
   platform: Platform;
   userId: string;
+  groupId?: string;
   command: string;
   args?: unknown[];
   success?: boolean;
   error?: string;
 }) {
+  // Resolve internal user id from platformId
+  const userRows = await db
+    .select({ id: users.id })
+    .from(users)
+    .where(and(eq(users.platformId, opts.userId), eq(users.platform, opts.platform)))
+    .limit(1);
+  const internalUserId = userRows[0]?.id ?? null;
+
   await db.insert(commandLogs).values({
     platform: opts.platform,
+    userId: internalUserId,
     command: opts.command,
     args: opts.args ?? [],
     success: opts.success ?? true,

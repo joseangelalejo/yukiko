@@ -3,7 +3,7 @@
 
 Fecha: 12 de marzo de 2026  
 Proyecto: Yukiko  
-Estado: ✅ LISTO PARA VERCEL
+Status: ✅ LISTO PARA VERCEL (Todos los fixes aplicados)
 
 ---
 
@@ -30,12 +30,33 @@ Estado: ✅ LISTO PARA VERCEL
 ---
 
 ---
-🎯 LO PRÓXIMO (HOY O MAÑANA)
+🎯 LO PRÓXIMO - PRÓXIMOS PASOS EN SERVIDOR
 
-Opción 1: Hacer Deploy a Vercel HOY 🚀
+Paso 1: En servidor 192.168.24.103 (YA INICIO)
 ```bash
 ================================================================================
-Paso 1: Verificar todo está listo
+cd ~/docker-compose-files/yukiko
+git pull origin main              ✅ COMPLETADO
+
+Paso 2: Reinstalar dependencias (incluyendo workspace db)
+npm install
+
+Paso 3: Compilar bots + web
+npm run build
+
+Paso 4: Reiniciar procesos
+pm2 restart all
+pm2 logs --lines 50
+```
+
+================================================================================
+Si la compilación pasa sin errores → Listo para Vercel
+
+================================================================================
+Opción: Hacer Deploy a Vercel HOY 🚀
+```bash
+================================================================================
+Paso 1: Verificar en local que todo está listo
 cd /home/miniature/gitrepositories/yukiko
 chmod +x verify-vercel-ready.sh
 ./verify-vercel-ready.sh

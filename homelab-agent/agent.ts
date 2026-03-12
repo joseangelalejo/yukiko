@@ -70,6 +70,6 @@ const server = http.createServer((req, res) => {
   res.end(JSON.stringify({ error: 'Not found' }));
 });
 
-server.listen(PORT, '100.66.214.108', () => {
+server.listen(PORT, '0.0.0.0', () => {
   console.log(`🌨️ Yukiko agent escuchando en http://100.66.214.108:${PORT}`);
 });

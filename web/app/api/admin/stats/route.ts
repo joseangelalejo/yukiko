@@ -1,18 +1,34 @@
 import { NextResponse } from 'next/server';
-import { db, users, groups, commandLogs } from '@db/index.ts';
-import { gte, count } from 'drizzle-orm';
+import { db } from '@db/index.ts';
+import { sql } from 'drizzle-orm';
 
 export async function GET() {
   try {
-    const [totalUsers] = await db.select({ count: count() }).from(users);
-    const [totalGroups] = await db.select({ count: count() }).from(groups);
+    // Count users from database
+    const userCountResult = await db.execute(
+      sql`SELECT COUNT(*) as cnt FROM "user"`
+    );
+    const totalUsers = Number(
+      (userCountResult as any)[0]?.cnt ?? 0
+    );
 
+    // Count groups from database
+    const groupCountResult = await db.execute(
+      sql`SELECT COUNT(*) as cnt FROM "group"`
+    );
+    const totalGroups = Number(
+      (groupCountResult as any)[0]?.cnt ?? 0
+    );
+
+    // Count commands executed today
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const [commandsToday] = await db
-      .select({ count: count() })
-      .from(commandLogs)
-      .where(gte(commandLogs.executedAt, today));
+    const commandCountResult = await db.execute(
+      sql`SELECT COUNT(*) as cnt FROM "commandLog" WHERE "executedAt" >= ${today}`
+    );
+    const commandsToday = Number(
+      (commandCountResult as any)[0]?.cnt ?? 0
+    );
 
     // Consultar estado real de bots al agente del homelab
     let platforms = { discord: false, telegram: false, whatsapp: false };
@@ -28,12 +44,16 @@ export async function GET() {
     }
 
     return NextResponse.json({
-      totalUsers: totalUsers.count,
-      totalGroups: totalGroups.count,
-      commandsToday: commandsToday.count,
+      totalUsers,
+      totalGroups,
+      commandsToday,
       platforms,
     });
   } catch (error) {
-    return NextResponse.json({ error: 'DB error' }, { status: 500 });
+    console.error('Stats error:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch stats', details: String(error) },
+      { status: 500 }
+    );
   }
 }

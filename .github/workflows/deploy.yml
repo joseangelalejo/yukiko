@@ -55,26 +55,6 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-  # ── Deploy web a Vercel ───────────────────────────────────
-  deploy-web:
-    name: Deploy Web (Vercel)
-    runs-on: ubuntu-latest
-    needs: lint
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-      - run: npm install -g vercel
-      - run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-        working-directory: ./web
-      - run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
-        working-directory: ./web
-      - run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
-        working-directory: ./web
-
   # ── Deploy bots al homelab via SSH ────────────────────────
   deploy-bots:
     name: Deploy Bots (Homelab SSH)

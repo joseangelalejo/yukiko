@@ -78,7 +78,7 @@ jobs:
             git pull origin main
             npm install
             npm run build:bots
-            pm2 restart yukiko-discord yukiko-telegram yukiko-whatsapp
+            pm2 restart yukiko-discord yukiko-telegram yukiko-agent
             pm2 save
             echo "✅ Deploy completado: $(date)"
             pm2 list

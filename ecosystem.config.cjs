@@ -36,5 +36,17 @@ module.exports = {
       restart_delay: 5000,
       max_restarts: 10,
     },
+    {
+      name: 'yukiko-agent',
+      script: './node_modules/.bin/tsx',
+      args: '--env-file=.env homelab-agent/agent.ts',
+      cwd: 'your-home-path/yukiko',
+      watch: false,
+      env: { NODE_ENV: 'production' },
+      error_file: './logs/agent-error.log',
+      out_file: './logs/agent-out.log',
+      restart_delay: 5000,
+      max_restarts: 10,
+    },
   ],
 };

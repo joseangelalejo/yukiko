@@ -1,6 +1,6 @@
 import { Bot, Context } from 'grammy';
-import { registry } from '@yukiko/core/src/registry.ts';
-import { db, knownContacts } from '@yukiko/db/index.ts';
+import { registry } from '@yukiko/core/src/registry';
+import { db, knownContacts } from '@yukiko/db';
 import { eq, and } from 'drizzle-orm';
 import { roleplayCommands } from '@yukiko/roleplay';
 import { economyCommands } from '@yukiko/economy';
@@ -8,9 +8,9 @@ import { adultCommands } from '@yukiko/adult';
 import { aiCommands } from '@yukiko/ai';
 import { moderationCommands } from '@yukiko/moderation';
 import { linkCommands, handleNewUser, buildOnboardingMessage } from '@yukiko/link';
-import { isOnCooldown, remainingCooldown, addXp, logCommand } from '@yukiko/core/src/utils.ts';
-import { checkAdultVerificationNotifications } from '@yukiko/core/src/notifications.ts';
-import type { CommandContext } from '@yukiko/core/src/types.ts';
+import { isOnCooldown, remainingCooldown, addXp, logCommand } from '@yukiko/core/src/utils';
+import { checkAdultVerificationNotifications } from '@yukiko/core/src/notifications';
+import type { CommandContext } from '@yukiko/core/src/types';
 import 'dotenv/config';
 
 // ── Register all commands ────────────────────────────────────
@@ -116,8 +116,8 @@ function setupCommand(commandName: string) {
     if (!command) return;
 
     const text = ctx.message?.text ?? '';
-    const args = text.split(await isOnCooldown(userId, commandName, command.cooldown)) {
-      const remaining = awaitng(ctx.from?.id ?? '');
+    const userId = String(ctx.from?.id ?? '');
+    const args = text.split(' ').slice(1);
     const displayName = [ctx.from?.first_name, ctx.from?.last_name].filter(Boolean).join(' ') || 'Usuario';
 
     // Onboarding silencioso si no es /link o /linkcode

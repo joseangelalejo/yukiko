@@ -1,22 +1,26 @@
-# 🚀 SIGUIENTES PASOS - ESTADO ACTUAL 12 MARZO 2026
+================================================================================
+🚀 SIGUIENTES PASOS - ESTADO ACTUAL 12 MARZO 2026
 
-## ✅ COMPLETADO
+================================================================================
+✅ COMPLETADO
+
 - ✅ Git pull en servidor (8dbfc9d → aaf75c3)
 - ✅ @yukiko/db workspace agregado a package.json + db/package.json creado
 - ✅ Documentación actualizada en local
 - ✅ 5 commits pusheados a GitHub main
 
----
+================================================================================
 
-## ⏳ PRÓXIMOS PASOS EN SERVIDOR (192.168.24.103)
+================================================================================
+⏳ PRÓXIMOS PASOS EN SERVIDOR (192.168.24.103)
 
-### Paso 1: SSH al servidor
+Paso 1: SSH al servidor
 ```bash
 ssh dockerja@192.168.24.103
 cd ~/docker-compose-files/yukiko
 ```
 
-### Paso 2: Git pull (sincronizar documentación)
+Paso 2: Git pull (sincronizar documentación)
 ```bash
 git pull origin main
 ```
@@ -29,7 +33,7 @@ Actualizando 8dbfc9d..aaf75c3
 # Cambios en documentación
 ```
 
-### Paso 3: Instalar workspaces (CRÍTICO - la orden del fix)
+Paso 3: Instalar workspaces (CRÍTICO - la orden del fix)
 ```bash
 npm install
 ```
@@ -39,7 +43,7 @@ Este comando debería:
 - Crear symlink o referencias a `@yukiko/db`
 - Resolver la importación de `@yukiko/db` en Telegram y WhatsApp
 
-### Paso 4: Compilar bots + web
+Paso 4: Compilar bots + web
 ```bash
 npm run build
 ```
@@ -55,12 +59,12 @@ Resultado esperado:
 # DEBE TERMINAR SIN ERRORES
 ```
 
-### Paso 5: Reiniciar procesos PM2
+Paso 5: Reiniciar procesos PM2
 ```bash
 pm2 restart all
 ```
 
-### Paso 6: Monitorear logs
+Paso 6: Monitorear logs
 ```bash
 pm2 logs --lines 50
 ```
@@ -71,20 +75,22 @@ Buscar:
 - ✅ "Socket connected" (WhatsApp)
 - ❌ NO debe haber "Cannot find module @yukiko/db"
 
----
+================================================================================
 
-## 🎯 SI BUILD PASA SIN ERRORES
+================================================================================
+🎯 SI BUILD PASA SIN ERRORES
 
 Entonces:
 1. Todos los 5 procesos deben estar ONLINE
 2. No hay errores de módulo
 3. Listo para siguiente fase: **Vercel Deploy**
 
----
+================================================================================
 
-## 🔨 SI BUILD FALLA
+================================================================================
+🔨 SI BUILD FALLA
 
-### Error: "Cannot find module '@yukiko/db'"
+Error: "Cannot find module '@yukiko/db'"
 
 **Signos vitales:**
 - npm install se ejecutó pero algo salió mal
@@ -104,15 +110,15 @@ cat package.json | grep -A5 "workspaces"  # Debe incluir "db"
 npm run build:bots -- --force
 ```
 
-### Error: "Syntax error at line 119"
+Error: "Syntax error at line 119"
 - Esto NO debería ocurrir (ya fue corregido en commit dfdbcb2)
 - Si aparece: `git log --oneline -5` para verificar que está en commit aaf75c3 o posterior
 
----
+================================================================================
 
-## 📋 CHECKLIST FINAL
+================================================================================
+📋 CHECKLIST FINAL
 
-```
 SERVIDOR (192.168.24.103):
 - [ ] git pull completado
 - [ ] npm install completado
@@ -124,11 +130,11 @@ SERVIDOR (192.168.24.103):
 RESULTADO:
 - [ ] Si TODO pasó → VERCEL READY  
 - [ ] Si algo falló → Revisar logs antes de continuar
-```
 
----
+================================================================================
 
-## 🚀 DESPUÉS QUE TODO ESTÉ ONLINE
+================================================================================
+🚀 DESPUÉS QUE TODO ESTÉ ONLINE
 
 ```bash
 # Resumen del estado
@@ -143,9 +149,10 @@ git status
 # Vercel está listo para: git push origin main
 ```
 
----
+================================================================================
 
-## 📞 REFERENCIAS RÁPIDAS
+================================================================================
+📞 REFERENCIAS RÁPIDAS
 
 | Recurso | Ubicación |
 |---------|-----------|
@@ -156,9 +163,10 @@ git status
 | Guardar estado | `pm2 save` |
 | Cargar estado | `pm2 resurrect` |
 
----
+================================================================================
 
-## 🎓 NOTAS IMPORTANTES
+================================================================================
+🎓 NOTAS IMPORTANTES
 
 1. **db/package.json es crítico**
    - Sin él, npm no reconoce `@yukiko/db` como workspace
@@ -172,8 +180,8 @@ git status
    - git pull → npm install (lee package.json) → npm run build (usa db resuelto)
    - NO saltarse ningún paso
 
----
+================================================================================
 
-**Generado:** 12 de marzo de 2026  
-**Commit documentación:** aaf75c3  
-**Estado:** ✅ LISTO PARA EJECUTAR PASOS EN SERVIDOR
+Generado: 12 de marzo de 2026  
+Commit documentación: aaf75c3  
+Estado: ✅ LISTO PARA EJECUTAR PASOS EN SERVIDOR

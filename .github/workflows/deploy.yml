@@ -85,12 +85,12 @@ jobs:
       - name: Deploy via SSH al homelab Proxmox
         uses: appleboy/ssh-action@v1
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT }}
+          host: ${{ secrets.HOMELAB_HOST }}
+          username: ${{ secrets.HOMELAB_USER }}
+          key: ${{ secrets.HOMELAB_KEY }}
+          port: 22
           script: |
-            cd /home/yukiko/bot
+            cd ${{ secrets.HOMELAB_PATH }}
             git pull origin main
             npm install --production
             npm run build:bots

@@ -11,7 +11,7 @@ import { economyCommands } from '@yukiko/economy';
 import { adultCommands } from '@yukiko/adult';
 import { aiCommands } from '@yukiko/ai';
 import { moderationCommands } from '@yukiko/moderation';
-import { linkCommands, handleNewUser, buildOnboardingMessage } from '@yukiko/link';
+import { linkCommands, handleNewUser } from '@yukiko/link';
 import { isOnCooldown, remainingCooldown, addXp, logCommand } from '@yukiko/core/src/utils.ts';
 import type { CommandContext } from '@yukiko/core/src/types.ts';
 import { mkdir } from 'fs/promises';
@@ -98,11 +98,16 @@ async function startWhatsApp() {
     await sock.sendMessage(jid, { text });
   }
 
+  const startupTime = Date.now();
+  const STARTUP_GRACE_MS = 15_000;
+
   sock.ev.on('messages.upsert', async ({ messages, type }) => {
     if (type !== 'notify') return;
 
     for (const msg of messages) {
       if (msg.key.fromMe || !msg.message) continue;
+      const msgTimestamp = (msg.messageTimestamp as number) * 1000;
+      if (msgTimestamp < startupTime - STARTUP_GRACE_MS) continue;
 
       const body =
         msg.message.conversation ??
@@ -115,18 +120,10 @@ async function startWhatsApp() {
       const userId = senderId.replace('@s.whatsapp.net', '');
       const displayName = msg.pushName ?? userId;
 
+      // Registrar usuario silenciosamente sin enviar onboarding
       if (!onboardedThisSession.has(userId)) {
         onboardedThisSession.add(userId);
-        const { isNew } = await handleNewUser(userId, 'whatsapp', displayName);
-        if (isNew) {
-          const onboardMsg = buildOnboardingMessage('whatsapp', displayName);
-          if (isGroup) {
-            try { await sendDM(userId, onboardMsg); }
-            catch { await sock.sendMessage(jid, { text: onboardMsg }); }
-          } else {
-            await sock.sendMessage(jid, { text: onboardMsg });
-          }
-        }
+        await handleNewUser(userId, 'whatsapp', displayName);
       }
 
       if (!body.startsWith(PREFIX)) continue;

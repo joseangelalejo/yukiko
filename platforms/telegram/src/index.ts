@@ -140,8 +140,8 @@ function setupCommand(commandName: string) {
     }
 
     // Cooldown
-    if (command.cooldown && isOnCooldown(userId, commandName, command.cooldown)) {
-      const remaining = remainingCooldown(userId, commandName, command.cooldown);
+    if (command.cooldown && await isOnCooldown(userId, commandName, command.cooldown)) {
+      const remaining = await remainingCooldown(userId, commandName, command.cooldown);
       await ctx.reply(`⏰ Espera *${remaining}s* antes de usar este comando.`, { parse_mode: 'Markdown' });
       return;
     }

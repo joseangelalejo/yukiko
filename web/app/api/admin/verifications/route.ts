@@ -1,35 +1,70 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { neon } from '@neondatabase/serverless';
+import { drizzle } from 'drizzle-orm/neon-http';
+import * as schema from '../../../../db/schema';
+import { eq, and, desc } from 'drizzle-orm';
 
-// GET /api/admin/verifications?status=pending
-export async function GET(req: NextRequest) {
-  const secret = req.headers.get('authorization')?.replace('Bearer ', '');
-  if (secret !== process.env.ADMIN_SECRET) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
-  // Placeholder response - real data handled by bot checks
-  return NextResponse.json({ requests: [] });
+function getDb() {
+  const sql = neon(process.env.DATABASE_URL!);
+  return drizzle(sql, { schema });
 }
 
-// POST /api/admin/verifications { id, action: 'approve'|'reject', reason? }
-export async function POST(req: NextRequest) {
-  const secret = req.headers.get('authorization')?.replace('Bearer ', '');
-  if (secret !== process.env.ADMIN_SECRET) {
+function checkAuth(req: NextRequest): boolean {
+  const cookie = req.cookies.get('yukiko_admin')?.value;
+  return cookie === process.env.ADMIN_SECRET;
+}
+
+export async function GET(req: NextRequest) {
+  if (!checkAuth(req)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+  const db = getDb();
+  const status = req.nextUrl.searchParams.get('status') ?? 'pending';
+  const requests = await db
+    .select()
+    .from(schema.adultRequests)
+    .where(eq(schema.adultRequests.status, status))
+    .orderBy(desc(schema.adultRequests.requestedAt));
+  return NextResponse.json({ requests });
+}
 
-  const { id, action, reason } = await req.json();
-
-  try {
-    if (action === 'approve') {
-      console.log(`[ADMIN] Solicitud +18 aprobada: ${id}`);
-    } else if (action === 'reject') {
-      console.log(`[ADMIN] Solicitud +18 rechazada: ${id} - Razon: ${reason}`);
-    }
-
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('Error updating verification:', error);
-    return NextResponse.json({ error: 'Database error' }, { status: 500 });
+export async function POST(req: NextRequest) {
+  if (!checkAuth(req)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+  const { id, action, reason } = await req.json();
+  if (!id || !['approve', 'reject'].includes(action)) {
+    return NextResponse.json({ error: 'Invalid params' }, { status: 400 });
+  }
+  const db = getDb();
+
+  const [request] = await db
+    .select()
+    .from(schema.adultRequests)
+    .where(eq(schema.adultRequests.id, id))
+    .limit(1);
+
+  if (!request) {
+    return NextResponse.json({ error: 'Request not found' }, { status: 404 });
+  }
+
+  const now = new Date();
+
+  if (action === 'approve') {
+    await db
+      .update(schema.adultRequests)
+      .set({ status: 'approved', reviewedAt: now, reviewedBy: 'admin' })
+      .where(eq(schema.adultRequests.id, id));
+    await db
+      .update(schema.users)
+      .set({ isVerifiedAdult: true })
+      .where(eq(schema.users.id, request.userId));
+  } else {
+    await db
+      .update(schema.adultRequests)
+      .set({ status: 'rejected', reviewedAt: now, reviewedBy: 'admin', rejectionReason: reason ?? null })
+      .where(eq(schema.adultRequests.id, id));
+  }
+
+  return NextResponse.json({ success: true });
 }

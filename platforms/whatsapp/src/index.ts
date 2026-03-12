@@ -101,6 +101,26 @@ async function startWhatsApp() {
     await sock.sendMessage(jid, { text });
   }
 
+  async function wakeHomelabIfNeeded(): Promise<boolean> {
+    try {
+      const res = await fetch(`${process.env.HOMELAB_AGENT_URL}/health`, {
+        signal: AbortSignal.timeout(3000),
+      });
+      return res.ok;
+    } catch {
+      // Homelab no responde — mandar WoL
+      try {
+        await fetch('https://wol.juanje.net/wake/proxmox.miniserver.online', {
+          signal: AbortSignal.timeout(5000),
+        });
+        console.log('🔌 WoL enviado a proxmox.miniserver.online');
+      } catch (e) {
+        console.error('❌ Error enviando WoL:', e);
+      }
+      return false;
+    }
+  }
+
   const startupTime = Date.now();
   const STARTUP_GRACE_MS = 15_000;
 
@@ -160,6 +180,15 @@ async function startWhatsApp() {
 
       if (!body.startsWith(PREFIX)) continue;
 
+      // Verificar si el homelab está activo; si no, despertar y avisar
+      const homelabOnline = await wakeHomelabIfNeeded();
+      if (!homelabOnline) {
+        await sock.sendMessage(jid, {
+          text: '😴 Mi servidor está apagado, lo estoy encendiendo... Inténtalo de nuevo en unos minutos.',
+        }, { quoted: msg });
+        continue;
+      }
+
       const [commandStr, ...args] = body.slice(PREFIX.length).trim().split(/\s+/);
       const commandName = commandStr.toLowerCase();
       const command = registry.get(commandName);
@@ -173,13 +202,24 @@ async function startWhatsApp() {
         continue;
       }
 
+      // Resolver isAdmin
+      let isAdmin = false;
+      if (isGroup) {
+        try {
+          const meta = await sock.groupMetadata(jid);
+          isAdmin = meta.participants
+            .filter(p => p.admin === 'admin' || p.admin === 'superadmin')
+            .some(p => p.id === senderId);
+        } catch { isAdmin = false; }
+      }
+
       const ctx: CommandContext = {
         platform: 'whatsapp',
         userId,
         chatId: jid,
         groupId: isGroup ? jid : undefined,
         displayName,
-        isAdmin: false,
+        isAdmin,
         isGroup,
         args,
         rawText: args.join(' '),

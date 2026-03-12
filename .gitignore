@@ -14,3 +14,5 @@ auth_info_*/
 next-env.d.ts
 web/next-env.d.ts
 web/tsconfig.json
+.vercel
+.env*.local

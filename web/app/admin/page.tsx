@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 type Stats = {
   totalUsers: number;
@@ -11,86 +12,88 @@ type Stats = {
 export default function DashboardPage() {
   const [stats, setStats] = useState<Stats | null>(null);
   const [activeTab, setActiveTab] = useState<'overview' | 'users' | 'groups' | 'logs'>('overview');
+  const router = useRouter();
 
   useEffect(() => {
     fetch('/api/admin/stats')
-      .then(r => r.json())
-      .then(setStats)
+      .then(r => {
+        if (r.status === 401) { router.push('/admin/login'); return null; }
+        return r.json();
+      })
+      .then(d => d && setStats(d))
       .catch(() => {});
   }, []);
 
+  const logout = async () => {
+    await fetch('/api/admin/auth', { method: 'DELETE' });
+    router.push('/admin/login');
+  };
+
   return (
     <div className="flex min-h-screen bg-[#0d0d1a] text-white">
-      {/* Sidebar */}
       <aside className="w-64 min-h-screen bg-white/5 border-r border-white/10 p-6">
-          <div className="flex items-center gap-2 mb-8">
-            <span className="text-2xl">🌨️</span>
-            <span className="font-bold text-lg">Yukiko Admin</span>
-          </div>
-          <nav className="space-y-1">
-            {[
-              { id: 'overview', label: '📊 Resumen', tab: 'overview' },
-              { id: 'users', label: '👥 Usuarios', tab: 'users' },
-              { id: 'groups', label: '🏠 Grupos', tab: 'groups' },
-              { id: 'logs', label: '📋 Logs', tab: 'logs' },
-            ].map(item => (
-              <button
-                key={item.id}
-                onClick={() => setActiveTab(item.tab as typeof activeTab)}
-                className={`w-full text-left px-4 py-2 rounded-lg transition-colors text-sm ${
-                  activeTab === item.tab ? 'bg-pink-500/20 text-pink-400' : 'text-white/60 hover:text-white hover:bg-white/5'
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
-            <hr className="border-white/10 my-4" />
-            <a href="/admin/verifications" className="block px-4 py-2 rounded-lg text-sm text-white/60 hover:text-white hover:bg-white/5">
-              🔞 Verificaciones
-            </a>
-            <a href="/monitor" className="block px-4 py-2 rounded-lg text-sm text-white/60 hover:text-white hover:bg-white/5">
-              📡 Monitor
-            </a>
-            <a href="/" className="block px-4 py-2 rounded-lg text-sm text-white/60 hover:text-white hover:bg-white/5">
-              🌐 Web
-            </a>
-          </nav>
+        <div className="flex items-center gap-2 mb-8">
+          <span className="text-2xl">🌨️</span>
+          <span className="font-bold text-lg">Yukiko Admin</span>
+        </div>
+        <nav className="space-y-1">
+          {([
+            { id: 'overview', label: '📊 Resumen' },
+            { id: 'users', label: '👥 Usuarios' },
+            { id: 'groups', label: '🏠 Grupos' },
+            { id: 'logs', label: '📋 Logs' },
+          ] as const).map(item => (
+            <button
+              key={item.id}
+              onClick={() => setActiveTab(item.id)}
+              className={`w-full text-left px-4 py-2 rounded-lg transition-colors text-sm ${
+                activeTab === item.id ? 'bg-pink-500/20 text-pink-400' : 'text-white/60 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              {item.label}
+            </button>
+          ))}
+          <hr className="border-white/10 my-4" />
+          <a href="/admin/verifications" className="block px-4 py-2 rounded-lg text-sm text-white/60 hover:text-white hover:bg-white/5">🔞 Verificaciones</a>
+          <a href="/monitor" className="block px-4 py-2 rounded-lg text-sm text-white/60 hover:text-white hover:bg-white/5">📡 Monitor</a>
+          <a href="/" className="block px-4 py-2 rounded-lg text-sm text-white/60 hover:text-white hover:bg-white/5">🌐 Web</a>
+          <hr className="border-white/10 my-4" />
+          <button onClick={logout} className="w-full text-left px-4 py-2 rounded-lg text-sm text-white/40 hover:text-red-400 hover:bg-red-500/10 transition-colors">
+            🚪 Cerrar sesión
+          </button>
+        </nav>
       </aside>
 
-      {/* Main content */}
       <div className="flex-1 p-8">
-          <h1 className="text-2xl font-bold mb-8">Panel de Administración</h1>
+        <h1 className="text-2xl font-bold mb-8">Panel de Administración</h1>
 
-          {/* Platform status */}
-          <div className="grid grid-cols-3 gap-4 mb-8">
-            {(['discord', 'telegram', 'whatsapp'] as const).map(platform => (
-              <div key={platform} className="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-3">
-                <span className={`w-3 h-3 rounded-full ${stats?.platforms[platform] ? 'bg-green-400' : 'bg-red-400'}`} />
-                <span className="capitalize font-medium">{platform}</span>
-                <span className={`ml-auto text-xs ${stats?.platforms[platform] ? 'text-green-400' : 'text-red-400'}`}>
-                  {stats?.platforms[platform] ? 'Online' : 'Offline'}
-                </span>
-              </div>
-            ))}
-          </div>
-
-          {/* Stats cards */}
-          <div className="grid grid-cols-3 gap-6 mb-8">
-            <StatCard label="Usuarios totales" value={stats?.totalUsers ?? '—'} emoji="👥" />
-            <StatCard label="Grupos activos" value={stats?.totalGroups ?? '—'} emoji="🏠" />
-            <StatCard label="Comandos hoy" value={stats?.commandsToday ?? '—'} emoji="⚡" />
-          </div>
-
-          {/* Quick actions */}
-          <div className="bg-white/5 border border-white/10 rounded-xl p-6">
-            <h2 className="font-bold mb-4">Acciones rápidas</h2>
-            <div className="flex flex-wrap gap-3">
-              <ActionButton label="🔄 Reiniciar Discord" endpoint="/api/admin/restart?platform=discord" />
-              <ActionButton label="🔄 Reiniciar Telegram" endpoint="/api/admin/restart?platform=telegram" />
-              <ActionButton label="🔄 Reiniciar WhatsApp" endpoint="/api/admin/restart?platform=whatsapp" />
-              <ActionButton label="💾 Backup DB" endpoint="/api/admin/backup" />
+        <div className="grid grid-cols-3 gap-4 mb-8">
+          {(['discord', 'telegram', 'whatsapp'] as const).map(platform => (
+            <div key={platform} className="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-3">
+              <span className={`w-3 h-3 rounded-full ${stats?.platforms[platform] ? 'bg-green-400' : 'bg-red-400'}`} />
+              <span className="capitalize font-medium">{platform}</span>
+              <span className={`ml-auto text-xs ${stats?.platforms[platform] ? 'text-green-400' : 'text-red-400'}`}>
+                {stats?.platforms[platform] ? 'Online' : 'Offline'}
+              </span>
             </div>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-3 gap-6 mb-8">
+          <StatCard label="Usuarios totales" value={stats?.totalUsers ?? '—'} emoji="👥" />
+          <StatCard label="Grupos activos" value={stats?.totalGroups ?? '—'} emoji="🏠" />
+          <StatCard label="Comandos hoy" value={stats?.commandsToday ?? '—'} emoji="⚡" />
+        </div>
+
+        <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+          <h2 className="font-bold mb-4">Acciones rápidas</h2>
+          <div className="flex flex-wrap gap-3">
+            <ActionButton label="🔄 Reiniciar Discord" endpoint="/api/admin/restart?platform=discord" />
+            <ActionButton label="🔄 Reiniciar Telegram" endpoint="/api/admin/restart?platform=telegram" />
+            <ActionButton label="🔄 Reiniciar WhatsApp" endpoint="/api/admin/restart?platform=whatsapp" />
+            <ActionButton label="💾 Backup DB" endpoint="/api/admin/backup" />
           </div>
+        </div>
       </div>
     </div>
   );
@@ -108,14 +111,15 @@ function StatCard({ label, value, emoji }: { label: string; value: number | stri
 
 function ActionButton({ label, endpoint }: { label: string; endpoint: string }) {
   const [loading, setLoading] = useState(false);
-  const [done, setDone] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'ok' | 'error'>('idle');
 
   const handleClick = async () => {
     setLoading(true);
-    const r = await fetch(endpoint, { method: 'POST', headers: { authorization: `Bearer ${process.env.NEXT_PUBLIC_ADMIN_SECRET ?? ''}` } }).catch(() => null); if (!r?.ok) console.error('Action failed', endpoint);
+    setStatus('idle');
+    const res = await fetch(endpoint, { method: 'POST' }).catch(() => null);
     setLoading(false);
-    setDone(true);
-    setTimeout(() => setDone(false), 2000);
+    setStatus(res?.ok ? 'ok' : 'error');
+    setTimeout(() => setStatus('idle'), 3000);
   };
 
   return (
@@ -123,10 +127,12 @@ function ActionButton({ label, endpoint }: { label: string; endpoint: string }) 
       onClick={handleClick}
       disabled={loading}
       className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-        done ? 'bg-green-500/20 text-green-400' : 'bg-white/10 hover:bg-white/20 text-white'
+        status === 'ok' ? 'bg-green-500/20 text-green-400' :
+        status === 'error' ? 'bg-red-500/20 text-red-400' :
+        'bg-white/10 hover:bg-white/20 text-white'
       }`}
     >
-      {loading ? '⏳ ...' : done ? '✅ Hecho' : label}
+      {loading ? '⏳ ...' : status === 'ok' ? '✅ Hecho' : status === 'error' ? '❌ Error' : label}
     </button>
   );
 }

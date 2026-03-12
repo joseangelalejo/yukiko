@@ -5,19 +5,14 @@ import { eq, desc } from 'drizzle-orm';
 // GET /api/admin/verifications?status=pending
 export async function GET(req: NextRequest) {
   const secret = req.headers.get('authorization')?.replace('Bearer ', '');
-  if (secret !== process.env.ADMIN_SECRET && process.env.NODE_ENV === 'production') {
+  if (secret !== process.env.ADMIN_SECRET) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   const status = req.nextUrl.searchParams.get('status') ?? 'pending';
 
-  let query = db
-    .select()
-    .from(adultRequests)
-    .orderBy(desc(adultRequests.requestedAt));
-
   const requests = status === 'all'
-    ? await query
+    ? await db.select().from(adultRequests).orderBy(desc(adultRequests.requestedAt))
     : await db
         .select()
         .from(adultRequests)
@@ -30,7 +25,7 @@ export async function GET(req: NextRequest) {
 // POST /api/admin/verifications { id, action: 'approve'|'reject', reason? }
 export async function POST(req: NextRequest) {
   const secret = req.headers.get('authorization')?.replace('Bearer ', '');
-  if (secret !== process.env.ADMIN_SECRET && process.env.NODE_ENV === 'production') {
+  if (secret !== process.env.ADMIN_SECRET) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 

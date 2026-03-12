@@ -40,7 +40,7 @@ export default function HomePage() {
         </p>
         <div className="flex gap-4 justify-center flex-wrap">
           <a
-            href="https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID"
+            href={`https://discord.com/oauth2/authorize?client_id=${process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID ?? ""}&scope=bot+applications.commands&permissions=8`}
             className="bg-[#5865F2] hover:bg-[#4752C4] px-8 py-3 rounded-full font-semibold transition-colors"
           >
             ➕ Añadir a Discord

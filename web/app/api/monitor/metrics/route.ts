@@ -1,17 +1,7 @@
 import { NextResponse } from 'next/server';
 import os from 'os';
-
-function getCpuUsage(): number {
-  const cpus = os.cpus();
-  let totalIdle = 0, totalTick = 0;
-  for (const cpu of cpus) {
-    for (const type in cpu.times) {
-      totalTick += cpu.times[type as keyof typeof cpu.times];
-    }
-    totalIdle += cpu.times.idle;
-  }
-  return Math.round((1 - totalIdle / totalTick) * 100);
-}
+import { db, commandLogs } from '../../../../db/index.ts';
+import { gte, eq, count, sql } from 'drizzle-orm';
 
 async function pingLatency(url: string): Promise<number> {
   const start = Date.now();
@@ -23,32 +13,65 @@ async function pingLatency(url: string): Promise<number> {
   }
 }
 
+async function getDbLatency(): Promise<number> {
+  const start = Date.now();
+  try {
+    await db.select({ one: sql`1` }).from(commandLogs).limit(1);
+    return Date.now() - start;
+  } catch {
+    return 9999;
+  }
+}
+
 export async function GET() {
   const totalMem = Math.round(os.totalmem() / 1024 / 1024);
   const freeMem = Math.round(os.freemem() / 1024 / 1024);
 
-  const [discordLatency, telegramLatency] = await Promise.all([
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const [discordLatency, telegramLatency, dbLatency] = await Promise.all([
     pingLatency('https://discord.com/api/v10/gateway'),
     pingLatency('https://api.telegram.org'),
+    getDbLatency(),
   ]);
 
-  // Fake DB latency - replace with actual Neon ping
-  const dbLatency = 45;
+  // Comandos por hora (últimas 24h)
+  const commandsRaw = await db
+    .select({
+      hour: sql<number>`EXTRACT(HOUR FROM ${commandLogs.executedAt})`,
+      total: count(),
+    })
+    .from(commandLogs)
+    .where(gte(commandLogs.executedAt, today))
+    .groupBy(sql`EXTRACT(HOUR FROM ${commandLogs.executedAt})`);
+
+  const commandsPerHour = Array.from({ length: 24 }, (_, h) => {
+    const row = commandsRaw.find(r => Number(r.hour) === h);
+    return row ? Number(row.total) : 0;
+  });
+
+  // Errores del día
+  const [errorsRow] = await db
+    .select({ count: count() })
+    .from(commandLogs)
+    .where(gte(commandLogs.executedAt, today))
+    .where(eq(commandLogs.success, false));
 
   return NextResponse.json({
     uptime: Math.floor(process.uptime()),
-    cpu: getCpuUsage(),
+    cpu: 0, // N/A en Vercel serverless — el homelab tiene su propio health-check
     memory: {
       used: totalMem - freeMem,
       total: totalMem,
     },
-    commandsPerHour: Array.from({ length: 24 }, () => Math.floor(Math.random() * 50)), // replace with real DB query
+    commandsPerHour,
     latency: {
       discord: discordLatency,
       telegram: telegramLatency,
-      whatsapp: 120, // WhatsApp doesn't have a public ping endpoint
+      whatsapp: 0, // WhatsApp no tiene endpoint público de ping
       db: dbLatency,
     },
-    errors: 0, // replace with real count from logs
+    errors: Number(errorsRow?.count ?? 0),
   });
 }

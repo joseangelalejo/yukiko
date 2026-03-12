@@ -5,14 +5,18 @@ import { eq, and } from 'drizzle-orm';
 // ── GIF fetcher ───────────────────────────────────────────────
 async function fetchGif(query: string): Promise<string> {
   const key = process.env.TENOR_API_KEY;
-  const res = await fetch(
-    `https://tenor.googleapis.com/v2/search?q=${encodeURIComponent(query + ' anime')}&key=${key}&limit=20&contentfilter=medium`
-  );
-  const data = await res.json() as { results: Array<{ media_formats: { gif: { url: string } } }> };
-  const results = data.results;
-  if (!results?.length) return '';
-  const random = results[Math.floor(Math.random() * results.length)];
-  return random.media_formats.gif.url;
+  if (!key) return '';
+  try {
+    const res = await fetch(
+      `https://tenor.googleapis.com/v2/search?q=${encodeURIComponent(query + ' anime')}&key=${key}&limit=20&contentfilter=medium`
+    );
+    if (!res.ok) return '';
+    const data = await res.json() as { results: Array<{ media_formats: { gif: { url: string } } }> };
+    const results = data.results;
+    if (!results?.length) return '';
+    const random = results[Math.floor(Math.random() * results.length)];
+    return random.media_formats.gif.url;
+  } catch { return ''; }
 }
 
 // ── Update roleplay counter ───────────────────────────────────

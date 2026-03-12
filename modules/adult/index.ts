@@ -181,8 +181,23 @@ export const adultCommands: Command[] = [
         return;
       }
       const enable = action === 'on';
-      await db.update(groups).set({ adultEnabled: enable })
-        .where(and(eq(groups.platformId, ctx.groupId!), eq(groups.platform, ctx.platform)));
+      const existing = await db
+        .select({ id: groups.id })
+        .from(groups)
+        .where(and(eq(groups.platformId, ctx.groupId!), eq(groups.platform, ctx.platform)))
+        .limit(1);
+
+      if (existing[0]) {
+        await db.update(groups).set({ adultEnabled: enable })
+          .where(and(eq(groups.platformId, ctx.groupId!), eq(groups.platform, ctx.platform)));
+      } else {
+        await db.insert(groups).values({
+          platformId: ctx.groupId!,
+          platform: ctx.platform,
+          name: ctx.groupId!,
+          adultEnabled: enable,
+        });
+      }
       await ctx.reply(enable
         ? '🔞 Contenido +18 **activado** en este grupo.'
         : '✅ Contenido +18 **desactivado**.'

@@ -74,8 +74,6 @@ export const aiCommands: Command[] = [
         return;
       }
 
-      await ctx.reply('🤔 Pensando...');
-
       try {
         const response = await askGPT(prompt);
         await ctx.reply(`🤖 ${response}`);
@@ -99,8 +97,6 @@ export const aiCommands: Command[] = [
         await ctx.reply('❌ Uso: /imagine <descripción>');
         return;
       }
-
-      await ctx.reply('🎨 Generando imagen, espera un momento...');
 
       try {
         const url = await generateImage(prompt);

@@ -77,9 +77,36 @@ export const economyCommands: Command[] = [
         return;
       }
 
+      // Intentar resolver el receptor en la misma plataforma
+      // El mention puede ser @usuario, un ID o un nombre — se busca por displayName como fallback
+      const mentionClean = mention.replace(/^@/, '');
+      const [receiver] = await db
+        .select()
+        .from(users)
+        .where(and(eq(users.platform, ctx.platform), eq(users.displayName, mentionClean)))
+        .limit(1);
+
+      if (!receiver) {
+        await ctx.reply(`❌ No se encontró al usuario **${mention}** en ${ctx.platform}.
+El usuario debe haber usado el bot al menos una vez.`);
+        return;
+      }
+
+      if (receiver.id === sender.id) {
+        await ctx.reply('❌ No puedes transferirte monedas a ti mismo.');
+        return;
+      }
+
       await db.update(users).set({ balance: sender.balance - amount }).where(eq(users.id, sender.id));
-      // Note: receiver lookup happens in platform adapters
-      await ctx.reply(`✅ Transferiste **${amount}** 🪙 a ${mention}`);
+      await db.update(users).set({ balance: receiver.balance + amount }).where(eq(users.id, receiver.id));
+      await db.insert(transactions).values({
+        fromUserId: sender.id,
+        toUserId: receiver.id,
+        amount,
+        reason: 'transfer',
+      });
+      await ctx.reply(`✅ Transferiste **${amount}** 🪙 a **${receiver.displayName}**
+Tu saldo: **${sender.balance - amount}** 🪙`);
     },
   },
 

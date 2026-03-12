@@ -1,5 +1,5 @@
-import { db, users, commandLogs } from '../../db/index.js';
-import { eq, and } from 'drizzle-orm';
+import { db, users, commandLogs, cooldowns } from '../../db/index.js';
+import { eq, and, gt, lte } from 'drizzle-orm';
 import type { Platform, YukikoUser } from './types.js';
 
 // ── XP / Levels ───────────────────────────────────────────────
@@ -56,21 +56,50 @@ export async function getOrCreateUser(
   return created as YukikoUser;
 }
 
-// ── Cooldowns (in-memory for speed) ──────────────────────────
-const cooldowns = new Map<string, number>();
+// ── Cooldowns (persistent in DB) ──────────────────────────────
+export async function isOnCooldown(userId: string, command: string, seconds: number): Promise<boolean> {
+  const effective = await resolveEffectiveUser(userId);
+  if (!effective) return false;
 
-export function isOnCooldown(userId: string, command: string, seconds: number): boolean {
-  const key = `${userId}:${command}`;
-  const last = cooldowns.get(key) ?? 0;
-  if (Date.now() - last < seconds * 1000) return true;
-  cooldowns.set(key, Date.now());
-  return false;
+  const now = new Date();
+  const [existing] = await db
+    .select()
+    .from(cooldowns)
+    .where(and(eq(cooldowns.userId, effective.id), eq(cooldowns.command, command), gt(cooldowns.expiresAt, now)))
+    .limit(1);
+
+  return !!existing;
 }
 
-export function remainingCooldown(userId: string, command: string, seconds: number): number {
-  const key = `${userId}:${command}`;
-  const last = cooldowns.get(key) ?? 0;
-  return Math.max(0, seconds - Math.floor((Date.now() - last) / 1000));
+export async function remainingCooldown(userId: string, command: string, seconds: number): Promise<number> {
+  const effective = await resolveEffectiveUser(userId);
+  if (!effective) return 0;
+
+  const now = new Date();
+  const [existing] = await db
+    .select()
+    .from(cooldowns)
+    .where(and(eq(cooldowns.userId, effective.id), eq(cooldowns.command, command), gt(cooldowns.expiresAt, now)))
+    .limit(1);
+
+  if (!existing) return 0;
+  const remainingMs = existing.expiresAt.getTime() - now.getTime();
+  return Math.max(0, Math.ceil(remainingMs / 1000));
+}
+
+// ── Set cooldown ──────────────────────────────────────────────
+export async function setCooldown(userId: string, command: string, seconds: number): Promise<void> {
+  const effective = await resolveEffectiveUser(userId);
+  if (!effective) return;
+
+  const expiresAt = new Date(Date.now() + seconds * 1000);
+  await db.insert(cooldowns).values({ userId: effective.id, command, expiresAt });
+}
+
+// ── Clean expired cooldowns ───────────────────────────────────
+export async function cleanExpiredCooldowns(): Promise<void> {
+  const now = new Date();
+  await db.delete(cooldowns).where(lte(cooldowns.expiresAt, now));
 }
 
 // ── Add XP — opera sobre el master ───────────────────────────

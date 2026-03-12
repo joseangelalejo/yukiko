@@ -1,0 +1,3968 @@
+dockerja@dockerja:~/docker-compose-files/yukiko$ cd ~/docker-compose-files/yukiko
+
+echo "=== ESTRUCTURA ===" && find . -not -path '*/node_modules/*' -not -path '*/.next/*' -not -path '*/.git/*' -not -path '*/logs/*' -name "*.ts" -o -name "*.tsx" -o -name "*.cjs" -o -name "*.json" | grep -v node_modules | sort
+
+echo "=== PLATFORMS ===" && find platforms -name "*.ts" | sort && cat platforms/discord/src/index.ts && echo "===" && cat platforms/telegram/src/index.ts && echo "===" && cat platforms/whatsapp/src/index.ts
+
+echo "=== MODULES ===" && find modules -name "*.ts" | sort && for f in modules/*/index.ts; do echo "--- $f ---"; cat "$f"; done
+
+echo "=== CORE ===" && for f in core/src/*.ts; do echo "--- $f ---"; cat "$f"; done
+
+echo "=== DB ===" && cat db/schema.ts && echo "===" && cat db/index.ts
+
+echo "=== AGENT ===" && cat homelab-agent/agent.ts
+
+echo "=== WEB API ===" && for f in web/app/api/**/*.ts; do echo "--- $f ---"; cat "$f"; done
+
+echo "=== PM2 STATUS ===" && pm2 list
+
+echo "=== LOGS DISCORD ===" && pm2 logs yukiko-discord --lines 30 --nostream
+echo "=== LOGS TELEGRAM ===" && pm2 logs yukiko-telegram --lines 30 --nostream
+echo "=== LOGS WHATSAPP ===" && pm2 logs yukiko-whatsapp --lines 20 --nostream
+=== ESTRUCTURA ===
+./core/package.json
+./core/src/index.ts
+./core/src/registry.ts
+./core/src/types.ts
+./core/src/utils.ts
+./db/index.ts
+./db/schema.ts
+./drizzle.config.ts
+./ecosystem.config.cjs
+./.eslintrc.json
+./homelab-agent/agent.ts
+./modules/adult/index.ts
+./modules/adult/package.json
+./modules/ai/index.ts
+./modules/ai/package.json
+./modules/economy/index.ts
+./modules/economy/package.json
+./modules/link/index.ts
+./modules/link/package.json
+./modules/moderation/index.ts
+./modules/moderation/package.json
+./modules/roleplay/index.ts
+./modules/roleplay/package.json
+./package.json
+./package-lock.json
+./platforms/discord/package.json
+./platforms/discord/src/index.ts
+./platforms/discord/tsconfig.json
+./platforms/telegram/package.json
+./platforms/telegram/src/index.ts
+./platforms/telegram/tsconfig.json
+./platforms/whatsapp/package.json
+./platforms/whatsapp/src/index.ts
+./platforms/whatsapp/tsconfig.json
+./sessions/whatsapp/app-state-sync-key-AAAAAFH__.json
+./sessions/whatsapp/app-state-sync-version-critical_block.json
+./sessions/whatsapp/app-state-sync-version-regular.json
+./sessions/whatsapp/creds.json
+./sessions/whatsapp/device-list-102903742234831.json
+./sessions/whatsapp/device-list-34694244477.json
+./sessions/whatsapp/device-list-68199936721147.json
+./sessions/whatsapp/lid-mapping-102903742234831_reverse.json
+./sessions/whatsapp/lid-mapping-34601048859.json
+./sessions/whatsapp/lid-mapping-34694244477.json
+./sessions/whatsapp/lid-mapping-68199936721147_reverse.json
+./sessions/whatsapp/pre-key-100.json
+./sessions/whatsapp/pre-key-101.json
+./sessions/whatsapp/pre-key-102.json
+./sessions/whatsapp/pre-key-103.json
+./sessions/whatsapp/pre-key-104.json
+./sessions/whatsapp/pre-key-105.json
+./sessions/whatsapp/pre-key-106.json
+./sessions/whatsapp/pre-key-107.json
+./sessions/whatsapp/pre-key-108.json
+./sessions/whatsapp/pre-key-109.json
+./sessions/whatsapp/pre-key-10.json
+./sessions/whatsapp/pre-key-110.json
+./sessions/whatsapp/pre-key-111.json
+./sessions/whatsapp/pre-key-112.json
+./sessions/whatsapp/pre-key-113.json
+./sessions/whatsapp/pre-key-114.json
+./sessions/whatsapp/pre-key-115.json
+./sessions/whatsapp/pre-key-116.json
+./sessions/whatsapp/pre-key-117.json
+./sessions/whatsapp/pre-key-118.json
+./sessions/whatsapp/pre-key-119.json
+./sessions/whatsapp/pre-key-11.json
+./sessions/whatsapp/pre-key-120.json
+./sessions/whatsapp/pre-key-121.json
+./sessions/whatsapp/pre-key-122.json
+./sessions/whatsapp/pre-key-123.json
+./sessions/whatsapp/pre-key-124.json
+./sessions/whatsapp/pre-key-125.json
+./sessions/whatsapp/pre-key-126.json
+./sessions/whatsapp/pre-key-127.json
+./sessions/whatsapp/pre-key-128.json
+./sessions/whatsapp/pre-key-129.json
+./sessions/whatsapp/pre-key-12.json
+./sessions/whatsapp/pre-key-130.json
+./sessions/whatsapp/pre-key-131.json
+./sessions/whatsapp/pre-key-132.json
+./sessions/whatsapp/pre-key-133.json
+./sessions/whatsapp/pre-key-134.json
+./sessions/whatsapp/pre-key-135.json
+./sessions/whatsapp/pre-key-136.json
+./sessions/whatsapp/pre-key-137.json
+./sessions/whatsapp/pre-key-138.json
+./sessions/whatsapp/pre-key-139.json
+./sessions/whatsapp/pre-key-13.json
+./sessions/whatsapp/pre-key-140.json
+./sessions/whatsapp/pre-key-141.json
+./sessions/whatsapp/pre-key-142.json
+./sessions/whatsapp/pre-key-143.json
+./sessions/whatsapp/pre-key-144.json
+./sessions/whatsapp/pre-key-145.json
+./sessions/whatsapp/pre-key-146.json
+./sessions/whatsapp/pre-key-147.json
+./sessions/whatsapp/pre-key-148.json
+./sessions/whatsapp/pre-key-149.json
+./sessions/whatsapp/pre-key-14.json
+./sessions/whatsapp/pre-key-150.json
+./sessions/whatsapp/pre-key-151.json
+./sessions/whatsapp/pre-key-152.json
+./sessions/whatsapp/pre-key-153.json
+./sessions/whatsapp/pre-key-154.json
+./sessions/whatsapp/pre-key-155.json
+./sessions/whatsapp/pre-key-156.json
+./sessions/whatsapp/pre-key-157.json
+./sessions/whatsapp/pre-key-158.json
+./sessions/whatsapp/pre-key-159.json
+./sessions/whatsapp/pre-key-15.json
+./sessions/whatsapp/pre-key-160.json
+./sessions/whatsapp/pre-key-161.json
+./sessions/whatsapp/pre-key-162.json
+./sessions/whatsapp/pre-key-163.json
+./sessions/whatsapp/pre-key-164.json
+./sessions/whatsapp/pre-key-165.json
+./sessions/whatsapp/pre-key-166.json
+./sessions/whatsapp/pre-key-167.json
+./sessions/whatsapp/pre-key-168.json
+./sessions/whatsapp/pre-key-169.json
+./sessions/whatsapp/pre-key-16.json
+./sessions/whatsapp/pre-key-170.json
+./sessions/whatsapp/pre-key-171.json
+./sessions/whatsapp/pre-key-172.json
+./sessions/whatsapp/pre-key-173.json
+./sessions/whatsapp/pre-key-174.json
+./sessions/whatsapp/pre-key-175.json
+./sessions/whatsapp/pre-key-176.json
+./sessions/whatsapp/pre-key-177.json
+./sessions/whatsapp/pre-key-178.json
+./sessions/whatsapp/pre-key-179.json
+./sessions/whatsapp/pre-key-17.json
+./sessions/whatsapp/pre-key-180.json
+./sessions/whatsapp/pre-key-181.json
+./sessions/whatsapp/pre-key-182.json
+./sessions/whatsapp/pre-key-183.json
+./sessions/whatsapp/pre-key-184.json
+./sessions/whatsapp/pre-key-185.json
+./sessions/whatsapp/pre-key-186.json
+./sessions/whatsapp/pre-key-187.json
+./sessions/whatsapp/pre-key-188.json
+./sessions/whatsapp/pre-key-189.json
+./sessions/whatsapp/pre-key-18.json
+./sessions/whatsapp/pre-key-190.json
+./sessions/whatsapp/pre-key-191.json
+./sessions/whatsapp/pre-key-192.json
+./sessions/whatsapp/pre-key-193.json
+./sessions/whatsapp/pre-key-194.json
+./sessions/whatsapp/pre-key-195.json
+./sessions/whatsapp/pre-key-196.json
+./sessions/whatsapp/pre-key-197.json
+./sessions/whatsapp/pre-key-198.json
+./sessions/whatsapp/pre-key-199.json
+./sessions/whatsapp/pre-key-19.json
+./sessions/whatsapp/pre-key-1.json
+./sessions/whatsapp/pre-key-200.json
+./sessions/whatsapp/pre-key-201.json
+./sessions/whatsapp/pre-key-202.json
+./sessions/whatsapp/pre-key-203.json
+./sessions/whatsapp/pre-key-204.json
+./sessions/whatsapp/pre-key-205.json
+./sessions/whatsapp/pre-key-206.json
+./sessions/whatsapp/pre-key-207.json
+./sessions/whatsapp/pre-key-208.json
+./sessions/whatsapp/pre-key-209.json
+./sessions/whatsapp/pre-key-20.json
+./sessions/whatsapp/pre-key-210.json
+./sessions/whatsapp/pre-key-211.json
+./sessions/whatsapp/pre-key-212.json
+./sessions/whatsapp/pre-key-213.json
+./sessions/whatsapp/pre-key-214.json
+./sessions/whatsapp/pre-key-215.json
+./sessions/whatsapp/pre-key-216.json
+./sessions/whatsapp/pre-key-217.json
+./sessions/whatsapp/pre-key-218.json
+./sessions/whatsapp/pre-key-219.json
+./sessions/whatsapp/pre-key-21.json
+./sessions/whatsapp/pre-key-220.json
+./sessions/whatsapp/pre-key-221.json
+./sessions/whatsapp/pre-key-222.json
+./sessions/whatsapp/pre-key-223.json
+./sessions/whatsapp/pre-key-224.json
+./sessions/whatsapp/pre-key-225.json
+./sessions/whatsapp/pre-key-226.json
+./sessions/whatsapp/pre-key-227.json
+./sessions/whatsapp/pre-key-228.json
+./sessions/whatsapp/pre-key-229.json
+./sessions/whatsapp/pre-key-22.json
+./sessions/whatsapp/pre-key-230.json
+./sessions/whatsapp/pre-key-231.json
+./sessions/whatsapp/pre-key-232.json
+./sessions/whatsapp/pre-key-233.json
+./sessions/whatsapp/pre-key-234.json
+./sessions/whatsapp/pre-key-235.json
+./sessions/whatsapp/pre-key-236.json
+./sessions/whatsapp/pre-key-237.json
+./sessions/whatsapp/pre-key-238.json
+./sessions/whatsapp/pre-key-239.json
+./sessions/whatsapp/pre-key-23.json
+./sessions/whatsapp/pre-key-240.json
+./sessions/whatsapp/pre-key-241.json
+./sessions/whatsapp/pre-key-242.json
+./sessions/whatsapp/pre-key-243.json
+./sessions/whatsapp/pre-key-244.json
+./sessions/whatsapp/pre-key-245.json
+./sessions/whatsapp/pre-key-246.json
+./sessions/whatsapp/pre-key-247.json
+./sessions/whatsapp/pre-key-248.json
+./sessions/whatsapp/pre-key-249.json
+./sessions/whatsapp/pre-key-24.json
+./sessions/whatsapp/pre-key-250.json
+./sessions/whatsapp/pre-key-251.json
+./sessions/whatsapp/pre-key-252.json
+./sessions/whatsapp/pre-key-253.json
+./sessions/whatsapp/pre-key-254.json
+./sessions/whatsapp/pre-key-255.json
+./sessions/whatsapp/pre-key-256.json
+./sessions/whatsapp/pre-key-257.json
+./sessions/whatsapp/pre-key-258.json
+./sessions/whatsapp/pre-key-259.json
+./sessions/whatsapp/pre-key-25.json
+./sessions/whatsapp/pre-key-260.json
+./sessions/whatsapp/pre-key-261.json
+./sessions/whatsapp/pre-key-262.json
+./sessions/whatsapp/pre-key-263.json
+./sessions/whatsapp/pre-key-264.json
+./sessions/whatsapp/pre-key-265.json
+./sessions/whatsapp/pre-key-266.json
+./sessions/whatsapp/pre-key-267.json
+./sessions/whatsapp/pre-key-268.json
+./sessions/whatsapp/pre-key-269.json
+./sessions/whatsapp/pre-key-26.json
+./sessions/whatsapp/pre-key-270.json
+./sessions/whatsapp/pre-key-271.json
+./sessions/whatsapp/pre-key-272.json
+./sessions/whatsapp/pre-key-273.json
+./sessions/whatsapp/pre-key-274.json
+./sessions/whatsapp/pre-key-275.json
+./sessions/whatsapp/pre-key-276.json
+./sessions/whatsapp/pre-key-277.json
+./sessions/whatsapp/pre-key-278.json
+./sessions/whatsapp/pre-key-279.json
+./sessions/whatsapp/pre-key-27.json
+./sessions/whatsapp/pre-key-280.json
+./sessions/whatsapp/pre-key-281.json
+./sessions/whatsapp/pre-key-282.json
+./sessions/whatsapp/pre-key-283.json
+./sessions/whatsapp/pre-key-284.json
+./sessions/whatsapp/pre-key-285.json
+./sessions/whatsapp/pre-key-286.json
+./sessions/whatsapp/pre-key-287.json
+./sessions/whatsapp/pre-key-288.json
+./sessions/whatsapp/pre-key-289.json
+./sessions/whatsapp/pre-key-28.json
+./sessions/whatsapp/pre-key-290.json
+./sessions/whatsapp/pre-key-291.json
+./sessions/whatsapp/pre-key-292.json
+./sessions/whatsapp/pre-key-293.json
+./sessions/whatsapp/pre-key-294.json
+./sessions/whatsapp/pre-key-295.json
+./sessions/whatsapp/pre-key-296.json
+./sessions/whatsapp/pre-key-297.json
+./sessions/whatsapp/pre-key-298.json
+./sessions/whatsapp/pre-key-299.json
+./sessions/whatsapp/pre-key-29.json
+./sessions/whatsapp/pre-key-2.json
+./sessions/whatsapp/pre-key-300.json
+./sessions/whatsapp/pre-key-301.json
+./sessions/whatsapp/pre-key-302.json
+./sessions/whatsapp/pre-key-303.json
+./sessions/whatsapp/pre-key-304.json
+./sessions/whatsapp/pre-key-305.json
+./sessions/whatsapp/pre-key-306.json
+./sessions/whatsapp/pre-key-307.json
+./sessions/whatsapp/pre-key-308.json
+./sessions/whatsapp/pre-key-309.json
+./sessions/whatsapp/pre-key-30.json
+./sessions/whatsapp/pre-key-310.json
+./sessions/whatsapp/pre-key-311.json
+./sessions/whatsapp/pre-key-312.json
+./sessions/whatsapp/pre-key-313.json
+./sessions/whatsapp/pre-key-314.json
+./sessions/whatsapp/pre-key-315.json
+./sessions/whatsapp/pre-key-316.json
+./sessions/whatsapp/pre-key-317.json
+./sessions/whatsapp/pre-key-318.json
+./sessions/whatsapp/pre-key-319.json
+./sessions/whatsapp/pre-key-31.json
+./sessions/whatsapp/pre-key-320.json
+./sessions/whatsapp/pre-key-321.json
+./sessions/whatsapp/pre-key-322.json
+./sessions/whatsapp/pre-key-323.json
+./sessions/whatsapp/pre-key-324.json
+./sessions/whatsapp/pre-key-325.json
+./sessions/whatsapp/pre-key-326.json
+./sessions/whatsapp/pre-key-327.json
+./sessions/whatsapp/pre-key-328.json
+./sessions/whatsapp/pre-key-329.json
+./sessions/whatsapp/pre-key-32.json
+./sessions/whatsapp/pre-key-330.json
+./sessions/whatsapp/pre-key-331.json
+./sessions/whatsapp/pre-key-332.json
+./sessions/whatsapp/pre-key-333.json
+./sessions/whatsapp/pre-key-334.json
+./sessions/whatsapp/pre-key-335.json
+./sessions/whatsapp/pre-key-336.json
+./sessions/whatsapp/pre-key-337.json
+./sessions/whatsapp/pre-key-338.json
+./sessions/whatsapp/pre-key-339.json
+./sessions/whatsapp/pre-key-33.json
+./sessions/whatsapp/pre-key-340.json
+./sessions/whatsapp/pre-key-341.json
+./sessions/whatsapp/pre-key-342.json
+./sessions/whatsapp/pre-key-343.json
+./sessions/whatsapp/pre-key-344.json
+./sessions/whatsapp/pre-key-345.json
+./sessions/whatsapp/pre-key-346.json
+./sessions/whatsapp/pre-key-347.json
+./sessions/whatsapp/pre-key-348.json
+./sessions/whatsapp/pre-key-349.json
+./sessions/whatsapp/pre-key-34.json
+./sessions/whatsapp/pre-key-350.json
+./sessions/whatsapp/pre-key-351.json
+./sessions/whatsapp/pre-key-352.json
+./sessions/whatsapp/pre-key-353.json
+./sessions/whatsapp/pre-key-354.json
+./sessions/whatsapp/pre-key-355.json
+./sessions/whatsapp/pre-key-356.json
+./sessions/whatsapp/pre-key-357.json
+./sessions/whatsapp/pre-key-358.json
+./sessions/whatsapp/pre-key-359.json
+./sessions/whatsapp/pre-key-35.json
+./sessions/whatsapp/pre-key-360.json
+./sessions/whatsapp/pre-key-361.json
+./sessions/whatsapp/pre-key-362.json
+./sessions/whatsapp/pre-key-363.json
+./sessions/whatsapp/pre-key-364.json
+./sessions/whatsapp/pre-key-365.json
+./sessions/whatsapp/pre-key-366.json
+./sessions/whatsapp/pre-key-367.json
+./sessions/whatsapp/pre-key-368.json
+./sessions/whatsapp/pre-key-369.json
+./sessions/whatsapp/pre-key-36.json
+./sessions/whatsapp/pre-key-370.json
+./sessions/whatsapp/pre-key-371.json
+./sessions/whatsapp/pre-key-372.json
+./sessions/whatsapp/pre-key-373.json
+./sessions/whatsapp/pre-key-374.json
+./sessions/whatsapp/pre-key-375.json
+./sessions/whatsapp/pre-key-376.json
+./sessions/whatsapp/pre-key-377.json
+./sessions/whatsapp/pre-key-378.json
+./sessions/whatsapp/pre-key-379.json
+./sessions/whatsapp/pre-key-37.json
+./sessions/whatsapp/pre-key-380.json
+./sessions/whatsapp/pre-key-381.json
+./sessions/whatsapp/pre-key-382.json
+./sessions/whatsapp/pre-key-383.json
+./sessions/whatsapp/pre-key-384.json
+./sessions/whatsapp/pre-key-385.json
+./sessions/whatsapp/pre-key-386.json
+./sessions/whatsapp/pre-key-387.json
+./sessions/whatsapp/pre-key-388.json
+./sessions/whatsapp/pre-key-389.json
+./sessions/whatsapp/pre-key-38.json
+./sessions/whatsapp/pre-key-390.json
+./sessions/whatsapp/pre-key-391.json
+./sessions/whatsapp/pre-key-392.json
+./sessions/whatsapp/pre-key-393.json
+./sessions/whatsapp/pre-key-394.json
+./sessions/whatsapp/pre-key-395.json
+./sessions/whatsapp/pre-key-396.json
+./sessions/whatsapp/pre-key-397.json
+./sessions/whatsapp/pre-key-398.json
+./sessions/whatsapp/pre-key-399.json
+./sessions/whatsapp/pre-key-39.json
+./sessions/whatsapp/pre-key-3.json
+./sessions/whatsapp/pre-key-400.json
+./sessions/whatsapp/pre-key-401.json
+./sessions/whatsapp/pre-key-402.json
+./sessions/whatsapp/pre-key-403.json
+./sessions/whatsapp/pre-key-404.json
+./sessions/whatsapp/pre-key-405.json
+./sessions/whatsapp/pre-key-406.json
+./sessions/whatsapp/pre-key-407.json
+./sessions/whatsapp/pre-key-408.json
+./sessions/whatsapp/pre-key-409.json
+./sessions/whatsapp/pre-key-40.json
+./sessions/whatsapp/pre-key-410.json
+./sessions/whatsapp/pre-key-411.json
+./sessions/whatsapp/pre-key-412.json
+./sessions/whatsapp/pre-key-413.json
+./sessions/whatsapp/pre-key-414.json
+./sessions/whatsapp/pre-key-415.json
+./sessions/whatsapp/pre-key-416.json
+./sessions/whatsapp/pre-key-417.json
+./sessions/whatsapp/pre-key-418.json
+./sessions/whatsapp/pre-key-419.json
+./sessions/whatsapp/pre-key-41.json
+./sessions/whatsapp/pre-key-420.json
+./sessions/whatsapp/pre-key-421.json
+./sessions/whatsapp/pre-key-422.json
+./sessions/whatsapp/pre-key-423.json
+./sessions/whatsapp/pre-key-424.json
+./sessions/whatsapp/pre-key-425.json
+./sessions/whatsapp/pre-key-426.json
+./sessions/whatsapp/pre-key-427.json
+./sessions/whatsapp/pre-key-428.json
+./sessions/whatsapp/pre-key-429.json
+./sessions/whatsapp/pre-key-42.json
+./sessions/whatsapp/pre-key-430.json
+./sessions/whatsapp/pre-key-431.json
+./sessions/whatsapp/pre-key-432.json
+./sessions/whatsapp/pre-key-433.json
+./sessions/whatsapp/pre-key-434.json
+./sessions/whatsapp/pre-key-435.json
+./sessions/whatsapp/pre-key-436.json
+./sessions/whatsapp/pre-key-437.json
+./sessions/whatsapp/pre-key-438.json
+./sessions/whatsapp/pre-key-439.json
+./sessions/whatsapp/pre-key-43.json
+./sessions/whatsapp/pre-key-440.json
+./sessions/whatsapp/pre-key-441.json
+./sessions/whatsapp/pre-key-442.json
+./sessions/whatsapp/pre-key-443.json
+./sessions/whatsapp/pre-key-444.json
+./sessions/whatsapp/pre-key-445.json
+./sessions/whatsapp/pre-key-446.json
+./sessions/whatsapp/pre-key-447.json
+./sessions/whatsapp/pre-key-448.json
+./sessions/whatsapp/pre-key-449.json
+./sessions/whatsapp/pre-key-44.json
+./sessions/whatsapp/pre-key-450.json
+./sessions/whatsapp/pre-key-451.json
+./sessions/whatsapp/pre-key-452.json
+./sessions/whatsapp/pre-key-453.json
+./sessions/whatsapp/pre-key-454.json
+./sessions/whatsapp/pre-key-455.json
+./sessions/whatsapp/pre-key-456.json
+./sessions/whatsapp/pre-key-457.json
+./sessions/whatsapp/pre-key-458.json
+./sessions/whatsapp/pre-key-459.json
+./sessions/whatsapp/pre-key-45.json
+./sessions/whatsapp/pre-key-460.json
+./sessions/whatsapp/pre-key-461.json
+./sessions/whatsapp/pre-key-462.json
+./sessions/whatsapp/pre-key-463.json
+./sessions/whatsapp/pre-key-464.json
+./sessions/whatsapp/pre-key-465.json
+./sessions/whatsapp/pre-key-466.json
+./sessions/whatsapp/pre-key-467.json
+./sessions/whatsapp/pre-key-468.json
+./sessions/whatsapp/pre-key-469.json
+./sessions/whatsapp/pre-key-46.json
+./sessions/whatsapp/pre-key-470.json
+./sessions/whatsapp/pre-key-471.json
+./sessions/whatsapp/pre-key-472.json
+./sessions/whatsapp/pre-key-473.json
+./sessions/whatsapp/pre-key-474.json
+./sessions/whatsapp/pre-key-475.json
+./sessions/whatsapp/pre-key-476.json
+./sessions/whatsapp/pre-key-477.json
+./sessions/whatsapp/pre-key-478.json
+./sessions/whatsapp/pre-key-479.json
+./sessions/whatsapp/pre-key-47.json
+./sessions/whatsapp/pre-key-480.json
+./sessions/whatsapp/pre-key-481.json
+./sessions/whatsapp/pre-key-482.json
+./sessions/whatsapp/pre-key-483.json
+./sessions/whatsapp/pre-key-484.json
+./sessions/whatsapp/pre-key-485.json
+./sessions/whatsapp/pre-key-486.json
+./sessions/whatsapp/pre-key-487.json
+./sessions/whatsapp/pre-key-488.json
+./sessions/whatsapp/pre-key-489.json
+./sessions/whatsapp/pre-key-48.json
+./sessions/whatsapp/pre-key-490.json
+./sessions/whatsapp/pre-key-491.json
+./sessions/whatsapp/pre-key-492.json
+./sessions/whatsapp/pre-key-493.json
+./sessions/whatsapp/pre-key-494.json
+./sessions/whatsapp/pre-key-495.json
+./sessions/whatsapp/pre-key-496.json
+./sessions/whatsapp/pre-key-497.json
+./sessions/whatsapp/pre-key-498.json
+./sessions/whatsapp/pre-key-499.json
+./sessions/whatsapp/pre-key-49.json
+./sessions/whatsapp/pre-key-4.json
+./sessions/whatsapp/pre-key-500.json
+./sessions/whatsapp/pre-key-501.json
+./sessions/whatsapp/pre-key-502.json
+./sessions/whatsapp/pre-key-503.json
+./sessions/whatsapp/pre-key-504.json
+./sessions/whatsapp/pre-key-505.json
+./sessions/whatsapp/pre-key-506.json
+./sessions/whatsapp/pre-key-507.json
+./sessions/whatsapp/pre-key-508.json
+./sessions/whatsapp/pre-key-509.json
+./sessions/whatsapp/pre-key-50.json
+./sessions/whatsapp/pre-key-510.json
+./sessions/whatsapp/pre-key-511.json
+./sessions/whatsapp/pre-key-512.json
+./sessions/whatsapp/pre-key-513.json
+./sessions/whatsapp/pre-key-514.json
+./sessions/whatsapp/pre-key-515.json
+./sessions/whatsapp/pre-key-516.json
+./sessions/whatsapp/pre-key-517.json
+./sessions/whatsapp/pre-key-518.json
+./sessions/whatsapp/pre-key-519.json
+./sessions/whatsapp/pre-key-51.json
+./sessions/whatsapp/pre-key-520.json
+./sessions/whatsapp/pre-key-521.json
+./sessions/whatsapp/pre-key-522.json
+./sessions/whatsapp/pre-key-523.json
+./sessions/whatsapp/pre-key-524.json
+./sessions/whatsapp/pre-key-525.json
+./sessions/whatsapp/pre-key-526.json
+./sessions/whatsapp/pre-key-527.json
+./sessions/whatsapp/pre-key-528.json
+./sessions/whatsapp/pre-key-529.json
+./sessions/whatsapp/pre-key-52.json
+./sessions/whatsapp/pre-key-530.json
+./sessions/whatsapp/pre-key-531.json
+./sessions/whatsapp/pre-key-532.json
+./sessions/whatsapp/pre-key-533.json
+./sessions/whatsapp/pre-key-534.json
+./sessions/whatsapp/pre-key-535.json
+./sessions/whatsapp/pre-key-536.json
+./sessions/whatsapp/pre-key-537.json
+./sessions/whatsapp/pre-key-538.json
+./sessions/whatsapp/pre-key-539.json
+./sessions/whatsapp/pre-key-53.json
+./sessions/whatsapp/pre-key-540.json
+./sessions/whatsapp/pre-key-541.json
+./sessions/whatsapp/pre-key-542.json
+./sessions/whatsapp/pre-key-543.json
+./sessions/whatsapp/pre-key-544.json
+./sessions/whatsapp/pre-key-545.json
+./sessions/whatsapp/pre-key-546.json
+./sessions/whatsapp/pre-key-547.json
+./sessions/whatsapp/pre-key-548.json
+./sessions/whatsapp/pre-key-549.json
+./sessions/whatsapp/pre-key-54.json
+./sessions/whatsapp/pre-key-550.json
+./sessions/whatsapp/pre-key-551.json
+./sessions/whatsapp/pre-key-552.json
+./sessions/whatsapp/pre-key-553.json
+./sessions/whatsapp/pre-key-554.json
+./sessions/whatsapp/pre-key-555.json
+./sessions/whatsapp/pre-key-556.json
+./sessions/whatsapp/pre-key-557.json
+./sessions/whatsapp/pre-key-558.json
+./sessions/whatsapp/pre-key-559.json
+./sessions/whatsapp/pre-key-55.json
+./sessions/whatsapp/pre-key-560.json
+./sessions/whatsapp/pre-key-561.json
+./sessions/whatsapp/pre-key-562.json
+./sessions/whatsapp/pre-key-563.json
+./sessions/whatsapp/pre-key-564.json
+./sessions/whatsapp/pre-key-565.json
+./sessions/whatsapp/pre-key-566.json
+./sessions/whatsapp/pre-key-567.json
+./sessions/whatsapp/pre-key-568.json
+./sessions/whatsapp/pre-key-569.json
+./sessions/whatsapp/pre-key-56.json
+./sessions/whatsapp/pre-key-570.json
+./sessions/whatsapp/pre-key-571.json
+./sessions/whatsapp/pre-key-572.json
+./sessions/whatsapp/pre-key-573.json
+./sessions/whatsapp/pre-key-574.json
+./sessions/whatsapp/pre-key-575.json
+./sessions/whatsapp/pre-key-576.json
+./sessions/whatsapp/pre-key-577.json
+./sessions/whatsapp/pre-key-578.json
+./sessions/whatsapp/pre-key-579.json
+./sessions/whatsapp/pre-key-57.json
+./sessions/whatsapp/pre-key-580.json
+./sessions/whatsapp/pre-key-581.json
+./sessions/whatsapp/pre-key-582.json
+./sessions/whatsapp/pre-key-583.json
+./sessions/whatsapp/pre-key-584.json
+./sessions/whatsapp/pre-key-585.json
+./sessions/whatsapp/pre-key-586.json
+./sessions/whatsapp/pre-key-587.json
+./sessions/whatsapp/pre-key-588.json
+./sessions/whatsapp/pre-key-589.json
+./sessions/whatsapp/pre-key-58.json
+./sessions/whatsapp/pre-key-590.json
+./sessions/whatsapp/pre-key-591.json
+./sessions/whatsapp/pre-key-592.json
+./sessions/whatsapp/pre-key-593.json
+./sessions/whatsapp/pre-key-594.json
+./sessions/whatsapp/pre-key-595.json
+./sessions/whatsapp/pre-key-596.json
+./sessions/whatsapp/pre-key-597.json
+./sessions/whatsapp/pre-key-598.json
+./sessions/whatsapp/pre-key-599.json
+./sessions/whatsapp/pre-key-59.json
+./sessions/whatsapp/pre-key-5.json
+./sessions/whatsapp/pre-key-600.json
+./sessions/whatsapp/pre-key-601.json
+./sessions/whatsapp/pre-key-602.json
+./sessions/whatsapp/pre-key-603.json
+./sessions/whatsapp/pre-key-604.json
+./sessions/whatsapp/pre-key-605.json
+./sessions/whatsapp/pre-key-606.json
+./sessions/whatsapp/pre-key-607.json
+./sessions/whatsapp/pre-key-608.json
+./sessions/whatsapp/pre-key-609.json
+./sessions/whatsapp/pre-key-60.json
+./sessions/whatsapp/pre-key-610.json
+./sessions/whatsapp/pre-key-611.json
+./sessions/whatsapp/pre-key-612.json
+./sessions/whatsapp/pre-key-613.json
+./sessions/whatsapp/pre-key-614.json
+./sessions/whatsapp/pre-key-615.json
+./sessions/whatsapp/pre-key-616.json
+./sessions/whatsapp/pre-key-617.json
+./sessions/whatsapp/pre-key-618.json
+./sessions/whatsapp/pre-key-619.json
+./sessions/whatsapp/pre-key-61.json
+./sessions/whatsapp/pre-key-620.json
+./sessions/whatsapp/pre-key-621.json
+./sessions/whatsapp/pre-key-622.json
+./sessions/whatsapp/pre-key-623.json
+./sessions/whatsapp/pre-key-624.json
+./sessions/whatsapp/pre-key-625.json
+./sessions/whatsapp/pre-key-626.json
+./sessions/whatsapp/pre-key-627.json
+./sessions/whatsapp/pre-key-628.json
+./sessions/whatsapp/pre-key-629.json
+./sessions/whatsapp/pre-key-62.json
+./sessions/whatsapp/pre-key-630.json
+./sessions/whatsapp/pre-key-631.json
+./sessions/whatsapp/pre-key-632.json
+./sessions/whatsapp/pre-key-633.json
+./sessions/whatsapp/pre-key-634.json
+./sessions/whatsapp/pre-key-635.json
+./sessions/whatsapp/pre-key-636.json
+./sessions/whatsapp/pre-key-637.json
+./sessions/whatsapp/pre-key-638.json
+./sessions/whatsapp/pre-key-639.json
+./sessions/whatsapp/pre-key-63.json
+./sessions/whatsapp/pre-key-640.json
+./sessions/whatsapp/pre-key-641.json
+./sessions/whatsapp/pre-key-642.json
+./sessions/whatsapp/pre-key-643.json
+./sessions/whatsapp/pre-key-644.json
+./sessions/whatsapp/pre-key-645.json
+./sessions/whatsapp/pre-key-646.json
+./sessions/whatsapp/pre-key-647.json
+./sessions/whatsapp/pre-key-648.json
+./sessions/whatsapp/pre-key-649.json
+./sessions/whatsapp/pre-key-64.json
+./sessions/whatsapp/pre-key-650.json
+./sessions/whatsapp/pre-key-651.json
+./sessions/whatsapp/pre-key-652.json
+./sessions/whatsapp/pre-key-653.json
+./sessions/whatsapp/pre-key-654.json
+./sessions/whatsapp/pre-key-655.json
+./sessions/whatsapp/pre-key-656.json
+./sessions/whatsapp/pre-key-657.json
+./sessions/whatsapp/pre-key-658.json
+./sessions/whatsapp/pre-key-659.json
+./sessions/whatsapp/pre-key-65.json
+./sessions/whatsapp/pre-key-660.json
+./sessions/whatsapp/pre-key-661.json
+./sessions/whatsapp/pre-key-662.json
+./sessions/whatsapp/pre-key-663.json
+./sessions/whatsapp/pre-key-664.json
+./sessions/whatsapp/pre-key-665.json
+./sessions/whatsapp/pre-key-666.json
+./sessions/whatsapp/pre-key-667.json
+./sessions/whatsapp/pre-key-668.json
+./sessions/whatsapp/pre-key-669.json
+./sessions/whatsapp/pre-key-66.json
+./sessions/whatsapp/pre-key-670.json
+./sessions/whatsapp/pre-key-671.json
+./sessions/whatsapp/pre-key-672.json
+./sessions/whatsapp/pre-key-673.json
+./sessions/whatsapp/pre-key-674.json
+./sessions/whatsapp/pre-key-675.json
+./sessions/whatsapp/pre-key-676.json
+./sessions/whatsapp/pre-key-677.json
+./sessions/whatsapp/pre-key-678.json
+./sessions/whatsapp/pre-key-679.json
+./sessions/whatsapp/pre-key-67.json
+./sessions/whatsapp/pre-key-680.json
+./sessions/whatsapp/pre-key-681.json
+./sessions/whatsapp/pre-key-682.json
+./sessions/whatsapp/pre-key-683.json
+./sessions/whatsapp/pre-key-684.json
+./sessions/whatsapp/pre-key-685.json
+./sessions/whatsapp/pre-key-686.json
+./sessions/whatsapp/pre-key-687.json
+./sessions/whatsapp/pre-key-688.json
+./sessions/whatsapp/pre-key-689.json
+./sessions/whatsapp/pre-key-68.json
+./sessions/whatsapp/pre-key-690.json
+./sessions/whatsapp/pre-key-691.json
+./sessions/whatsapp/pre-key-692.json
+./sessions/whatsapp/pre-key-693.json
+./sessions/whatsapp/pre-key-694.json
+./sessions/whatsapp/pre-key-695.json
+./sessions/whatsapp/pre-key-696.json
+./sessions/whatsapp/pre-key-697.json
+./sessions/whatsapp/pre-key-698.json
+./sessions/whatsapp/pre-key-699.json
+./sessions/whatsapp/pre-key-69.json
+./sessions/whatsapp/pre-key-6.json
+./sessions/whatsapp/pre-key-700.json
+./sessions/whatsapp/pre-key-701.json
+./sessions/whatsapp/pre-key-702.json
+./sessions/whatsapp/pre-key-703.json
+./sessions/whatsapp/pre-key-704.json
+./sessions/whatsapp/pre-key-705.json
+./sessions/whatsapp/pre-key-706.json
+./sessions/whatsapp/pre-key-707.json
+./sessions/whatsapp/pre-key-708.json
+./sessions/whatsapp/pre-key-709.json
+./sessions/whatsapp/pre-key-70.json
+./sessions/whatsapp/pre-key-710.json
+./sessions/whatsapp/pre-key-711.json
+./sessions/whatsapp/pre-key-712.json
+./sessions/whatsapp/pre-key-713.json
+./sessions/whatsapp/pre-key-714.json
+./sessions/whatsapp/pre-key-715.json
+./sessions/whatsapp/pre-key-716.json
+./sessions/whatsapp/pre-key-717.json
+./sessions/whatsapp/pre-key-718.json
+./sessions/whatsapp/pre-key-719.json
+./sessions/whatsapp/pre-key-71.json
+./sessions/whatsapp/pre-key-720.json
+./sessions/whatsapp/pre-key-721.json
+./sessions/whatsapp/pre-key-722.json
+./sessions/whatsapp/pre-key-723.json
+./sessions/whatsapp/pre-key-724.json
+./sessions/whatsapp/pre-key-725.json
+./sessions/whatsapp/pre-key-726.json
+./sessions/whatsapp/pre-key-727.json
+./sessions/whatsapp/pre-key-728.json
+./sessions/whatsapp/pre-key-729.json
+./sessions/whatsapp/pre-key-72.json
+./sessions/whatsapp/pre-key-730.json
+./sessions/whatsapp/pre-key-731.json
+./sessions/whatsapp/pre-key-732.json
+./sessions/whatsapp/pre-key-733.json
+./sessions/whatsapp/pre-key-734.json
+./sessions/whatsapp/pre-key-735.json
+./sessions/whatsapp/pre-key-736.json
+./sessions/whatsapp/pre-key-737.json
+./sessions/whatsapp/pre-key-738.json
+./sessions/whatsapp/pre-key-739.json
+./sessions/whatsapp/pre-key-73.json
+./sessions/whatsapp/pre-key-740.json
+./sessions/whatsapp/pre-key-741.json
+./sessions/whatsapp/pre-key-742.json
+./sessions/whatsapp/pre-key-743.json
+./sessions/whatsapp/pre-key-744.json
+./sessions/whatsapp/pre-key-745.json
+./sessions/whatsapp/pre-key-746.json
+./sessions/whatsapp/pre-key-747.json
+./sessions/whatsapp/pre-key-748.json
+./sessions/whatsapp/pre-key-749.json
+./sessions/whatsapp/pre-key-74.json
+./sessions/whatsapp/pre-key-750.json
+./sessions/whatsapp/pre-key-751.json
+./sessions/whatsapp/pre-key-752.json
+./sessions/whatsapp/pre-key-753.json
+./sessions/whatsapp/pre-key-754.json
+./sessions/whatsapp/pre-key-755.json
+./sessions/whatsapp/pre-key-756.json
+./sessions/whatsapp/pre-key-757.json
+./sessions/whatsapp/pre-key-758.json
+./sessions/whatsapp/pre-key-759.json
+./sessions/whatsapp/pre-key-75.json
+./sessions/whatsapp/pre-key-760.json
+./sessions/whatsapp/pre-key-761.json
+./sessions/whatsapp/pre-key-762.json
+./sessions/whatsapp/pre-key-763.json
+./sessions/whatsapp/pre-key-764.json
+./sessions/whatsapp/pre-key-765.json
+./sessions/whatsapp/pre-key-766.json
+./sessions/whatsapp/pre-key-767.json
+./sessions/whatsapp/pre-key-768.json
+./sessions/whatsapp/pre-key-769.json
+./sessions/whatsapp/pre-key-76.json
+./sessions/whatsapp/pre-key-770.json
+./sessions/whatsapp/pre-key-771.json
+./sessions/whatsapp/pre-key-772.json
+./sessions/whatsapp/pre-key-773.json
+./sessions/whatsapp/pre-key-774.json
+./sessions/whatsapp/pre-key-775.json
+./sessions/whatsapp/pre-key-776.json
+./sessions/whatsapp/pre-key-777.json
+./sessions/whatsapp/pre-key-778.json
+./sessions/whatsapp/pre-key-779.json
+./sessions/whatsapp/pre-key-77.json
+./sessions/whatsapp/pre-key-780.json
+./sessions/whatsapp/pre-key-781.json
+./sessions/whatsapp/pre-key-782.json
+./sessions/whatsapp/pre-key-783.json
+./sessions/whatsapp/pre-key-784.json
+./sessions/whatsapp/pre-key-785.json
+./sessions/whatsapp/pre-key-786.json
+./sessions/whatsapp/pre-key-787.json
+./sessions/whatsapp/pre-key-788.json
+./sessions/whatsapp/pre-key-789.json
+./sessions/whatsapp/pre-key-78.json
+./sessions/whatsapp/pre-key-790.json
+./sessions/whatsapp/pre-key-791.json
+./sessions/whatsapp/pre-key-792.json
+./sessions/whatsapp/pre-key-793.json
+./sessions/whatsapp/pre-key-794.json
+./sessions/whatsapp/pre-key-795.json
+./sessions/whatsapp/pre-key-796.json
+./sessions/whatsapp/pre-key-798.json
+./sessions/whatsapp/pre-key-799.json
+./sessions/whatsapp/pre-key-79.json
+./sessions/whatsapp/pre-key-7.json
+./sessions/whatsapp/pre-key-800.json
+./sessions/whatsapp/pre-key-801.json
+./sessions/whatsapp/pre-key-802.json
+./sessions/whatsapp/pre-key-803.json
+./sessions/whatsapp/pre-key-804.json
+./sessions/whatsapp/pre-key-805.json
+./sessions/whatsapp/pre-key-807.json
+./sessions/whatsapp/pre-key-808.json
+./sessions/whatsapp/pre-key-809.json
+./sessions/whatsapp/pre-key-80.json
+./sessions/whatsapp/pre-key-810.json
+./sessions/whatsapp/pre-key-811.json
+./sessions/whatsapp/pre-key-812.json
+./sessions/whatsapp/pre-key-81.json
+./sessions/whatsapp/pre-key-82.json
+./sessions/whatsapp/pre-key-83.json
+./sessions/whatsapp/pre-key-84.json
+./sessions/whatsapp/pre-key-85.json
+./sessions/whatsapp/pre-key-86.json
+./sessions/whatsapp/pre-key-87.json
+./sessions/whatsapp/pre-key-88.json
+./sessions/whatsapp/pre-key-89.json
+./sessions/whatsapp/pre-key-8.json
+./sessions/whatsapp/pre-key-90.json
+./sessions/whatsapp/pre-key-91.json
+./sessions/whatsapp/pre-key-92.json
+./sessions/whatsapp/pre-key-93.json
+./sessions/whatsapp/pre-key-94.json
+./sessions/whatsapp/pre-key-95.json
+./sessions/whatsapp/pre-key-96.json
+./sessions/whatsapp/pre-key-97.json
+./sessions/whatsapp/pre-key-98.json
+./sessions/whatsapp/pre-key-99.json
+./sessions/whatsapp/pre-key-9.json
+./sessions/whatsapp/session-102903742234831_1.0.json
+./sessions/whatsapp/session-68199936721147_1.0.json
+./sessions/whatsapp/session-68199936721147_1.19.json
+./sessions/whatsapp/session-68199936721147_1.21.json
+./sessions/whatsapp/session-68199936721147_1.22.json
+./sessions/whatsapp/tctoken-102903742234831@lid.json
+./sessions/whatsapp/tctoken-68199936721147@lid.json
+./ssh-cli/package.json
+./ssh-cli/yukiko.ts
+./tsconfig.base.json
+./tsconfig.json
+./web/app/admin/login/page.tsx
+./web/app/admin/page.tsx
+./web/app/admin/verifications/page.tsx
+./web/app/api/admin/auth/route.ts
+./web/app/api/admin/backup/route.ts
+./web/app/api/admin/restart/route.ts
+./web/app/api/admin/stats/route.ts
+./web/app/api/admin/verifications/route.ts
+./web/app/api/monitor/metrics/route.ts
+./web/app/layout.tsx
+./web/app/monitor/page.tsx
+./web/app/page.tsx
+./web/middleware.ts
+./web/.next/app-path-routes-manifest.json
+./web/.next/build-manifest.json
+./web/.next/build/package.json
+./web/next.config.ts
+./web/.next/dev/build-manifest.json
+./web/.next/dev/build/package.json
+./web/.next/dev/cache/next-devtools-config.json
+./web/.next/dev/fallback-build-manifest.json
+./web/.next/dev/package.json
+./web/.next/dev/prerender-manifest.json
+./web/.next/dev/routes-manifest.json
+./web/.next/dev/server/app/admin/login/page/app-paths-manifest.json
+./web/.next/dev/server/app/admin/login/page/build-manifest.json
+./web/.next/dev/server/app/admin/login/page/next-font-manifest.json
+./web/.next/dev/server/app/admin/login/page/react-loadable-manifest.json
+./web/.next/dev/server/app/admin/login/page/server-reference-manifest.json
+./web/.next/dev/server/app/admin/page/app-paths-manifest.json
+./web/.next/dev/server/app/admin/page/build-manifest.json
+./web/.next/dev/server/app/admin/page/next-font-manifest.json
+./web/.next/dev/server/app/admin/page/react-loadable-manifest.json
+./web/.next/dev/server/app/admin/page/server-reference-manifest.json
+./web/.next/dev/server/app/admin/verifications/page/app-paths-manifest.json
+./web/.next/dev/server/app/admin/verifications/page/build-manifest.json
+./web/.next/dev/server/app/admin/verifications/page/next-font-manifest.json
+./web/.next/dev/server/app/admin/verifications/page/react-loadable-manifest.json
+./web/.next/dev/server/app/admin/verifications/page/server-reference-manifest.json
+./web/.next/dev/server/app/api/admin/auth/route/app-paths-manifest.json
+./web/.next/dev/server/app/api/admin/auth/route/build-manifest.json
+./web/.next/dev/server/app/api/admin/auth/route/server-reference-manifest.json
+./web/.next/dev/server/app/api/admin/backup/route/app-paths-manifest.json
+./web/.next/dev/server/app/api/admin/backup/route/build-manifest.json
+./web/.next/dev/server/app/api/admin/backup/route/server-reference-manifest.json
+./web/.next/dev/server/app/api/admin/restart/route/app-paths-manifest.json
+./web/.next/dev/server/app/api/admin/restart/route/build-manifest.json
+./web/.next/dev/server/app/api/admin/restart/route/server-reference-manifest.json
+./web/.next/dev/server/app/api/admin/stats/route/app-paths-manifest.json
+./web/.next/dev/server/app/api/admin/stats/route/build-manifest.json
+./web/.next/dev/server/app/api/admin/stats/route/server-reference-manifest.json
+./web/.next/dev/server/app/api/admin/verifications/route/app-paths-manifest.json
+./web/.next/dev/server/app/api/admin/verifications/route/build-manifest.json
+./web/.next/dev/server/app/api/admin/verifications/route/server-reference-manifest.json
+./web/.next/dev/server/app/api/monitor/metrics/route/app-paths-manifest.json
+./web/.next/dev/server/app/api/monitor/metrics/route/build-manifest.json
+./web/.next/dev/server/app/api/monitor/metrics/route/server-reference-manifest.json
+./web/.next/dev/server/app/monitor/page/app-paths-manifest.json
+./web/.next/dev/server/app/monitor/page/build-manifest.json
+./web/.next/dev/server/app/monitor/page/next-font-manifest.json
+./web/.next/dev/server/app/monitor/page/react-loadable-manifest.json
+./web/.next/dev/server/app/monitor/page/server-reference-manifest.json
+./web/.next/dev/server/app/page/app-paths-manifest.json
+./web/.next/dev/server/app/page/build-manifest.json
+./web/.next/dev/server/app/page/next-font-manifest.json
+./web/.next/dev/server/app/page/react-loadable-manifest.json
+./web/.next/dev/server/app/page/server-reference-manifest.json
+./web/.next/dev/server/app-paths-manifest.json
+./web/.next/dev/server/middleware-manifest.json
+./web/.next/dev/server/middleware/middleware-manifest.json
+./web/.next/dev/server/next-font-manifest.json
+./web/.next/dev/server/pages-manifest.json
+./web/.next/dev/server/server-reference-manifest.json
+./web/.next/dev/static/development/_clientMiddlewareManifest.json
+./web/.next/diagnostics/build-diagnostics.json
+./web/.next/diagnostics/framework.json
+./web/next-env.d.ts
+./web/.next/export-marker.json
+./web/.next/fallback-build-manifest.json
+./web/.next/images-manifest.json
+./web/.next/next-minimal-server.js.nft.json
+./web/.next/next-server.js.nft.json
+./web/.next/package.json
+./web/.next/prerender-manifest.json
+./web/.next/required-server-files.json
+./web/.next/routes-manifest.json
+./web/.next/server/app/admin/login/page/app-paths-manifest.json
+./web/.next/server/app/admin/login/page/build-manifest.json
+./web/.next/server/app/admin/login/page.js.nft.json
+./web/.next/server/app/admin/login/page/next-font-manifest.json
+./web/.next/server/app/admin/login/page/react-loadable-manifest.json
+./web/.next/server/app/admin/login/page/server-reference-manifest.json
+./web/.next/server/app/admin/page/app-paths-manifest.json
+./web/.next/server/app/admin/page/build-manifest.json
+./web/.next/server/app/admin/page.js.nft.json
+./web/.next/server/app/admin/page/next-font-manifest.json
+./web/.next/server/app/admin/page/react-loadable-manifest.json
+./web/.next/server/app/admin/page/server-reference-manifest.json
+./web/.next/server/app/admin/verifications/page/app-paths-manifest.json
+./web/.next/server/app/admin/verifications/page/build-manifest.json
+./web/.next/server/app/admin/verifications/page.js.nft.json
+./web/.next/server/app/admin/verifications/page/next-font-manifest.json
+./web/.next/server/app/admin/verifications/page/react-loadable-manifest.json
+./web/.next/server/app/admin/verifications/page/server-reference-manifest.json
+./web/.next/server/app/api/admin/auth/route/app-paths-manifest.json
+./web/.next/server/app/api/admin/auth/route/build-manifest.json
+./web/.next/server/app/api/admin/auth/route.js.nft.json
+./web/.next/server/app/api/admin/auth/route/server-reference-manifest.json
+./web/.next/server/app/api/admin/backup/route/app-paths-manifest.json
+./web/.next/server/app/api/admin/backup/route/build-manifest.json
+./web/.next/server/app/api/admin/backup/route.js.nft.json
+./web/.next/server/app/api/admin/backup/route/server-reference-manifest.json
+./web/.next/server/app/api/admin/restart/route/app-paths-manifest.json
+./web/.next/server/app/api/admin/restart/route/build-manifest.json
+./web/.next/server/app/api/admin/restart/route.js.nft.json
+./web/.next/server/app/api/admin/restart/route/server-reference-manifest.json
+./web/.next/server/app/api/admin/stats/route/app-paths-manifest.json
+./web/.next/server/app/api/admin/stats/route/build-manifest.json
+./web/.next/server/app/api/admin/stats/route.js.nft.json
+./web/.next/server/app/api/admin/stats/route/server-reference-manifest.json
+./web/.next/server/app/api/admin/verifications/route/app-paths-manifest.json
+./web/.next/server/app/api/admin/verifications/route/build-manifest.json
+./web/.next/server/app/api/admin/verifications/route.js.nft.json
+./web/.next/server/app/api/admin/verifications/route/server-reference-manifest.json
+./web/.next/server/app/api/monitor/metrics/route/app-paths-manifest.json
+./web/.next/server/app/api/monitor/metrics/route/build-manifest.json
+./web/.next/server/app/api/monitor/metrics/route.js.nft.json
+./web/.next/server/app/api/monitor/metrics/route/server-reference-manifest.json
+./web/.next/server/app/_global-error/page/app-paths-manifest.json
+./web/.next/server/app/_global-error/page/build-manifest.json
+./web/.next/server/app/_global-error/page.js.nft.json
+./web/.next/server/app/_global-error/page/next-font-manifest.json
+./web/.next/server/app/_global-error/page/react-loadable-manifest.json
+./web/.next/server/app/_global-error/page/server-reference-manifest.json
+./web/.next/server/app/monitor/page/app-paths-manifest.json
+./web/.next/server/app/monitor/page/build-manifest.json
+./web/.next/server/app/monitor/page.js.nft.json
+./web/.next/server/app/monitor/page/next-font-manifest.json
+./web/.next/server/app/monitor/page/react-loadable-manifest.json
+./web/.next/server/app/monitor/page/server-reference-manifest.json
+./web/.next/server/app/_not-found/page/app-paths-manifest.json
+./web/.next/server/app/_not-found/page/build-manifest.json
+./web/.next/server/app/_not-found/page.js.nft.json
+./web/.next/server/app/_not-found/page/next-font-manifest.json
+./web/.next/server/app/_not-found/page/react-loadable-manifest.json
+./web/.next/server/app/_not-found/page/server-reference-manifest.json
+./web/.next/server/app/page/app-paths-manifest.json
+./web/.next/server/app/page/build-manifest.json
+./web/.next/server/app/page.js.nft.json
+./web/.next/server/app/page/next-font-manifest.json
+./web/.next/server/app/page/react-loadable-manifest.json
+./web/.next/server/app/page/server-reference-manifest.json
+./web/.next/server/app-paths-manifest.json
+./web/.next/server/functions-config-manifest.json
+./web/.next/server/middleware-manifest.json
+./web/.next/server/middleware/middleware-manifest.json
+./web/.next/server/next-font-manifest.json
+./web/.next/server/pages-manifest.json
+./web/.next/server/server-reference-manifest.json
+./web/.next/static/mKNeF35EA5s6TmOhXehJO/_clientMiddlewareManifest.json
+./web/package.json
+./web/tsconfig.json
+./web/vercel.json
+=== PLATFORMS ===
+platforms/discord/src/index.ts
+platforms/telegram/src/index.ts
+platforms/whatsapp/src/index.ts
+import {
+  Client,
+  GatewayIntentBits,
+  REST,
+  Routes,
+  SlashCommandBuilder,
+  ChatInputCommandInteraction,
+  EmbedBuilder,
+  ChannelType,
+  DMChannel,
+} from 'discord.js';
+import { registry } from '@yukiko/core/src/registry.ts';
+import { roleplayCommands } from '@yukiko/roleplay';
+import { economyCommands } from '@yukiko/economy';
+import { adultCommands } from '@yukiko/adult';
+import { aiCommands } from '@yukiko/ai';
+import { moderationCommands } from '@yukiko/moderation';
+import { linkCommands, handleNewUser, buildOnboardingMessage } from '@yukiko/link';
+import { getOrCreateUser, isOnCooldown, remainingCooldown, addXp, logCommand } from '@yukiko/core/src/utils.ts';
+import type { CommandContext } from '@yukiko/core/src/types.ts';
+import 'dotenv/config';
+
+// ── Register all commands ────────────────────────────────────
+[
+  ...roleplayCommands,
+  ...economyCommands,
+  ...adultCommands,
+  ...aiCommands,
+  ...moderationCommands,
+  ...linkCommands,           // ← nuevo
+].forEach(cmd => registry.register(cmd));
+
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.DirectMessages,
+  ],
+});
+
+// ── Build context from Discord interaction ───────────────────
+function buildContext(interaction: ChatInputCommandInteraction, args: string[]): CommandContext {
+  const isAdmin = interaction.memberPermissions?.has('Administrator') ?? false;
+  const isGroup = (interaction.channel?.type as number) !== (ChannelType.DM as number);
+
+  return {
+    platform: 'discord',
+    userId: interaction.user.id,
+    chatId: interaction.channelId,
+    groupId: isGroup ? interaction.guildId ?? undefined : undefined,
+    username: interaction.user.username,
+    displayName: interaction.member
+      ? (interaction.member as { displayName?: string }).displayName ?? interaction.user.username
+      : interaction.user.username,
+    isAdmin,
+    isGroup,
+    args,
+    rawText: args.join(' '),
+    reply: async (text: string) => {
+      if (interaction.replied || interaction.deferred) {
+        await interaction.followUp({ content: text });
+      } else {
+        await interaction.reply({ content: text });
+      }
+    },
+    replyWithImage: async (url: string, caption?: string) => {
+      const embed = new EmbedBuilder().setImage(url);
+      if (caption) embed.setDescription(caption);
+      if (interaction.replied || interaction.deferred) {
+        await interaction.followUp({ embeds: [embed] });
+      } else {
+        await interaction.reply({ embeds: [embed] });
+      }
+    },
+    replyWithGif: async (url: string, caption?: string) => {
+      const embed = new EmbedBuilder().setImage(url);
+      if (caption) embed.setDescription(caption);
+      if (interaction.replied || interaction.deferred) {
+        await interaction.followUp({ embeds: [embed] });
+      } else {
+        await interaction.reply({ embeds: [embed] });
+      }
+    },
+    // DM directo al usuario (para onboarding)
+    replyDM: async (text: string) => {
+      await interaction.user.send(text);
+    },
+  };
+}
+
+// ── Register slash commands with Discord API ─────────────────
+async function registerSlashCommands() {
+  const allCommands = registry.getForPlatform('discord');
+  const commands = allCommands.map(cmd => {
+    const builder = new SlashCommandBuilder()
+      .setName(cmd.name)
+      .setDescription(cmd.description);
+
+    // Comandos que aceptan argumento de texto libre
+    const withArgs = [
+      'ask', 'imagine', 'rp', 'translate',
+      'hentai', 'redgifs',
+      'warn', 'ban', 'unban', 'clear', 'prefix',
+      'link',      // ← acepta el código
+      'unlink',    // ← acepta "confirmar"
+    ];
+    if (withArgs.includes(cmd.name)) {
+      builder.addStringOption(opt =>
+        opt.setName('args').setDescription('Argumentos').setRequired(false)
+      );
+    }
+
+    return builder.toJSON();
+  });
+
+  const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN!);
+
+  // Guild commands (instantáneos, para dev) si hay GUILD_ID
+  if (process.env.DISCORD_GUILD_ID) {
+    await rest.put(
+      Routes.applicationGuildCommands(process.env.DISCORD_CLIENT_ID!, process.env.DISCORD_GUILD_ID),
+      { body: commands }
+    );
+    console.log(`✅ Discord slash commands registered (guild: ${process.env.DISCORD_GUILD_ID})`);
+  } else {
+    await rest.put(
+      Routes.applicationCommands(process.env.DISCORD_CLIENT_ID!),
+      { body: commands }
+    );
+    console.log('✅ Discord slash commands registered (global)');
+  }
+}
+
+// ── Handle interactions ──────────────────────────────────────
+client.on('interactionCreate', async interaction => {
+  if (!interaction.isChatInputCommand()) return;
+
+  const command = registry.get(interaction.commandName);
+  if (!command) return;
+
+  const argsStr = interaction.options.getString('args') ?? '';
+  const args = argsStr.split(' ').filter(Boolean);
+
+  // ── Onboarding: detectar usuario nuevo ──────────────────
+  const { isNew } = await handleNewUser(
+    interaction.user.id,
+    'discord',
+    interaction.member
+      ? (interaction.member as { displayName?: string }).displayName ?? interaction.user.username
+      : interaction.user.username,
+    interaction.user.username,
+  );
+
+  if (isNew && interaction.commandName !== 'link' && interaction.commandName !== 'linkcode') {
+    // Intentar enviar DM con el mensaje de onboarding
+    try {
+      await interaction.user.send(
+        buildOnboardingMessage('discord', interaction.user.username)
+      );
+    } catch {
+      // El usuario tiene DMs cerrados — responder en el canal
+      await interaction.reply({
+        content: buildOnboardingMessage('discord', interaction.user.username),
+        ephemeral: true,
+      });
+      return;
+    }
+    // Continuar igualmente con el comando que activó el onboarding
+  }
+
+  // Cooldown check
+  if (command.cooldown && isOnCooldown(interaction.user.id, command.name, command.cooldown)) {
+    const remaining = remainingCooldown(interaction.user.id, command.name, command.cooldown);
+    await interaction.reply({ content: `⏰ Espera **${remaining}s** antes de usar este comando.`, ephemeral: true });
+    return;
+  }
+
+  const ctx = buildContext(interaction, args);
+
+  try {
+    await interaction.deferReply();
+    await command.execute(ctx);
+    await addXp(interaction.user.id, 5);
+    await logCommand({ platform: 'discord', userId: interaction.user.id, command: command.name, args, success: true });
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : 'Error desconocido';
+    await logCommand({ platform: 'discord', userId: interaction.user.id, command: command.name, args, success: false, error: msg });
+    if (!interaction.replied) {
+      await interaction.editReply('❌ Ocurrió un error al ejecutar el comando.');
+    }
+  }
+});
+
+// ── Ready ────────────────────────────────────────────────────
+client.once('ready', async () => {
+  console.log(`🌨️ Yukiko Discord ready as ${client.user?.tag}`);
+  client.user?.setActivity('con anime 🌸', { type: 0 });
+  await registerSlashCommands();
+});
+
+client.login(process.env.DISCORD_TOKEN);
+===
+import { Bot, Context } from 'grammy';
+import { registry } from '@yukiko/core/src/registry.ts';
+import { roleplayCommands } from '@yukiko/roleplay';
+import { economyCommands } from '@yukiko/economy';
+import { adultCommands } from '@yukiko/adult';
+import { aiCommands } from '@yukiko/ai';
+import { moderationCommands } from '@yukiko/moderation';
+import { linkCommands, handleNewUser, buildOnboardingMessage } from '@yukiko/link';
+import { isOnCooldown, remainingCooldown, addXp, logCommand } from '@yukiko/core/src/utils.ts';
+import type { CommandContext } from '@yukiko/core/src/types.ts';
+import 'dotenv/config';
+
+// ── Register all commands ────────────────────────────────────
+[
+  ...roleplayCommands,
+  ...economyCommands,
+  ...adultCommands,
+  ...aiCommands,
+  ...moderationCommands,
+  ...linkCommands,           // ← nuevo
+].forEach(cmd => registry.register(cmd));
+
+const bot = new Bot(process.env.TELEGRAM_BOT_TOKEN!);
+
+// ── Build context from Telegram update ──────────────────────
+function buildContext(ctx: Context, commandName: string, args: string[]): CommandContext {
+  const userId = String(ctx.from?.id ?? '');
+  const chatId = String(ctx.chat?.id ?? '');
+  const isGroup = ctx.chat?.type === 'group' || ctx.chat?.type === 'supergroup';
+  const isAdmin = false;
+  const displayName = [ctx.from?.first_name, ctx.from?.last_name].filter(Boolean).join(' ') || 'Usuario';
+
+  return {
+    platform: 'telegram',
+    userId,
+    chatId,
+    groupId: isGroup ? chatId : undefined,
+    username: ctx.from?.username,
+    displayName,
+    isAdmin,
+    isGroup,
+    args,
+    rawText: args.join(' '),
+    reply: async (text: string) => {
+      await ctx.reply(text, { parse_mode: 'Markdown' });
+    },
+    replyWithImage: async (url: string, caption?: string) => {
+      await ctx.replyWithPhoto(url, { caption, parse_mode: 'Markdown' });
+    },
+    replyWithGif: async (url: string, caption?: string) => {
+      await ctx.replyWithAnimation(url, { caption, parse_mode: 'Markdown' });
+    },
+    // En Telegram el DM se envía al chat del usuario (si está en privado ya es DM)
+    replyDM: async (text: string) => {
+      const userId2 = ctx.from?.id;
+      if (userId2) {
+        await bot.api.sendMessage(userId2, text, { parse_mode: 'Markdown' });
+      }
+    },
+  };
+}
+
+// ── /start — onboarding ───────────────────────────────────────
+bot.command('start', async (ctx) => {
+  const userId = String(ctx.from?.id ?? '');
+  const displayName = [ctx.from?.first_name, ctx.from?.last_name].filter(Boolean).join(' ') || 'Usuario';
+  const username = ctx.from?.username;
+
+  const { isNew } = await handleNewUser(userId, 'telegram', displayName, username);
+
+  if (isNew) {
+    // Usuario nuevo → mostrar onboarding con opción de vincular
+    await ctx.reply(buildOnboardingMessage('telegram', displayName), { parse_mode: 'Markdown' });
+  } else {
+    // Usuario conocido → bienvenida breve
+    await ctx.reply(
+      `🌨️ **¡Hola de nuevo, ${displayName}!** 🐱\n\n` +
+      `Usa /help para ver los comandos disponibles.\n` +
+      `Usa /accounts para ver tus plataformas vinculadas.`,
+      { parse_mode: 'Markdown' }
+    );
+  }
+});
+
+// ── Command handler factory ───────────────────────────────────
+function setupCommand(commandName: string) {
+  bot.command(commandName, async (ctx) => {
+    const command = registry.get(commandName);
+    if (!command) return;
+
+    const text = ctx.message?.text ?? '';
+    const args = text.split(' ').slice(1).filter(Boolean);
+    const userId = String(ctx.from?.id ?? '');
+    const displayName = [ctx.from?.first_name, ctx.from?.last_name].filter(Boolean).join(' ') || 'Usuario';
+
+    // Onboarding silencioso si no es /link o /linkcode
+    if (commandName !== 'link' && commandName !== 'linkcode' && commandName !== 'start') {
+      const { isNew } = await handleNewUser(userId, 'telegram', displayName, ctx.from?.username);
+      if (isNew) {
+        // Enviar onboarding por DM (o en el mismo chat si es privado)
+        const onboardingMsg = buildOnboardingMessage('telegram', displayName);
+        if (ctx.chat?.type === 'private') {
+          await ctx.reply(onboardingMsg, { parse_mode: 'Markdown' });
+        } else {
+          try {
+            await bot.api.sendMessage(Number(userId), onboardingMsg, { parse_mode: 'Markdown' });
+          } catch {
+            // DMs cerrados, skip silencioso
+          }
+        }
+        // Continuar con el comando
+      }
+    }
+
+    // Cooldown
+    if (command.cooldown && isOnCooldown(userId, commandName, command.cooldown)) {
+      const remaining = remainingCooldown(userId, commandName, command.cooldown);
+      await ctx.reply(`⏰ Espera *${remaining}s* antes de usar este comando.`, { parse_mode: 'Markdown' });
+      return;
+    }
+
+    const yukikoCtx = buildContext(ctx, commandName, args);
+
+    try {
+      await command.execute(yukikoCtx);
+      await addXp(userId, 5);
+      await logCommand({ platform: 'telegram', userId, command: commandName, args, success: true });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Error';
+      await logCommand({ platform: 'telegram', userId, command: commandName, args, success: false, error: msg });
+      await ctx.reply('❌ Error al ejecutar el comando.');
+    }
+  });
+}
+
+// ── Register all commands ────────────────────────────────────
+registry.getForPlatform('telegram').forEach(cmd => {
+  setupCommand(cmd.name);
+  cmd.aliases?.forEach(alias => setupCommand(alias));
+});
+
+// ── /help ─────────────────────────────────────────────────────
+bot.command('help', async (ctx) => {
+  const categories = ['roleplay', 'economy', 'ai', 'moderation', 'adult', 'utility'];
+  const categoryEmojis: Record<string, string> = {
+    roleplay: '🎭', economy: '💰', ai: '🤖',
+    moderation: '🔨', adult: '🔞', utility: '🔧',
+  };
+
+  const lines = categories.map(cat => {
+    const cmds = registry.getByCategory(cat).map(c => `/${c.name}`).join(' ');
+    if (!cmds) return null;
+    return `${categoryEmojis[cat] ?? '▸'} *${cat.toUpperCase()}*\n${cmds}`;
+  }).filter(Boolean);
+
+  await ctx.reply(lines.join('\n\n'), { parse_mode: 'Markdown' });
+});
+
+// ── Start bot ─────────────────────────────────────────────────
+bot.start();
+console.log('🌨️ Yukiko Telegram bot started');
+===
+import makeWASocket, {
+  useMultiFileAuthState,
+  DisconnectReason,
+  fetchLatestBaileysVersion,
+  makeCacheableSignalKeyStore,
+} from '@whiskeysockets/baileys';
+import { Boom } from '@hapi/boom';
+import { registry } from '@yukiko/core/src/registry.ts';
+import { roleplayCommands } from '@yukiko/roleplay';
+import { economyCommands } from '@yukiko/economy';
+import { adultCommands } from '@yukiko/adult';
+import { aiCommands } from '@yukiko/ai';
+import { moderationCommands } from '@yukiko/moderation';
+import { linkCommands, handleNewUser } from '@yukiko/link';
+import { isOnCooldown, remainingCooldown, addXp, logCommand } from '@yukiko/core/src/utils.ts';
+import type { CommandContext } from '@yukiko/core/src/types.ts';
+import { mkdir } from 'fs/promises';
+import 'dotenv/config';
+
+[
+  ...roleplayCommands,
+  ...economyCommands,
+  ...adultCommands,
+  ...aiCommands,
+  ...moderationCommands,
+  ...linkCommands,
+].forEach(cmd => registry.register(cmd));
+
+const SESSION_PATH = process.env.WHATSAPP_SESSION_PATH ?? './sessions/whatsapp';
+const PREFIX = '/';
+const onboardedThisSession = new Set<string>();
+
+async function startWhatsApp() {
+  await mkdir(SESSION_PATH, { recursive: true });
+
+  const { state, saveCreds } = await useMultiFileAuthState(SESSION_PATH);
+  const { version } = await fetchLatestBaileysVersion();
+
+  const sock = makeWASocket({
+    version,
+    auth: {
+      creds: state.creds,
+      keys: makeCacheableSignalKeyStore(state.keys, console as never),
+    },
+    generateHighQualityLinkPreview: true,
+  });
+
+  sock.ev.on('creds.update', saveCreds);
+
+  // ── Pairing code ─────────────────────────────────────────
+  if (!state.creds.registered) {
+    const phone = process.env.WHATSAPP_PHONE ?? '';
+    if (!phone) { console.error('Pon WHATSAPP_PHONE en el .env'); process.exit(1); }
+
+    let pairingRequested = false;
+
+    await new Promise<void>(resolve => {
+      sock.ev.on('connection.update', async (update) => {
+        if ((update.qr || update.connection === 'connecting') && !pairingRequested) {
+          pairingRequested = true;
+          try {
+            await new Promise(r => setTimeout(r, 3000)); // esperar 3s a que el socket esté listo
+            const pairingCode = await sock.requestPairingCode(phone);
+            console.log('\n########################################');
+            console.log('#      CODIGO DE VINCULACION WA        #');
+            console.log('#                                      #');
+            console.log(`#          ${pairingCode}              #`);
+            console.log('#                                      #');
+            console.log('########################################\n');
+            console.log('Tienes 60 segundos para introducirlo en WhatsApp.');
+          } catch(e) {
+            console.error('Error al pedir pairing code:', e);
+            pairingRequested = false;
+          }
+        }
+        if (update.connection === 'open') {
+          console.log('🌨️ Yukiko WhatsApp connected!');
+          resolve();
+        }
+      });
+    });
+  }
+
+  // ── Connection handling ──────────────────────────────────
+  sock.ev.on('connection.update', ({ connection, lastDisconnect }) => {
+    if (connection === 'close') {
+      const shouldReconnect =
+        (lastDisconnect?.error as Boom)?.output?.statusCode !== DisconnectReason.loggedOut;
+      console.log('WhatsApp disconnected. Reconnecting:', shouldReconnect);
+      if (shouldReconnect) startWhatsApp();
+    } else if (connection === 'open') {
+      console.log('🌨️ Yukiko WhatsApp connected!');
+    }
+  });
+
+  async function sendDM(phone: string, text: string) {
+    const jid = phone.includes('@') ? phone : `${phone}@s.whatsapp.net`;
+    await sock.sendMessage(jid, { text });
+  }
+
+  const startupTime = Date.now();
+  const STARTUP_GRACE_MS = 15_000;
+
+  sock.ev.on('messages.upsert', async ({ messages, type }) => {
+    if (type !== 'notify') return;
+
+    for (const msg of messages) {
+      if (msg.key.fromMe || !msg.message) continue;
+      const msgTimestamp = (msg.messageTimestamp as number) * 1000;
+      if (msgTimestamp < startupTime - STARTUP_GRACE_MS) continue;
+
+      const body =
+        msg.message.conversation ??
+        msg.message.extendedTextMessage?.text ??
+        '';
+
+      const jid = msg.key.remoteJid ?? '';
+      const isGroup = jid.endsWith('@g.us');
+      const senderId = msg.key.participant ?? msg.key.remoteJid ?? '';
+      const userId = senderId.replace('@s.whatsapp.net', '');
+      const displayName = msg.pushName ?? userId;
+
+      // Registrar usuario silenciosamente sin enviar onboarding
+      if (!onboardedThisSession.has(userId)) {
+        onboardedThisSession.add(userId);
+        await handleNewUser(userId, 'whatsapp', displayName);
+      }
+
+      if (!body.startsWith(PREFIX)) continue;
+
+      const [commandStr, ...args] = body.slice(PREFIX.length).trim().split(/\s+/);
+      const commandName = commandStr.toLowerCase();
+      const command = registry.get(commandName);
+      if (!command) continue;
+
+      if (command.cooldown && isOnCooldown(userId, commandName, command.cooldown)) {
+        const remaining = remainingCooldown(userId, commandName, command.cooldown);
+        await sock.sendMessage(jid, {
+          text: `⏰ Espera *${remaining}s* antes de usar este comando.`,
+        }, { quoted: msg });
+        continue;
+      }
+
+      const ctx: CommandContext = {
+        platform: 'whatsapp',
+        userId,
+        chatId: jid,
+        groupId: isGroup ? jid : undefined,
+        displayName,
+        isAdmin: false,
+        isGroup,
+        args,
+        rawText: args.join(' '),
+        reply: async (text: string) => {
+          await sock.sendMessage(jid, { text }, { quoted: msg });
+        },
+        replyWithImage: async (url: string, caption?: string) => {
+          const res = await fetch(url);
+          const buffer = Buffer.from(await res.arrayBuffer());
+          await sock.sendMessage(jid, {
+            image: buffer,
+            caption: caption ?? '',
+            mimetype: 'image/jpeg',
+          }, { quoted: msg });
+        },
+        replyWithGif: async (url: string, caption?: string) => {
+          const res = await fetch(url);
+          const buffer = Buffer.from(await res.arrayBuffer());
+          await sock.sendMessage(jid, {
+            video: buffer,
+            caption: caption ?? '',
+            gifPlayback: true,
+          }, { quoted: msg });
+        },
+        replyDM: async (text: string) => {
+          await sendDM(userId, text);
+        },
+      };
+
+      try {
+        await command.execute(ctx);
+        await addXp(userId, 5);
+        await logCommand({ platform: 'whatsapp', userId, command: commandName, args, success: true });
+      } catch (err) {
+        const errMsg = err instanceof Error ? err.message : 'Error';
+        await logCommand({ platform: 'whatsapp', userId, command: commandName, args, success: false, error: errMsg });
+        await sock.sendMessage(jid, { text: '❌ Error al ejecutar el comando.' }, { quoted: msg });
+      }
+    }
+  });
+}
+
+startWhatsApp().catch(console.error);
+=== MODULES ===
+modules/adult/index.ts
+modules/ai/index.ts
+modules/economy/index.ts
+modules/link/index.ts
+modules/moderation/index.ts
+modules/roleplay/index.ts
+--- modules/adult/index.ts ---
+import type { Command, CommandContext } from '../../core/src/types.js';
+import { db, users, groups, adultRequests } from '../../db/index.js';
+import { eq, and } from 'drizzle-orm';
+
+// ── RedGifs token cache ───────────────────────────────────────
+let redgifsToken: string | null = null;
+let tokenExpiry = 0;
+
+async function getRedGifsToken(): Promise<string> {
+  if (redgifsToken && Date.now() < tokenExpiry) return redgifsToken;
+  const res = await fetch('https://api.redgifs.com/v2/auth/temporary');
+  const data = await res.json() as { token: string };
+  redgifsToken = data.token;
+  tokenExpiry = Date.now() + 55 * 60 * 1000;
+  return redgifsToken;
+}
+
+async function fetchRedGif(tags: string): Promise<string | null> {
+  try {
+    const token = await getRedGifsToken();
+    const res = await fetch(
+      `https://api.redgifs.com/v2/gifs/search?search_text=${encodeURIComponent(tags)}&count=20&order=trending`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    const data = await res.json() as { gifs: Array<{ urls: { hd: string; sd: string } }> };
+    if (!data.gifs?.length) return null;
+    const random = data.gifs[Math.floor(Math.random() * data.gifs.length)];
+    return random.urls.hd ?? random.urls.sd;
+  } catch { return null; }
+}
+
+async function fetchDanbooru(tags: string): Promise<string | null> {
+  try {
+    const login = process.env.DANBOORU_LOGIN;
+    const apiKey = process.env.DANBOORU_API_KEY;
+    const auth = login && apiKey ? `&login=${login}&api_key=${apiKey}` : '';
+    const res = await fetch(
+      `https://danbooru.donmai.us/posts.json?tags=${encodeURIComponent(tags + ' rating:explicit')}&limit=30&random=true${auth}`
+    );
+    const posts = await res.json() as Array<{ file_url?: string; large_file_url?: string }>;
+    const valid = posts.filter(p => p.file_url || p.large_file_url);
+    if (!valid.length) return null;
+    const random = valid[Math.floor(Math.random() * valid.length)];
+    return random.large_file_url ?? random.file_url ?? null;
+  } catch { return null; }
+}
+
+// ── Access guard: request flow ────────────────────────────────
+async function checkAdultAccess(ctx: CommandContext): Promise<boolean> {
+  if (!ctx.isGroup || !ctx.groupId) {
+    await ctx.reply('🔞 El contenido +18 solo está disponible en grupos.');
+    return false;
+  }
+
+  const group = await db
+    .select()
+    .from(groups)
+    .where(and(eq(groups.platformId, ctx.groupId), eq(groups.platform, ctx.platform)))
+    .limit(1);
+
+  if (!group[0]?.adultEnabled) {
+    await ctx.reply('🔞 El contenido +18 no está habilitado en este grupo.\nUn admin debe usar /adult on');
+    return false;
+  }
+
+  const user = await db
+    .select()
+    .from(users)
+    .where(and(eq(users.platformId, ctx.userId), eq(users.platform, ctx.platform)))
+    .limit(1);
+
+  if (!user[0]) {
+    await ctx.reply('❌ Primero usa cualquier otro comando para registrarte.');
+    return false;
+  }
+
+  if (user[0].isVerifiedAdult) return true;
+
+  // Not verified — check request state
+  const [pending] = await db
+    .select()
+    .from(adultRequests)
+    .where(and(eq(adultRequests.platformUserId, ctx.userId), eq(adultRequests.status, 'pending')))
+    .limit(1);
+
+  if (pending) {
+    await ctx.reply('⏳ Tu solicitud +18 está **pendiente de aprobación**. ¡Ten paciencia! 🌸');
+    return false;
+  }
+
+  const [rejected] = await db
+    .select()
+    .from(adultRequests)
+    .where(and(eq(adultRequests.platformUserId, ctx.userId), eq(adultRequests.status, 'rejected')))
+    .orderBy(adultRequests.requestedAt)
+    .limit(1);
+
+  if (rejected) {
+    await ctx.reply(
+      `❌ Tu solicitud +18 fue rechazada${rejected.rejectionReason ? `: ${rejected.rejectionReason}` : ''}.\n` +
+      'Usa /verify18 para volver a solicitar acceso.'
+    );
+    return false;
+  }
+
+  await ctx.reply(
+    '🔞 Necesitas verificación de edad.\n\n' +
+    'Usa **/verify18** para enviar una solicitud al administrador.\n' +
+    'Una vez aprobada tendrás acceso completo.'
+  );
+  return false;
+}
+
+export const adultCommands: Command[] = [
+  // ── Solicitar verificación ────────────────────────────────
+  {
+    name: 'verify18',
+    aliases: ['solicitar18', 'verificar18', 'requestadult'],
+    description: 'Solicita acceso a contenido +18 (el admin lo aprueba)',
+    category: 'adult',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    execute: async (ctx: CommandContext) => {
+      const user = await db
+        .select()
+        .from(users)
+        .where(and(eq(users.platformId, ctx.userId), eq(users.platform, ctx.platform)))
+        .limit(1);
+
+      if (!user[0]) {
+        await ctx.reply('❌ Primero usa cualquier comando para registrarte.');
+        return;
+      }
+
+      if (user[0].isVerifiedAdult) {
+        await ctx.reply('✅ ¡Ya tienes acceso +18 aprobado!');
+        return;
+      }
+
+      const [existingPending] = await db
+        .select()
+        .from(adultRequests)
+        .where(and(eq(adultRequests.platformUserId, ctx.userId), eq(adultRequests.status, 'pending')))
+        .limit(1);
+
+      if (existingPending) {
+        await ctx.reply('⏳ Ya tienes una solicitud pendiente. El admin la revisará pronto.');
+        return;
+      }
+
+      await db.insert(adultRequests).values({
+        userId: user[0].id,
+        platform: ctx.platform,
+        platformUserId: ctx.userId,
+        displayName: ctx.displayName,
+        status: 'pending',
+      });
+
+      await ctx.reply(
+        '📨 **Solicitud enviada correctamente** ✅\n\n' +
+        'Al enviar esta solicitud confirmas que:\n' +
+        '• Tienes **18 años o más**\n' +
+        '• Eres consciente de que accederás a contenido para adultos\n\n' +
+        'El administrador revisará tu solicitud y recibirás una notificación. 🌸'
+      );
+    },
+  },
+
+  // ── Activar +18 en grupo ──────────────────────────────────
+  {
+    name: 'adult',
+    aliases: ['nsfw'],
+    description: 'Activa o desactiva contenido +18 en el grupo',
+    category: 'adult',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    adminOnly: true,
+    groupOnly: true,
+    execute: async (ctx: CommandContext) => {
+      const action = ctx.args[0]?.toLowerCase();
+      if (!['on', 'off'].includes(action ?? '')) {
+        await ctx.reply('❌ Uso: /adult on | /adult off');
+        return;
+      }
+      const enable = action === 'on';
+      const existing = await db
+        .select({ id: groups.id })
+        .from(groups)
+        .where(and(eq(groups.platformId, ctx.groupId!), eq(groups.platform, ctx.platform)))
+        .limit(1);
+
+      if (existing[0]) {
+        await db.update(groups).set({ adultEnabled: enable })
+          .where(and(eq(groups.platformId, ctx.groupId!), eq(groups.platform, ctx.platform)));
+      } else {
+        await db.insert(groups).values({
+          platformId: ctx.groupId!,
+          platform: ctx.platform,
+          name: ctx.groupId!,
+          adultEnabled: enable,
+        });
+      }
+      await ctx.reply(enable
+        ? '🔞 Contenido +18 **activado** en este grupo.'
+        : '✅ Contenido +18 **desactivado**.'
+      );
+    },
+  },
+
+  // ── Hentai ────────────────────────────────────────────────
+  {
+    name: 'hentai',
+    aliases: ['h'],
+    description: 'Imagen hentai aleatoria (requiere verificación +18)',
+    category: 'adult',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    adultOnly: true,
+    cooldown: 5,
+    execute: async (ctx: CommandContext) => {
+      if (!await checkAdultAccess(ctx)) return;
+      const tags = ctx.args.join(' ') || 'anime';
+      const url = await fetchDanbooru(tags);
+      if (!url) { await ctx.reply('❌ Sin resultados. Intenta otras etiquetas.'); return; }
+      await ctx.replyWithImage(url, `🔞 ${tags}`);
+    },
+  },
+
+  // ── RedGifs ───────────────────────────────────────────────
+  {
+    name: 'redgifs',
+    aliases: ['rgif', 'gif18'],
+    description: 'GIF de RedGifs +18 (requiere verificación)',
+    category: 'adult',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    adultOnly: true,
+    cooldown: 5,
+    execute: async (ctx: CommandContext) => {
+      if (!await checkAdultAccess(ctx)) return;
+      const tags = ctx.args.join(' ') || 'hentai';
+      const url = await fetchRedGif(tags);
+      if (!url) { await ctx.reply('❌ Sin resultados.'); return; }
+      await ctx.replyWithGif(url, `🔞 ${tags}`);
+    },
+  },
+];
+--- modules/ai/index.ts ---
+import type { Command, CommandContext } from '../../core/src/types.js';
+
+// ── OpenAI chat ────────────────────────────────────────────────
+async function askGPT(prompt: string, systemPrompt?: string): Promise<string> {
+  const res = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+    },
+    body: JSON.stringify({
+      model: process.env.OPENAI_MODEL ?? 'gpt-4o',
+      messages: [
+        {
+          role: 'system',
+          content: systemPrompt ??
+            'Eres Yukiko, una bot kawaii y amigable de anime. Responde siempre en español, de forma breve y con personalidad divertida. Usa emojis con moderación.',
+        },
+        { role: 'user', content: prompt },
+      ],
+      max_tokens: 500,
+      temperature: 0.8,
+    }),
+  });
+
+  const data = await res.json() as {
+    choices: Array<{ message: { content: string } }>;
+    error?: { message: string };
+  };
+
+  if (data.error) throw new Error(data.error.message);
+  return data.choices[0].message.content.trim();
+}
+
+// ── DALL-E image generation ───────────────────────────────────
+async function generateImage(prompt: string): Promise<string> {
+  const res = await fetch('https://api.openai.com/v1/images/generations', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+    },
+    body: JSON.stringify({
+      model: 'dall-e-3',
+      prompt: `anime style, ${prompt}`,
+      n: 1,
+      size: '1024x1024',
+      quality: 'standard',
+    }),
+  });
+
+  const data = await res.json() as {
+    data: Array<{ url: string }>;
+    error?: { message: string };
+  };
+
+  if (data.error) throw new Error(data.error.message);
+  return data.data[0].url;
+}
+
+export const aiCommands: Command[] = [
+  // ── AI Chat ────────────────────────────────────────────────
+  {
+    name: 'ask',
+    aliases: ['pregunta', 'ia', 'ai', 'gpt'],
+    description: 'Pregúntale algo a Yukiko IA',
+    category: 'ai',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    cooldown: 5,
+    execute: async (ctx: CommandContext) => {
+      const prompt = ctx.args.join(' ');
+      if (!prompt) {
+        await ctx.reply('❌ Uso: /ask <tu pregunta>');
+        return;
+      }
+
+      try {
+        const response = await askGPT(prompt);
+        await ctx.reply(`🤖 ${response}`);
+      } catch (err) {
+        await ctx.reply('❌ Hubo un error al consultar la IA. Intenta más tarde.');
+      }
+    },
+  },
+
+  // ── Image generation ───────────────────────────────────────
+  {
+    name: 'imagine',
+    aliases: ['generar', 'dream', 'draw'],
+    description: 'Genera una imagen con IA (DALL-E 3)',
+    category: 'ai',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    cooldown: 30,
+    execute: async (ctx: CommandContext) => {
+      const prompt = ctx.args.join(' ');
+      if (!prompt) {
+        await ctx.reply('❌ Uso: /imagine <descripción>');
+        return;
+      }
+
+      try {
+        const url = await generateImage(prompt);
+        await ctx.replyWithImage(url, `🎨 "${prompt}"`);
+      } catch (err) {
+        await ctx.reply('❌ No se pudo generar la imagen. Intenta con otra descripción.');
+      }
+    },
+  },
+
+  // ── Roleplay AI ───────────────────────────────────────────
+  {
+    name: 'rp',
+    aliases: ['roleplay-ai', 'rpai'],
+    description: 'Roleplay con IA como personaje de anime',
+    category: 'ai',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    cooldown: 10,
+    execute: async (ctx: CommandContext) => {
+      const text = ctx.args.join(' ');
+      if (!text) {
+        await ctx.reply('❌ Uso: /rp <acción o diálogo>');
+        return;
+      }
+
+      const system =
+        'Eres Yukiko, una chica neko del mundo anime. Respondes en primera persona, de forma expresiva y kawaii. ' +
+        'Interpretas situaciones de roleplay de anime de forma creativa y divertida. ' +
+        'Responde siempre en español y mantén el personaje.';
+
+      try {
+        const response = await askGPT(text, system);
+        await ctx.reply(`🐱 *${response}*`);
+      } catch {
+        await ctx.reply('❌ Error en el roleplay IA. Intenta más tarde.');
+      }
+    },
+  },
+
+  // ── Translate ─────────────────────────────────────────────
+  {
+    name: 'translate',
+    aliases: ['traducir', 'tr'],
+    description: 'Traduce texto a otro idioma',
+    category: 'ai',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    cooldown: 5,
+    execute: async (ctx: CommandContext) => {
+      const [lang, ...words] = ctx.args;
+      const text = words.join(' ');
+      if (!lang || !text) {
+        await ctx.reply('❌ Uso: /translate <idioma> <texto>\nEj: /translate inglés Hola mundo');
+        return;
+      }
+
+      try {
+        const response = await askGPT(
+          `Traduce al ${lang}: "${text}". Responde SOLO con la traducción, sin explicaciones.`
+        );
+        await ctx.reply(`🌐 **${lang}:** ${response}`);
+      } catch {
+        await ctx.reply('❌ Error al traducir.');
+      }
+    },
+  },
+];
+--- modules/economy/index.ts ---
+import type { Command, CommandContext } from '../../core/src/types.js';
+import { db, users, transactions, pets } from '../../db/index.js';
+import { eq, desc, sql, and } from 'drizzle-orm';
+import { getOrCreateUser } from '../../core/src/utils.js';
+
+const DAILY_AMOUNT = 100;
+const DAILY_COOLDOWN_MS = 24 * 60 * 60 * 1000;
+
+// In-memory daily cooldown (replace with Redis in production)
+const dailyCooldowns = new Map<string, number>();
+
+export const economyCommands: Command[] = [
+  // ── Balance ────────────────────────────────────────────────
+  {
+    name: 'balance',
+    aliases: ['bal', 'saldo', 'monedas'],
+    description: 'Muestra tu balance de monedas y nivel',
+    category: 'economy',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    execute: async (ctx: CommandContext) => {
+      const user = await getOrCreateUser(ctx.userId, ctx.platform, ctx.displayName);
+      const xpNeeded = Math.floor(100 * Math.pow(1.5, user.level));
+      await ctx.reply(
+        `💰 **${ctx.displayName}**\n` +
+        `Monedas: **${user.balance}** 🪙\n` +
+        `Nivel: **${user.level}** | XP: ${user.xp}/${xpNeeded}\n` +
+        `Rango: ${getRank(user.level)}`
+      );
+    },
+  },
+
+  // ── Daily ──────────────────────────────────────────────────
+  {
+    name: 'daily',
+    aliases: ['diario', 'recompensa'],
+    description: 'Reclama tu recompensa diaria de monedas',
+    category: 'economy',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    execute: async (ctx: CommandContext) => {
+      const last = dailyCooldowns.get(ctx.userId) ?? 0;
+      const remaining = DAILY_COOLDOWN_MS - (Date.now() - last);
+
+      if (remaining > 0) {
+        const hours = Math.floor(remaining / 3600000);
+        const minutes = Math.floor((remaining % 3600000) / 60000);
+        await ctx.reply(`⏰ Ya reclamaste tu recompensa hoy. Vuelve en **${hours}h ${minutes}m**`);
+        return;
+      }
+
+      const user = await getOrCreateUser(ctx.userId, ctx.platform, ctx.displayName);
+      await db.update(users).set({ balance: user.balance + DAILY_AMOUNT }).where(eq(users.id, user.id));
+      dailyCooldowns.set(ctx.userId, Date.now());
+
+      await ctx.reply(`✅ ¡Reclamaste **${DAILY_AMOUNT}** 🪙! Tu nuevo saldo: **${user.balance + DAILY_AMOUNT}** 🪙`);
+    },
+  },
+
+  // ── Transfer ───────────────────────────────────────────────
+  {
+    name: 'transfer',
+    aliases: ['transferir', 'dar', 'send'],
+    description: 'Transfiere monedas a otro usuario',
+    category: 'economy',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    execute: async (ctx: CommandContext) => {
+      const [mention, amountStr] = ctx.args;
+      const amount = parseInt(amountStr);
+
+      if (!mention || isNaN(amount) || amount <= 0) {
+        await ctx.reply('❌ Uso: /transfer @usuario <cantidad>');
+        return;
+      }
+
+      const sender = await getOrCreateUser(ctx.userId, ctx.platform, ctx.displayName);
+      if (sender.balance < amount) {
+        await ctx.reply(`❌ No tienes suficientes monedas. Saldo: **${sender.balance}** 🪙`);
+        return;
+      }
+
+      // Intentar resolver el receptor en la misma plataforma
+      // El mention puede ser @usuario, un ID o un nombre — se busca por displayName como fallback
+      const mentionClean = mention.replace(/^@/, '');
+      const [receiver] = await db
+        .select()
+        .from(users)
+        .where(and(eq(users.platform, ctx.platform), eq(users.displayName, mentionClean)))
+        .limit(1);
+
+      if (!receiver) {
+        await ctx.reply(`❌ No se encontró al usuario **${mention}** en ${ctx.platform}.
+El usuario debe haber usado el bot al menos una vez.`);
+        return;
+      }
+
+      if (receiver.id === sender.id) {
+        await ctx.reply('❌ No puedes transferirte monedas a ti mismo.');
+        return;
+      }
+
+      await db.update(users).set({ balance: sender.balance - amount }).where(eq(users.id, sender.id));
+      await db.update(users).set({ balance: receiver.balance + amount }).where(eq(users.id, receiver.id));
+      await db.insert(transactions).values({
+        fromUserId: sender.id,
+        toUserId: receiver.id,
+        amount,
+        reason: 'transfer',
+      });
+      await ctx.reply(`✅ Transferiste **${amount}** 🪙 a **${receiver.displayName}**
+Tu saldo: **${sender.balance - amount}** 🪙`);
+    },
+  },
+
+  // ── Top / Ranking ──────────────────────────────────────────
+  {
+    name: 'top',
+    aliases: ['ranking', 'leaderboard', 'tabla'],
+    description: 'Muestra el ranking global de monedas',
+    category: 'economy',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    execute: async (ctx: CommandContext) => {
+      const top = await db
+        .select()
+        .from(users)
+        .orderBy(desc(users.balance))
+        .limit(10);
+
+      const medals = ['🥇', '🥈', '🥉'];
+      const lines = top.map((u, i) => {
+        const medal = medals[i] ?? `${i + 1}.`;
+        return `${medal} **${u.displayName}** — ${u.balance} 🪙 (Lv.${u.level})`;
+      });
+
+      await ctx.reply(`🏆 **Ranking Global**\n\n${lines.join('\n')}`);
+    },
+  },
+
+  // ── Shop ───────────────────────────────────────────────────
+  {
+    name: 'shop',
+    aliases: ['tienda'],
+    description: 'Muestra la tienda de items',
+    category: 'economy',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    execute: async (ctx: CommandContext) => {
+      const items = getShopItems();
+      const lines = items.map(i => `${i.emoji} **${i.name}** — ${i.price} 🪙\n  ${i.description}`);
+      await ctx.reply(`🛍️ **Tienda de Yukiko**\n\n${lines.join('\n\n')}\n\nUsa /buy <nombre> para comprar`);
+    },
+  },
+
+  // ── XP Top ────────────────────────────────────────────────
+  {
+    name: 'levels',
+    aliases: ['niveles', 'xptop'],
+    description: 'Ranking de niveles y XP',
+    category: 'economy',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    execute: async (ctx: CommandContext) => {
+      const top = await db.select().from(users).orderBy(desc(users.xp)).limit(10);
+      const lines = top.map((u, i) => `${i + 1}. **${u.displayName}** — Lv.${u.level} (${u.xp} XP)`);
+      await ctx.reply(`⭐ **Ranking de Niveles**\n\n${lines.join('\n')}`);
+    },
+  },
+];
+
+// ── Helpers ───────────────────────────────────────────────────
+function getRank(level: number): string {
+  if (level >= 50) return '👑 Leyenda';
+  if (level >= 30) return '💎 Diamante';
+  if (level >= 20) return '🥇 Oro';
+  if (level >= 10) return '🥈 Plata';
+  if (level >= 5)  return '🥉 Bronce';
+  return '🌱 Novato';
+}
+
+function getShopItems() {
+  return [
+    { name: 'vip', emoji: '⭐', price: 500, description: 'Rol VIP exclusivo' },
+    { name: 'mascota_gato', emoji: '🐱', price: 300, description: 'Adopta un gatito' },
+    { name: 'mascota_perro', emoji: '🐶', price: 300, description: 'Adopta un perrito' },
+    { name: 'mascota_dragon', emoji: '🐉', price: 1000, description: 'Adopta un dragón legendario' },
+    { name: 'xp_boost', emoji: '⚡', price: 200, description: 'Doble XP durante 1 hora' },
+    { name: 'caja_misteriosa', emoji: '📦', price: 150, description: 'Caja con recompensa aleatoria' },
+  ];
+}
+--- modules/link/index.ts ---
+// ============================================================
+// Yukiko — Módulo de vinculación de cuentas entre plataformas
+// ============================================================
+// Flujo:
+//   1. Usuario llega NUEVO a una plataforma → /start o primer comando
+//      El bot le pregunta: "¿Ya tienes Yukiko en otra app?"
+//   2a. Si dice SÍ → le pide que vaya a esa app y escriba /linkcode
+//       Esa app genera un código temporal (YUKXXXX1234, válido 10min)
+//       El usuario lo introduce aquí con /link YUKXXXX1234
+//       Se fusionan sus cuentas (saldo, XP, adulto...)
+//   2b. Si dice NO → se crea cuenta nueva normalmente
+//
+// Comandos:
+//   /link [código]  → vincular cuenta (o pedir el código si no lo tiene)
+//   /linkcode       → generar código para vincular desde OTRA plataforma
+//   /unlink         → desvincular (opcional, avanzado)
+//   /accounts       → ver mis cuentas vinculadas
+// ============================================================
+
+import type { Command, CommandContext } from '../../core/src/types.js';
+import { db } from '../../db/index.js';
+import {
+  users,
+  linkTokens,
+  linkedAccountsLog,
+  adultVerifications,
+} from '../../db/schema.js';
+import { eq, and, gt, isNull } from 'drizzle-orm';
+import { getOrCreateUser } from '../../core/src/utils.js';
+import type { Platform } from '../../core/src/types.js';
+
+// ─── Helpers ─────────────────────────────────────────────────
+
+const PLATFORM_NAMES: Record<Platform, string> = {
+  discord: 'Discord',
+  telegram: 'Telegram',
+  whatsapp: 'WhatsApp',
+};
+
+const PLATFORM_EMOJIS: Record<Platform, string> = {
+  discord: '💜',
+  telegram: '🔵',
+  whatsapp: '💚',
+};
+
+/** Genera un código corto único estilo YUK-XXXX-1234 */
+function generateToken(): string {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // sin O,0,I,1 para evitar confusión
+  const part1 = Array.from({ length: 4 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+  const part2 = Array.from({ length: 4 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+  return `YUK-${part1}-${part2}`;
+}
+
+/** Resuelve el userId "efectivo" de un usuario:
+ *  Si está vinculado a otro, devuelve el ID del master.
+ *  Así toda la economía/XP/adulto se centraliza en una sola cuenta.
+ */
+export async function resolveEffectiveUserId(userId: string): Promise<string> {
+  const [user] = await db.select({ linkedToUserId: users.linkedToUserId })
+    .from(users)
+    .where(eq(users.id, userId))
+    .limit(1);
+
+  return user?.linkedToUserId ?? userId;
+}
+
+/** Devuelve todas las plataformas vinculadas a un userId master */
+export async function getLinkedPlatforms(masterUserId: string): Promise<Array<{
+  platform: Platform;
+  displayName: string;
+  platformId: string;
+}>> {
+  const linked = await db.select({
+    platform: users.platform,
+    displayName: users.displayName,
+    platformId: users.platformId,
+  })
+  .from(users)
+  .where(eq(users.linkedToUserId, masterUserId));
+
+  return linked as Array<{ platform: Platform; displayName: string; platformId: string }>;
+}
+
+/** Fusiona la cuenta secundaria en la maestra:
+ *  - Suma saldo y XP
+ *  - Hereda verificación adulto si alguna lo tiene
+ *  - Marca la cuenta secundaria como vinculada
+ */
+async function mergeAccounts(masterUserId: string, secondaryUserId: string): Promise<{
+  balanceMerged: number;
+  xpMerged: number;
+  adultInherited: boolean;
+}> {
+  const [master] = await db.select().from(users).where(eq(users.id, masterUserId));
+  const [secondary] = await db.select().from(users).where(eq(users.id, secondaryUserId));
+
+  if (!master || !secondary) throw new Error('Usuario no encontrado');
+
+  const newBalance = master.balance + secondary.balance;
+  const newXp = master.xp + secondary.xp;
+  const newLevel = Math.max(master.level, secondary.level);
+  const adultInherited = secondary.isVerifiedAdult && !master.isVerifiedAdult;
+  const newAdult = master.isVerifiedAdult || secondary.isVerifiedAdult;
+
+  // Actualizar master
+  await db.update(users).set({
+    balance: newBalance,
+    xp: newXp,
+    level: newLevel,
+    isVerifiedAdult: newAdult,
+  }).where(eq(users.id, masterUserId));
+
+  // Marcar secondary como vinculada al master y poner sus stats a 0
+  // (el master ya tiene todo lo que importa)
+  await db.update(users).set({
+    linkedToUserId: masterUserId,
+    balance: 0,
+    xp: 0,
+  }).where(eq(users.id, secondaryUserId));
+
+  // Log
+  await db.insert(linkedAccountsLog).values({
+    masterUserId,
+    linkedUserId: secondaryUserId,
+    linkedPlatform: secondary.platform,
+    balanceMerged: secondary.balance,
+    xpMerged: secondary.xp,
+  });
+
+  return {
+    balanceMerged: secondary.balance,
+    xpMerged: secondary.xp,
+    adultInherited,
+  };
+}
+
+// ─── Flujo de onboarding ──────────────────────────────────────
+
+/** 
+ * Llama esto cuando un usuario llega por primera vez a una plataforma.
+ * Si ya existe su platformId, no hace nada.
+ * Si es nuevo, devuelve true para que la plataforma muestre el mensaje de onboarding.
+ */
+export async function handleNewUser(
+  platformId: string,
+  platform: Platform,
+  displayName: string,
+  username?: string,
+): Promise<{ isNew: boolean; userId: string }> {
+  // Buscar si ya existe
+  const existing = await db
+    .select({ id: users.id })
+    .from(users)
+    .where(and(eq(users.platformId, platformId), eq(users.platform, platform)))
+    .limit(1);
+
+  if (existing[0]) {
+    return { isNew: false, userId: existing[0].id };
+  }
+
+  // Crear usuario nuevo
+  const [created] = await db.insert(users).values({
+    platformId,
+    platform,
+    displayName,
+    username,
+  }).returning({ id: users.id });
+
+  return { isNew: true, userId: created.id };
+}
+
+/** Mensaje de onboarding que se envía cuando el usuario es nuevo */
+export function buildOnboardingMessage(platform: Platform, displayName: string): string {
+  const emoji = PLATFORM_EMOJIS[platform];
+  const platformName = PLATFORM_NAMES[platform];
+
+  return (
+    `🌨️ **¡Hola, ${displayName}! ¡Soy Yukiko!** 🐱\n\n` +
+    `Tu compañera neko kawaii en ${emoji} ${platformName}.\n\n` +
+    `━━━━━━━━━━━━━━━━━━━\n` +
+    `❓ **¿Ya tienes Yukiko en otra app?**\n` +
+    `(Discord, Telegram o WhatsApp)\n\n` +
+    `Si dices que **SÍ**, podrás vincular tus cuentas y ` +
+    `conservar tu saldo, nivel y verificación de edad.\n\n` +
+    `👉 **¿Ya tienes cuenta?**\n` +
+    `  • **Sí** → escribe \`/link\` y sigue las instrucciones\n` +
+    `  • **No** → escribe \`/start\` para empezar desde cero\n\n` +
+    `━━━━━━━━━━━━━━━━━━━\n` +
+    `💡 También puedes vincular más tarde con \`/link\``
+  );
+}
+
+// ─── Comandos ─────────────────────────────────────────────────
+
+export const linkCommands: Command[] = [
+
+  // ── /link [código] ──────────────────────────────────────────
+  {
+    name: 'link',
+    aliases: ['vincular', 'conectar'],
+    description: 'Vincula tu cuenta con otra plataforma usando un código',
+    category: 'utility',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    execute: async (ctx: CommandContext) => {
+      const token = ctx.args[0]?.toUpperCase();
+
+      // Sin código → explicar cómo obtenerlo
+      if (!token) {
+        await ctx.reply(
+          `🔗 **Vinculación de cuentas**\n\n` +
+          `Este comando conecta tu cuenta de Yukiko entre plataformas ` +
+          `(Discord, Telegram y WhatsApp).\n\n` +
+          `**¿Cómo funciona?**\n` +
+          `1. Ve a la app donde **ya tienes** tu cuenta de Yukiko\n` +
+          `2. Escribe \`/linkcode\` — recibirás un código temporal\n` +
+          `3. Vuelve aquí y escribe:\n` +
+          `   \`/link YUK-XXXX-XXXX\`\n\n` +
+          `⏰ El código dura **10 minutos**.\n\n` +
+          `💡 Si aún no tienes cuenta en ninguna app, usa \`/start\` directamente.`
+        );
+        return;
+      }
+
+      // Validar formato del token
+      if (!/^YUK-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(token)) {
+        await ctx.reply(
+          `❌ Código inválido. El formato debe ser \`YUK-XXXX-XXXX\`.\n\n` +
+          `Genera uno nuevo en la otra app con \`/linkcode\`.`
+        );
+        return;
+      }
+
+      // Buscar el token en BD
+      const now = new Date();
+      const [tokenRow] = await db
+        .select()
+        .from(linkTokens)
+        .where(
+          and(
+            eq(linkTokens.token, token),
+            gt(linkTokens.expiresAt, now),
+            isNull(linkTokens.usedAt),
+          )
+        )
+        .limit(1);
+
+      if (!tokenRow) {
+        await ctx.reply(
+          `❌ Código no encontrado, ya usado o caducado.\n\n` +
+          `Genera uno nuevo en la otra app con \`/linkcode\` (válido 10 min).`
+        );
+        return;
+      }
+
+      // Obtener/crear usuario en esta plataforma
+      const thisUser = await getOrCreateUser(ctx.userId, ctx.platform, ctx.displayName, ctx.username);
+
+      // No vincular con uno mismo
+      if (tokenRow.userId === thisUser.id) {
+        await ctx.reply(
+          `❌ No puedes vincular la misma cuenta consigo misma. ` +
+          `El código debe generarse desde una **plataforma diferente**.`
+        );
+        return;
+      }
+
+      // Evitar vincular si ya están vinculados al mismo master
+      const masterOfToken = await resolveEffectiveUserId(tokenRow.userId);
+      const masterOfThis  = await resolveEffectiveUserId(thisUser.id);
+
+      if (masterOfToken === masterOfThis) {
+        await ctx.reply(`✅ ¡Estas cuentas ya estaban vinculadas! Usa \`/accounts\` para verlas.`);
+        return;
+      }
+
+      // La cuenta que generó el código es la MASTER
+      // La cuenta actual (nueva plataforma) es la que se vincula
+      const [sourceUser] = await db.select().from(users).where(eq(users.id, tokenRow.userId));
+      const sourceplatformName = PLATFORM_NAMES[sourceUser.platform as Platform];
+      const sourcePlatformEmoji = PLATFORM_EMOJIS[sourceUser.platform as Platform];
+
+      // Verificar que el usuario actual no tenga stats que perder sin saberlo
+      const hasStats = thisUser.balance > 0 || thisUser.xp > 0;
+      const statsWarning = hasStats
+        ? `\n⚠️ Tus stats actuales (${thisUser.balance} 🪙, ${thisUser.xp} XP) se **sumarán** a tu cuenta principal.`
+        : '';
+
+      // Marcar el token como usado
+      await db.update(linkTokens)
+        .set({ usedAt: new Date() })
+        .where(eq(linkTokens.id, tokenRow.id));
+
+      // Fusionar cuentas: el master es quien generó el código
+      const { balanceMerged, xpMerged, adultInherited } = await mergeAccounts(
+        masterOfToken,
+        thisUser.id,
+      );
+
+      // Obtener stats del master tras la fusión
+      const [updatedMaster] = await db.select().from(users).where(eq(users.id, masterOfToken));
+
+      let successMsg =
+        `✅ **¡Cuentas vinculadas!** 🎉\n\n` +
+        `${sourcePlatformEmoji} ${sourceplatformName} ↔️ ${PLATFORM_EMOJIS[ctx.platform]} ${PLATFORM_NAMES[ctx.platform]}\n\n` +
+        `**Fusión completada:**\n` +
+        `  🪙 Saldo fusionado: **+${balanceMerged}** (total: **${updatedMaster?.balance ?? 0}**)\n` +
+        `  ⭐ XP fusionado: **+${xpMerged}** (total: **${updatedMaster?.xp ?? 0}**)\n`;
+
+      if (adultInherited) {
+        successMsg += `  🔞 Verificación +18 **heredada** ✅\n`;
+      }
+
+      successMsg +=
+        `\n💡 Ahora tu progreso (monedas, XP, nivel, +18) es compartido ` +
+        `en todas las plataformas donde tengas Yukiko.\n\n` +
+        `Usa \`/accounts\` para ver todas tus plataformas vinculadas.`;
+
+      await ctx.reply(successMsg);
+    },
+  },
+
+  // ── /linkcode ────────────────────────────────────────────────
+  {
+    name: 'linkcode',
+    aliases: ['codigo-vinculacion', 'micodigo'],
+    description: 'Genera un código para vincular tu cuenta en otra plataforma',
+    category: 'utility',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    execute: async (ctx: CommandContext) => {
+      const user = await getOrCreateUser(ctx.userId, ctx.platform, ctx.displayName, ctx.username);
+
+      // Limpiar tokens anteriores caducados o ya usados (limpieza ligera)
+      await db
+        .delete(linkTokens)
+        .where(
+          and(
+            eq(linkTokens.userId, user.id),
+            isNull(linkTokens.usedAt),
+          )
+        );
+
+      // Generar nuevo token
+      const token = generateToken();
+      const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutos
+
+      await db.insert(linkTokens).values({
+        userId: user.id,
+        platform: ctx.platform,
+        token,
+        expiresAt,
+      });
+
+      // Ver qué otras plataformas ya tiene vinculadas
+      const effectiveId = await resolveEffectiveUserId(user.id);
+      const linkedPlatforms = await getLinkedPlatforms(effectiveId);
+      const linkedNames = linkedPlatforms
+        .filter(p => p.platform !== ctx.platform)
+        .map(p => `${PLATFORM_EMOJIS[p.platform]} ${PLATFORM_NAMES[p.platform]}`)
+        .join(', ') || 'ninguna aún';
+
+      await ctx.reply(
+        `🔑 **Tu código de vinculación:**\n\n` +
+        `\`\`\`\n${token}\n\`\`\`\n\n` +
+        `⏰ Válido durante **10 minutos**.\n\n` +
+        `**¿Cómo usarlo?**\n` +
+        `1. Abre Yukiko en la **nueva plataforma**\n` +
+        `2. Escribe: \`/link ${token}\`\n\n` +
+        `📊 **Tu cuenta actual:**\n` +
+        `  🪙 ${user.balance} monedas | ⭐ XP ${user.xp} | Nv. ${user.level}\n` +
+        `  🔞 Adulto: ${user.isVerifiedAdult ? 'Verificado ✅' : 'No verificado'}\n` +
+        `  🔗 Plataformas vinculadas: ${linkedNames}\n\n` +
+        `⚠️ El saldo y XP de ambas cuentas se **suman**. No te preocupes, no pierdes nada.`
+      );
+    },
+  },
+
+  // ── /accounts ────────────────────────────────────────────────
+  {
+    name: 'accounts',
+    aliases: ['cuentas', 'plataformas', 'misplataformas'],
+    description: 'Ver todas tus plataformas vinculadas',
+    category: 'utility',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    execute: async (ctx: CommandContext) => {
+      const user = await getOrCreateUser(ctx.userId, ctx.platform, ctx.displayName, ctx.username);
+      const effectiveId = await resolveEffectiveUserId(user.id);
+      const [master] = await db.select().from(users).where(eq(users.id, effectiveId));
+
+      if (!master) {
+        await ctx.reply('❌ Error al cargar tu cuenta. Inténtalo de nuevo.');
+        return;
+      }
+
+      const linkedPlatforms = await getLinkedPlatforms(effectiveId);
+      const isMaster = user.id === effectiveId;
+
+      // Construir lista de plataformas
+      const allPlatforms = [
+        { platform: master.platform as Platform, displayName: master.displayName, isCurrent: master.platform === ctx.platform, isMaster: true },
+        ...linkedPlatforms.map(p => ({
+          platform: p.platform,
+          displayName: p.displayName,
+          isCurrent: p.platform === ctx.platform,
+          isMaster: false,
+        })),
+      ];
+
+      const platformList = allPlatforms
+        .map(p => {
+          const current = p.isCurrent ? ' ← **aquí** ' : '';
+          const master2 = p.isMaster ? ' 👑' : '';
+          return `  ${PLATFORM_EMOJIS[p.platform]} ${PLATFORM_NAMES[p.platform]}${master2}${current}`;
+        })
+        .join('\n');
+
+      const linkedCount = linkedPlatforms.length;
+
+      await ctx.reply(
+        `🔗 **Tus cuentas vinculadas**\n\n` +
+        `**Plataformas (${allPlatforms.length}/3):**\n` +
+        `${platformList}\n\n` +
+        `👑 = cuenta principal (donde se almacenan los datos)\n\n` +
+        `📊 **Stats globales:**\n` +
+        `  🪙 Monedas: **${master.balance}**\n` +
+        `  ⭐ XP: **${master.xp}** | Nv. **${master.level}**\n` +
+        `  🔞 Adulto: ${master.isVerifiedAdult ? 'Verificado ✅' : 'No verificado'}\n\n` +
+        (linkedCount < 2
+          ? `💡 Aún puedes vincular más plataformas con \`/linkcode\``
+          : `✅ ¡Tienes todas las plataformas vinculadas!`)
+      );
+    },
+  },
+
+  // ── /unlink ──────────────────────────────────────────────────
+  {
+    name: 'unlink',
+    aliases: ['desvincular'],
+    description: 'Desvincula tu cuenta de esta plataforma (avanzado)',
+    category: 'utility',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    execute: async (ctx: CommandContext) => {
+      const user = await getOrCreateUser(ctx.userId, ctx.platform, ctx.displayName, ctx.username);
+
+      // Si no está vinculada, no hay nada que hacer
+      if (!user.linkedToUserId) {
+        await ctx.reply(
+          `ℹ️ Tu cuenta en ${PLATFORM_NAMES[ctx.platform]} no está vinculada a ninguna otra plataforma.\n\n` +
+          `Usa \`/link\` para vincularla.`
+        );
+        return;
+      }
+
+      // Confirmación (patrón simple: args[0] debe ser "confirmar")
+      if (ctx.args[0]?.toLowerCase() !== 'confirmar') {
+        await ctx.reply(
+          `⚠️ **¿Seguro que quieres desvincular esta cuenta?**\n\n` +
+          `• Tu cuenta en ${PLATFORM_EMOJIS[ctx.platform]} ${PLATFORM_NAMES[ctx.platform]} ` +
+          `se separará de la cuenta principal.\n` +
+          `• **No perderás tu saldo ni XP** (empezarás con los que tenías antes de vincular, desde cero aquí).\n` +
+          `• Perderás la **verificación +18** si la obtuviste en otra plataforma.\n\n` +
+          `Para confirmar, escribe:\n\`/unlink confirmar\``
+        );
+        return;
+      }
+
+      // Desvincular
+      await db.update(users)
+        .set({ linkedToUserId: null })
+        .where(eq(users.id, user.id));
+
+      await ctx.reply(
+        `✅ Cuenta desvinculada en ${PLATFORM_EMOJIS[ctx.platform]} ${PLATFORM_NAMES[ctx.platform]}.\n\n` +
+        `Tu cuenta aquí ahora es independiente.\n` +
+        `Si quieres volver a vincularla, usa \`/link\`.`
+      );
+    },
+  },
+];
+--- modules/moderation/index.ts ---
+import type { Command, CommandContext } from '../../core/src/types.js';
+import { db, users, warnings, groups } from '../../db/index.js';
+import { eq, and, desc } from 'drizzle-orm';
+import { getOrCreateUser } from '../../core/src/utils.js';
+
+export const moderationCommands: Command[] = [
+  // ── Warn ──────────────────────────────────────────────────
+  {
+    name: 'warn',
+    aliases: ['advertir'],
+    description: 'Advierte a un usuario',
+    category: 'moderation',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    adminOnly: true,
+    groupOnly: true,
+    execute: async (ctx: CommandContext) => {
+      const [mention, ...reasonParts] = ctx.args;
+      const reason = reasonParts.join(' ') || 'Sin motivo especificado';
+
+      if (!mention) {
+        await ctx.reply('❌ Uso: /warn @usuario <motivo>');
+        return;
+      }
+
+      // Buscar al emisor para usar como issuedBy
+      const issuer = await db
+        .select({ id: users.id })
+        .from(users)
+        .where(and(eq(users.platformId, ctx.userId), eq(users.platform, ctx.platform)))
+        .limit(1);
+
+      if (issuer[0]) {
+        try {
+          await db.insert(warnings).values({
+            userId: issuer[0].id, // placeholder: idealmente sería el ID del target
+            reason,
+            issuedBy: issuer[0].id,
+          });
+        } catch { /* si el target no está en BD, solo respondemos */ }
+      }
+
+      await ctx.reply(`⚠️ **${mention}** ha sido advertido/a.\nMotivo: ${reason}`);
+    },
+  },
+
+  // ── Warnings list ─────────────────────────────────────────
+  {
+    name: 'warns',
+    aliases: ['advertencias'],
+    description: 'Lista las advertencias de un usuario',
+    category: 'moderation',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    adminOnly: true,
+    execute: async (ctx: CommandContext) => {
+      const mention = ctx.args[0];
+      if (!mention) {
+        await ctx.reply('❌ Uso: /warns @usuario');
+        return;
+      }
+      await ctx.reply(`📋 Advertencias de ${mention}: (ver panel de admin en /dashboard)`);
+    },
+  },
+
+  // ── Ban ───────────────────────────────────────────────────
+  {
+    name: 'ban',
+    aliases: ['banear'],
+    description: 'Banea a un usuario del bot',
+    category: 'moderation',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    adminOnly: true,
+    execute: async (ctx: CommandContext) => {
+      const [mention, ...reasonParts] = ctx.args;
+      const reason = reasonParts.join(' ') || 'Sin motivo';
+
+      if (!mention) {
+        await ctx.reply('❌ Uso: /ban @usuario <motivo>');
+        return;
+      }
+
+      await ctx.reply(`🔨 **${mention}** ha sido baneado/a del bot.\nMotivo: ${reason}`);
+    },
+  },
+
+  // ── Unban ─────────────────────────────────────────────────
+  {
+    name: 'unban',
+    aliases: ['desbanear'],
+    description: 'Desbanea a un usuario',
+    category: 'moderation',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    adminOnly: true,
+    execute: async (ctx: CommandContext) => {
+      const mention = ctx.args[0];
+      if (!mention) {
+        await ctx.reply('❌ Uso: /unban @usuario');
+        return;
+      }
+      await ctx.reply(`✅ **${mention}** ha sido desbaneado/a.`);
+    },
+  },
+
+  // ── Clear messages (Discord only) ─────────────────────────
+  {
+    name: 'clear',
+    aliases: ['purge', 'limpiar'],
+    description: 'Elimina mensajes del chat (Discord)',
+    category: 'moderation',
+    platforms: ['discord'],
+    adminOnly: true,
+    execute: async (ctx: CommandContext) => {
+      const amount = parseInt(ctx.args[0] ?? '10');
+      if (isNaN(amount) || amount < 1 || amount > 100) {
+        await ctx.reply('❌ Uso: /clear <1-100>');
+        return;
+      }
+      // Actual deletion handled by Discord platform adapter
+      await ctx.reply(`🗑️ Eliminando ${amount} mensajes...`);
+    },
+  },
+
+  // ── Prefix config ─────────────────────────────────────────
+  {
+    name: 'prefix',
+    aliases: ['prefijo'],
+    description: 'Cambia el prefijo del bot en este grupo',
+    category: 'moderation',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    adminOnly: true,
+    groupOnly: true,
+    execute: async (ctx: CommandContext) => {
+      const newPrefix = ctx.args[0];
+      if (!newPrefix || newPrefix.length > 3) {
+        await ctx.reply('❌ Uso: /prefix <prefijo> (máx 3 caracteres)');
+        return;
+      }
+
+      await db
+        .update(groups)
+        .set({ prefix: newPrefix })
+        .where(and(eq(groups.platformId, ctx.groupId!), eq(groups.platform, ctx.platform)));
+
+      await ctx.reply(`✅ Prefijo cambiado a: **${newPrefix}**`);
+    },
+  },
+
+  // ── Stats ────────────────────────────────────────────────
+  {
+    name: 'stats',
+    aliases: ['estadisticas'],
+    description: 'Muestra estadísticas del bot',
+    category: 'moderation',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    execute: async (ctx: CommandContext) => {
+      const totalUsers = await db.select().from(users);
+      const totalGroups = await db.select().from(groups);
+      await ctx.reply(
+        `📊 **Estadísticas de Yukiko**\n\n` +
+        `👥 Usuarios registrados: **${totalUsers.length}**\n` +
+        `🏠 Grupos activos: **${totalGroups.length}**\n` +
+        `⏱️ Uptime: disponible en /monitor`
+      );
+    },
+  },
+];
+--- modules/roleplay/index.ts ---
+import type { Command, CommandContext } from '../../core/src/types.js';
+import { db, roleplayCounts, users } from '../../db/index.js';
+import { eq, and } from 'drizzle-orm';
+
+// ── GIF fetcher ───────────────────────────────────────────────
+async function fetchGif(query: string): Promise<string> {
+  const key = process.env.TENOR_API_KEY;
+  if (!key) return '';
+  try {
+    const res = await fetch(
+      `https://tenor.googleapis.com/v2/search?q=${encodeURIComponent(query + ' anime')}&key=${key}&limit=20&contentfilter=medium`
+    );
+    if (!res.ok) return '';
+    const data = await res.json() as { results: Array<{ media_formats: { gif: { url: string } } }> };
+    const results = data.results;
+    if (!results?.length) return '';
+    const random = results[Math.floor(Math.random() * results.length)];
+    return random.media_formats.gif.url;
+  } catch { return ''; }
+}
+
+// ── Update roleplay counter ───────────────────────────────────
+async function updateCounter(giverId: string, receiverId: string, action: string) {
+  // Increment given for giver
+  const giverRow = await db
+    .select()
+    .from(roleplayCounts)
+    .where(and(eq(roleplayCounts.userId, giverId), eq(roleplayCounts.action, action)))
+    .limit(1);
+
+  if (giverRow[0]) {
+    await db
+      .update(roleplayCounts)
+      .set({ given: giverRow[0].given + 1 })
+      .where(eq(roleplayCounts.id, giverRow[0].id));
+  } else {
+    await db.insert(roleplayCounts).values({ userId: giverId, action, given: 1, received: 0 });
+  }
+
+  // Increment received for receiver
+  const receiverRow = await db
+    .select()
+    .from(roleplayCounts)
+    .where(and(eq(roleplayCounts.userId, receiverId), eq(roleplayCounts.action, action)))
+    .limit(1);
+
+  if (receiverRow[0]) {
+    await db
+      .update(roleplayCounts)
+      .set({ received: receiverRow[0].received + 1 })
+      .where(eq(roleplayCounts.id, receiverRow[0].id));
+  } else {
+    await db.insert(roleplayCounts).values({ userId: receiverId, action, given: 0, received: 1 });
+  }
+}
+
+// ── Factory for roleplay commands ─────────────────────────────
+type RoleplayAction = {
+  name: string;
+  aliases?: string[];
+  emoji: string;
+  gifQuery: string;
+  selfText: string;   // e.g. "te da un abrazo a"
+  caption: (giver: string, receiver: string) => string;
+};
+
+const ACTIONS: RoleplayAction[] = [
+  {
+    name: 'hug',
+    aliases: ['abrazo', 'abrazar'],
+    emoji: '🤗',
+    gifQuery: 'anime hug',
+    selfText: 'abraza a',
+    caption: (g, r) => `${g} abraza a ${r} 💕`,
+  },
+  {
+    name: 'pat',
+    aliases: ['palmadita', 'patear'],
+    emoji: '👋',
+    gifQuery: 'anime head pat',
+    selfText: 'le da palmaditas a',
+    caption: (g, r) => `${g} le da palmaditas a ${r} 😊`,
+  },
+  {
+    name: 'kiss',
+    aliases: ['beso', 'besar'],
+    emoji: '💋',
+    gifQuery: 'anime kiss',
+    selfText: 'besa a',
+    caption: (g, r) => `${g} besa a ${r} 😘`,
+  },
+  {
+    name: 'slap',
+    aliases: ['bofetada', 'golpear'],
+    emoji: '👋',
+    gifQuery: 'anime slap',
+    selfText: 'abofetea a',
+    caption: (g, r) => `${g} abofetea a ${r} 😤`,
+  },
+  {
+    name: 'cuddle',
+    aliases: ['acurrucar'],
+    emoji: '🥰',
+    gifQuery: 'anime cuddle',
+    selfText: 'se acurruca con',
+    caption: (g, r) => `${g} se acurruca con ${r} 🥰`,
+  },
+  {
+    name: 'poke',
+    aliases: ['pinchar'],
+    emoji: '👉',
+    gifQuery: 'anime poke',
+    selfText: 'pincha a',
+    caption: (g, r) => `${g} pincha a ${r} 👉`,
+  },
+  {
+    name: 'bite',
+    aliases: ['morder'],
+    emoji: '😬',
+    gifQuery: 'anime bite',
+    selfText: 'muerde a',
+    caption: (g, r) => `${g} muerde a ${r} 😬`,
+  },
+  {
+    name: 'lick',
+    aliases: ['lamer'],
+    emoji: '👅',
+    gifQuery: 'anime lick',
+    selfText: 'lame a',
+    caption: (g, r) => `${g} lame a ${r} 👅`,
+  },
+  {
+    name: 'wave',
+    aliases: ['saludar'],
+    emoji: '👋',
+    gifQuery: 'anime wave hello',
+    selfText: 'saluda a',
+    caption: (g, r) => `${g} saluda a ${r} 👋`,
+  },
+  {
+    name: 'highfive',
+    aliases: ['chocar'],
+    emoji: '✋',
+    gifQuery: 'anime high five',
+    selfText: 'choca los cinco con',
+    caption: (g, r) => `${g} choca los cinco con ${r} ✋`,
+  },
+  {
+    name: 'dance',
+    aliases: ['bailar'],
+    emoji: '💃',
+    gifQuery: 'anime dance',
+    selfText: 'baila con',
+    caption: (g, r) => `${g} baila con ${r} 💃`,
+  },
+  {
+    name: 'feed',
+    aliases: ['alimentar'],
+    emoji: '🍡',
+    gifQuery: 'anime feeding',
+    selfText: 'alimenta a',
+    caption: (g, r) => `${g} le da de comer a ${r} 🍡`,
+  },
+];
+
+function makeRoleplayCommand(action: RoleplayAction): Command {
+  return {
+    name: action.name,
+    aliases: action.aliases,
+    description: `Realiza la acción ${action.name} con otro usuario`,
+    category: 'roleplay',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    cooldown: 3,
+    execute: async (ctx: CommandContext) => {
+      const mention = ctx.args[0];
+      if (!mention) {
+        await ctx.reply(`❌ Debes mencionar a alguien. Ej: /${action.name} @usuario`);
+        return;
+      }
+
+      const gifUrl = await fetchGif(action.gifQuery);
+      const caption = action.caption(ctx.displayName, mention);
+
+      if (gifUrl) {
+        await ctx.replyWithGif(gifUrl, caption);
+      } else {
+        await ctx.reply(`${action.emoji} ${caption}`);
+      }
+
+      // Update counters if we can resolve the target user
+      // (Platform-specific user resolution happens in each platform adapter)
+    },
+  };
+}
+
+export const roleplayCommands: Command[] = ACTIONS.map(makeRoleplayCommand);
+=== CORE ===
+--- core/src/index.ts ---
+export * from './types.js';
+export * from './registry.js';
+export * from './utils.js';
+--- core/src/registry.ts ---
+import type { Command, Platform } from './types.js';
+
+class CommandRegistry {
+  private commands = new Map<string, Command>();
+  private aliases = new Map<string, string>();
+
+  register(command: Command): void {
+    this.commands.set(command.name, command);
+    command.aliases?.forEach(alias => {
+      this.aliases.set(alias, command.name);
+    });
+  }
+
+  get(name: string): Command | undefined {
+    const resolved = this.aliases.get(name) ?? name;
+    return this.commands.get(resolved);
+  }
+
+  getAll(): Command[] {
+    return Array.from(this.commands.values());
+  }
+
+  getByCategory(category: string): Command[] {
+    return this.getAll().filter(cmd => cmd.category === category);
+  }
+
+  getForPlatform(platform: Platform): Command[] {
+    return this.getAll().filter(cmd => cmd.platforms.includes(platform));
+  }
+}
+
+export const registry = new CommandRegistry();
+--- core/src/types.ts ---
+// ============================================================
+// Yukiko Core — Shared Types
+// ============================================================
+
+export type Platform = 'discord' | 'telegram' | 'whatsapp';
+
+export type CommandContext = {
+  platform: Platform;
+  userId: string;        // ID de la plataforma (discord snowflake / telegram id / wa jid)
+  chatId: string;
+  groupId?: string;
+  username?: string;
+  displayName: string;
+  isAdmin: boolean;
+  isGroup: boolean;
+  args: string[];
+  rawText: string;
+  reply: (text: string) => Promise<void>;
+  replyWithImage: (url: string, caption?: string) => Promise<void>;
+  replyWithGif: (url: string, caption?: string) => Promise<void>;
+  // DM directo al usuario (para onboarding en privado)
+  replyDM?: (text: string) => Promise<void>;
+};
+
+export type Command = {
+  name: string;
+  aliases?: string[];
+  description: string;
+  category: CommandCategory;
+  platforms: Platform[];
+  adminOnly?: boolean;
+  groupOnly?: boolean;
+  adultOnly?: boolean;
+  cooldown?: number; // seconds
+  execute: (ctx: CommandContext) => Promise<void>;
+};
+
+export type CommandCategory =
+  | 'roleplay'
+  | 'economy'
+  | 'adult'
+  | 'moderation'
+  | 'music'
+  | 'ai'
+  | 'utility'
+  | 'fun';
+
+export type YukikoUser = {
+  id: string;
+  platformId: string;
+  platform: Platform;
+  linkedToUserId?: string | null;  // FK a otro users.id (el "master")
+  username?: string | null;
+  displayName: string;
+  balance: number;
+  xp: number;
+  level: number;
+  isVerifiedAdult: boolean;
+  isBanned: boolean;
+  banReason?: string | null;
+  createdAt: Date;
+  lastSeen: Date;
+};
+
+export type YukikoGroup = {
+  id: string;
+  platformId: string;
+  platform: Platform;
+  name: string;
+  adultEnabled: boolean;
+  musicEnabled: boolean;
+  aiEnabled: boolean;
+  language: string;
+  prefix: string;
+  createdAt: Date;
+};
+
+export type LogEntry = {
+  id: string;
+  platform: Platform;
+  userId: string;
+  command: string;
+  groupId?: string;
+  args: string[];
+  success: boolean;
+  error?: string;
+  executedAt: Date;
+};
+
+// ── Link system ───────────────────────────────────────────────
+
+export type LinkToken = {
+  id: string;
+  userId: string;
+  platform: Platform;
+  token: string;        // formato: YUK-XXXX-XXXX
+  expiresAt: Date;
+  usedAt?: Date | null;
+  createdAt: Date;
+};
+
+export type LinkedAccountInfo = {
+  platform: Platform;
+  displayName: string;
+  platformId: string;
+};
+
+export type OnboardingResult = {
+  isNew: boolean;
+  userId: string;
+};
+--- core/src/utils.ts ---
+import { db, users, commandLogs } from '../../db/index.js';
+import { eq, and } from 'drizzle-orm';
+import type { Platform, YukikoUser } from './types.js';
+
+// ── XP / Levels ───────────────────────────────────────────────
+export function xpForLevel(level: number): number {
+  return Math.floor(100 * Math.pow(1.5, level - 1));
+}
+
+export function levelFromXp(xp: number): number {
+  let level = 1;
+  while (xp >= xpForLevel(level + 1)) level++;
+  return level;
+}
+
+// ── Resolve effective user (master si está vinculado) ─────────
+// Toda la economía y stats deben usar esto para centralizar en el master.
+export async function resolveEffectiveUser(userId: string): Promise<YukikoUser | null> {
+  const [user] = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+  if (!user) return null;
+
+  if (user.linkedToUserId) {
+    const [master] = await db.select().from(users).where(eq(users.id, user.linkedToUserId)).limit(1);
+    return (master as YukikoUser) ?? (user as YukikoUser);
+  }
+
+  return user as YukikoUser;
+}
+
+// ── User upsert ───────────────────────────────────────────────
+export async function getOrCreateUser(
+  platformId: string,
+  platform: Platform,
+  displayName: string,
+  username?: string
+): Promise<YukikoUser> {
+  const existing = await db
+    .select()
+    .from(users)
+    .where(and(eq(users.platformId, platformId), eq(users.platform, platform)))
+    .limit(1);
+
+  if (existing[0]) {
+    await db
+      .update(users)
+      .set({ lastSeen: new Date(), displayName })
+      .where(eq(users.id, existing[0].id));
+    return existing[0] as YukikoUser;
+  }
+
+  const [created] = await db
+    .insert(users)
+    .values({ platformId, platform, displayName, username })
+    .returning();
+
+  return created as YukikoUser;
+}
+
+// ── Cooldowns (in-memory for speed) ──────────────────────────
+const cooldowns = new Map<string, number>();
+
+export function isOnCooldown(userId: string, command: string, seconds: number): boolean {
+  const key = `${userId}:${command}`;
+  const last = cooldowns.get(key) ?? 0;
+  if (Date.now() - last < seconds * 1000) return true;
+  cooldowns.set(key, Date.now());
+  return false;
+}
+
+export function remainingCooldown(userId: string, command: string, seconds: number): number {
+  const key = `${userId}:${command}`;
+  const last = cooldowns.get(key) ?? 0;
+  return Math.max(0, seconds - Math.floor((Date.now() - last) / 1000));
+}
+
+// ── Add XP — opera sobre el master ───────────────────────────
+export async function addXp(userId: string, amount: number): Promise<{ leveled: boolean; newLevel: number }> {
+  const effective = await resolveEffectiveUser(userId);
+  if (!effective) return { leveled: false, newLevel: 1 };
+
+  const newXp = effective.xp + amount;
+  const newLevel = levelFromXp(newXp);
+  const leveled = newLevel > effective.level;
+
+  await db.update(users).set({ xp: newXp, level: newLevel }).where(eq(users.id, effective.id));
+  return { leveled, newLevel };
+}
+
+// ── Log command ───────────────────────────────────────────────
+export async function logCommand(opts: {
+  platform: Platform;
+  userId: string;
+  groupId?: string;
+  command: string;
+  args?: unknown[];
+  success?: boolean;
+  error?: string;
+}) {
+  // Resolve internal user id from platformId
+  const userRows = await db
+    .select({ id: users.id })
+    .from(users)
+    .where(and(eq(users.platformId, opts.userId), eq(users.platform, opts.platform)))
+    .limit(1);
+  const internalUserId = userRows[0]?.id ?? null;
+
+  await db.insert(commandLogs).values({
+    platform: opts.platform,
+    userId: internalUserId,
+    command: opts.command,
+    args: opts.args ?? [],
+    success: opts.success ?? true,
+    error: opts.error,
+  });
+}
+=== DB ===
+import { pgTable, text, integer, boolean, timestamp, uuid, varchar, jsonb, unique } from 'drizzle-orm/pg-core';
+
+// ── Users ────────────────────────────────────────────────────
+export const users = pgTable('users', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  platformId: varchar('platform_id', { length: 100 }).notNull(),
+  platform: varchar('platform', { length: 20 }).notNull(), // discord | telegram | whatsapp
+
+  // ── Linked account (master user) ────────────────────────
+  // Si este usuario es una cuenta secundaria, apunta al usuario principal
+  // Si es principal o está solo, es null
+  linkedToUserId: uuid('linked_to_user_id'),  // FK a users.id (self-ref, nullable)
+
+  username: varchar('username', { length: 100 }),
+  displayName: varchar('display_name', { length: 100 }).notNull(),
+  balance: integer('balance').default(0).notNull(),
+  xp: integer('xp').default(0).notNull(),
+  level: integer('level').default(1).notNull(),
+  isVerifiedAdult: boolean('is_verified_adult').default(false).notNull(),
+  isBanned: boolean('is_banned').default(false).notNull(),
+  banReason: text('ban_reason'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  lastSeen: timestamp('last_seen').defaultNow().notNull(),
+});
+
+// ── Link tokens (códigos temporales para vincular cuentas) ───
+// Se genera cuando un usuario ya configurado escribe /linkcode
+// El usuario en la nueva plataforma lo introduce con /link <código>
+export const linkTokens = pgTable('link_tokens', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  // Usuario que genera el código (ya existente en otra plataforma)
+  userId: uuid('user_id').references(() => users.id).notNull(),
+  platform: varchar('platform', { length: 20 }).notNull(), // plataforma donde se generó
+  token: varchar('token', { length: 12 }).notNull().unique(), // código corto: YUKXXXX1234
+  expiresAt: timestamp('expires_at').notNull(),              // 10 minutos de validez
+  usedAt: timestamp('used_at'),                             // null = no usado aún
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+// ── Linked accounts log (historial de vinculaciones) ─────────
+export const linkedAccountsLog = pgTable('linked_accounts_log', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  masterUserId: uuid('master_user_id').references(() => users.id).notNull(),
+  linkedUserId: uuid('linked_user_id').references(() => users.id).notNull(),
+  linkedPlatform: varchar('linked_platform', { length: 20 }).notNull(),
+  linkedAt: timestamp('linked_at').defaultNow().notNull(),
+  // Stats migrados al vincular
+  balanceMerged: integer('balance_merged').default(0).notNull(),
+  xpMerged: integer('xp_merged').default(0).notNull(),
+});
+
+// ── Groups / Chats ────────────────────────────────────────────
+export const groups = pgTable('groups', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  platformId: varchar('platform_id', { length: 100 }).notNull(),
+  platform: varchar('platform', { length: 20 }).notNull(),
+  name: varchar('name', { length: 200 }).notNull(),
+  adultEnabled: boolean('adult_enabled').default(false).notNull(),
+  musicEnabled: boolean('music_enabled').default(true).notNull(),
+  aiEnabled: boolean('ai_enabled').default(true).notNull(),
+  language: varchar('language', { length: 10 }).default('es').notNull(),
+  prefix: varchar('prefix', { length: 5 }).default('/').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+// ── Economy ───────────────────────────────────────────────────
+export const transactions = pgTable('transactions', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  fromUserId: uuid('from_user_id').references(() => users.id),
+  toUserId: uuid('to_user_id').references(() => users.id),
+  amount: integer('amount').notNull(),
+  reason: varchar('reason', { length: 200 }),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const inventory = pgTable('inventory', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').references(() => users.id).notNull(),
+  itemId: varchar('item_id', { length: 100 }).notNull(),
+  quantity: integer('quantity').default(1).notNull(),
+  acquiredAt: timestamp('acquired_at').defaultNow().notNull(),
+});
+
+export const pets = pgTable('pets', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').references(() => users.id).notNull(),
+  name: varchar('name', { length: 50 }).notNull(),
+  type: varchar('type', { length: 30 }).notNull(),
+  level: integer('level').default(1).notNull(),
+  happiness: integer('happiness').default(100).notNull(),
+  hunger: integer('hunger').default(100).notNull(),
+  lastFed: timestamp('last_fed').defaultNow().notNull(),
+});
+
+export const marriages = pgTable('marriages', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  user1Id: uuid('user1_id').references(() => users.id).notNull(),
+  user2Id: uuid('user2_id').references(() => users.id).notNull(),
+  marriedAt: timestamp('married_at').defaultNow().notNull(),
+});
+
+// ── Roleplay counters ─────────────────────────────────────────
+export const roleplayCounts = pgTable('roleplay_counts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').references(() => users.id).notNull(),
+  action: varchar('action', { length: 50 }).notNull(),
+  received: integer('received').default(0).notNull(),
+  given: integer('given').default(0).notNull(),
+});
+
+// ── Moderation ────────────────────────────────────────────────
+export const warnings = pgTable('warnings', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').references(() => users.id).notNull(),
+  groupId: uuid('group_id').references(() => groups.id),
+  reason: text('reason').notNull(),
+  issuedBy: uuid('issued_by').references(() => users.id).notNull(),
+  issuedAt: timestamp('issued_at').defaultNow().notNull(),
+});
+
+// ── Command logs ──────────────────────────────────────────────
+export const commandLogs = pgTable('command_logs', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  platform: varchar('platform', { length: 20 }).notNull(),
+  userId: uuid('user_id').references(() => users.id),
+  groupId: uuid('group_id').references(() => groups.id),
+  command: varchar('command', { length: 100 }).notNull(),
+  args: jsonb('args'),
+  success: boolean('success').default(true).notNull(),
+  error: text('error'),
+  executedAt: timestamp('executed_at').defaultNow().notNull(),
+});
+
+// ── Adult verification (legacy self-verify) ───────────────────
+export const adultVerifications = pgTable('adult_verifications', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').references(() => users.id).notNull(),
+  verifiedAt: timestamp('verified_at').defaultNow().notNull(),
+  verifiedBy: varchar('verified_by', { length: 20 }).notNull(),
+});
+
+// ── Adult access requests (admin approval flow) ───────────────
+export const adultRequests = pgTable('adult_requests', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').references(() => users.id).notNull(),
+  platform: varchar('platform', { length: 20 }).notNull(),
+  platformUserId: varchar('platform_user_id', { length: 100 }).notNull(),
+  displayName: varchar('display_name', { length: 100 }).notNull(),
+  status: varchar('status', { length: 20 }).default('pending').notNull(),
+  requestedAt: timestamp('requested_at').defaultNow().notNull(),
+  reviewedAt: timestamp('reviewed_at'),
+  reviewedBy: varchar('reviewed_by', { length: 100 }),
+  rejectionReason: text('rejection_reason'),
+});
+===
+import { neon } from '@neondatabase/serverless';
+import { drizzle } from 'drizzle-orm/neon-http';
+import * as schema from './schema';
+
+if (!process.env.DATABASE_URL) {
+  throw new Error('DATABASE_URL is not set');
+}
+
+const sql = neon(process.env.DATABASE_URL);
+export const db = drizzle(sql, { schema });
+
+export * from './schema';
+=== AGENT ===
+import http from 'http';
+import { execSync } from 'child_process';
+import { config } from 'dotenv';
+
+config({ path: '/home/dockerja/docker-compose-files/yukiko/.env' });
+
+const SECRET = process.env.ADMIN_SECRET;
+const PORT = 3001;
+const CWD = '/home/dockerja/docker-compose-files/yukiko';
+
+const server = http.createServer((req, res) => {
+  const auth = req.headers['authorization']?.replace('Bearer ', '');
+  if (auth !== SECRET) {
+    res.writeHead(401);
+    res.end(JSON.stringify({ error: 'Unauthorized' }));
+    return;
+  }
+
+  res.setHeader('Content-Type', 'application/json');
+
+  // POST /restart/:platform
+  const restartMatch = req.url?.match(/^\/restart\/(discord|telegram|whatsapp)$/) && req.method === 'POST';
+  if (restartMatch) {
+    const platform = req.url!.split('/')[2];
+    try {
+      execSync(`pm2 restart yukiko-${platform}`, { cwd: CWD });
+      res.writeHead(200);
+      res.end(JSON.stringify({ ok: true, restarted: `yukiko-${platform}` }));
+    } catch (e) {
+      res.writeHead(500);
+      res.end(JSON.stringify({ error: String(e) }));
+    }
+    return;
+  }
+
+  // GET /status
+  if (req.url === '/status' && req.method === 'GET') {
+    try {
+      const raw = execSync('pm2 jlist', { cwd: CWD }).toString();
+      const list = JSON.parse(raw) as Array<{ name: string; pm2_env: { status: string } }>;
+      const platforms = ['discord', 'telegram', 'whatsapp'];
+      const result: Record<string, boolean> = {};
+      for (const p of platforms) {
+        const proc = list.find(x => x.name === `yukiko-${p}`);
+        result[p] = proc?.pm2_env?.status === 'online';
+      }
+      res.writeHead(200);
+      res.end(JSON.stringify(result));
+    } catch (e) {
+      res.writeHead(500);
+      res.end(JSON.stringify({ error: String(e) }));
+    }
+    return;
+  }
+
+  // POST /backup — dispara el script de backup
+  if (req.url === '/backup' && req.method === 'POST') {
+    try {
+      execSync('bash scripts/db-backup.sh', { cwd: CWD });
+      res.writeHead(200);
+      res.end(JSON.stringify({ ok: true }));
+    } catch (e) {
+      res.writeHead(500);
+      res.end(JSON.stringify({ error: String(e) }));
+    }
+    return;
+  }
+
+  res.writeHead(404);
+  res.end(JSON.stringify({ error: 'Not found' }));
+});
+
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`🌨️ Yukiko agent escuchando en http://100.66.214.108:${PORT}`);
+});
+=== WEB API ===
+--- web/app/api/**/*.ts ---
+cat: 'web/app/api/**/*.ts': No existe el fichero o el directorio
+=== PM2 STATUS ===
+┌────┬────────────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+│ id │ name               │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+├────┼────────────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+│ 3  │ yukiko-agent       │ default     │ 1.0.0   │ fork    │ 158931   │ 15m    │ 10   │ online    │ 0%       │ 62.3mb   │ dockerja │ disabled │
+│ 0  │ yukiko-discord     │ default     │ 1.0.0   │ fork    │ 158894   │ 15m    │ 43   │ online    │ 0%       │ 66.8mb   │ dockerja │ disabled │
+│ 1  │ yukiko-telegram    │ default     │ 1.0.0   │ fork    │ 158907   │ 15m    │ 43   │ online    │ 0%       │ 67.2mb   │ dockerja │ disabled │
+│ 4  │ yukiko-web         │ default     │ N/A     │ fork    │ 158080   │ 24m    │ 0    │ online    │ 0%       │ 68.7mb   │ dockerja │ disabled │
+│ 2  │ yukiko-whatsapp    │ default     │ 1.0.0   │ fork    │ 159119   │ 9m     │ 36   │ online    │ 0%       │ 64.8mb   │ dockerja │ disabled │
+└────┴────────────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
+=== LOGS DISCORD ===
+[TAILING] Tailing last 30 lines for [yukiko-discord] process (change the value with --lines option)
+/home/dockerja/docker-compose-files/yukiko/logs/discord-error.log last 30 lines:
+0|yukiko-d | (node:151051) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:151232) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:151755) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:152456) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:152689) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:152872) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:153088) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:156324) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:156473) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:156666) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:156851) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:157134) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:157305) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:157546) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:158915) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+
+/home/dockerja/docker-compose-files/yukiko/logs/discord-out.log last 30 lines:
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+
+=== LOGS TELEGRAM ===
+[TAILING] Tailing last 30 lines for [yukiko-telegram] process (change the value with --lines option)
+/home/dockerja/docker-compose-files/yukiko/logs/telegram-out.log last 30 lines:
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+
+/home/dockerja/docker-compose-files/yukiko/logs/telegram-error.log last 30 lines:
+1|yukiko-t | (node:151078) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:151258) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:151782) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:152483) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:152716) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:152898) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:153115) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:156325) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:156498) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:156687) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:156877) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:157162) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:157332) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:157572) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:158938) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+
+=== LOGS WHATSAPP ===
+[TAILING] Tailing last 20 lines for [yukiko-whatsapp] process (change the value with --lines option)
+/home/dockerja/docker-compose-files/yukiko/logs/whatsapp-out.log last 20 lines:
+2|yukiko-w | aJ6leAnylMgzUljWql14lctS87vXwqrGcjxkRCThOkfJIkULSN0FWtRZWdJpjZgF8AmjAj7D+N/R51yFWfVmUQmY0P9Jt++F3LlRBxY3PtBkTOy3t8e+LrWJg91rbPUI258DjLW/YE+kWBHZc8Jij21/DifZ5k9DRWFYqHGqIgqcwCkUlGlWFHSWVhS59bK37O84aGOPjaI9exBRpJuw8Y+C3m/9N1OHPh+39ccBF1ccTp7d8+ef5rr+uupiItkM3rYAhomCWIomB/pe/e9uDMT8aNSDjMRwIi9xEDIMBW3/q3ThC8I6c/diK1OgKGuSrtECIpiOCIIygWgmKBzLe5T/B1MaqUmVR65+sm/x2qbpW3rWfftxA9HrxqLylvvSUphG9w/73cttpriQ7EbaGpEITYBIa5WRjhLCqSIaICQPz+oi4/GoGqXKqiJRusaxKnRvumMQWn2bCfYtHZhgphAHu7w/oUioGbDo2HP6vsXuyXNeanh9+msrD+dtZaXyZrDsNhMoEdmzyN4jExxLvjgG70VDjudEFiLFYCDilTX/XgP4ZdszHRZjkWdCWYGKJLOo8hTjQbOfrmlEOf5cUtDI8RohsjAQJHMC/uICb44RRAaTEygg04OBEu/UBDIdrb1s/DYQjCenGOUFgRAZMrJNtL/+A38AfZlr+tH/jLLiXOvTsL8MWfeOf+yMj57J29F/4NEFaYlLzuct2ftit0MD5kVPCk6Tu7obrEyjokfa2Oq1gZlp8x7uWvHnM5uHJP28PfOYMcLy2mOAaAH4SXs0cgJuNz8lS4zG0DSjenTUDTykkIlovKryiipzxGAcaLYlxjUMuvHPGUz8q0dK6pZ+I1VMr5xWzWO+mqH7R5jYkFVT3AdsckRT9tXticjpTHvV/am915ruI4WNyOqjgNgM8LWdV1dXFVmUGEGQZEamdBHNfE/g0dYMYWMb3XgqcfXO2KYh+4Xvs86NOKz9ofhZuSkn9S8De8+uzc/p6977xo8NVjkibWwtx3dnr2TkbLtvztcJ5UOHN0wf8F6mVY7Dbf3nlBi7GCqvCyz0yIrKsDLkPRKyb12RKUlA/4bu3Xf0X6PVf8B+idhZtfoP/OIlEvbx+19M3Rq7MOZINbALhOT51bnJ48ftmTp4z4f9NzaVH+mzqseNvtmJ/tWv/O03VVmHHh/X3LrTfp6wLMUJjATv0ccdkBET8YdpSDE8shgaTSUQOTIvJeYlFIfa7r+9ZlNdl/yuqT7Db+QaoSBOD1e9Y0enpAW09qguAGyNC7v1IiImtwWnoIA8i5U4JP93BF+/cw0K3k0NoEcr6mY07FnxvXR22dTsbKrz+AqWQn6+MG/j8vN+uHql+dPQVUkZk1LPdBc+3f+mOLvlUHAGUZXenFVO49ZbroOhh3Aab1o/6UD00Cd3a3Q5ZZ/SwYuRcHgb3rqXcxEJJ61sPaQDWyYcpq7ZgJySnhmcMGpcWtaTQW+QTpOp0uTx5mjWP600Lc1Xqnj+C33WXKo="},"process":true,"id":"AC590538860590E54B959A894C9AAD51","isLatest":false,"msg":"got history notification"}
+2|yukiko-w | {"level":30,"time":"2026-03-12T16:13:38.790Z","pid":159130,"hostname":"dockerja","class":"baileys","newAppStateSyncKeyId":"AAAAAFH/","newKeys":["AAAAAFH/"],"msg":"injecting new app state sync keys"}
+2|yukiko-w | {"level":30,"time":"2026-03-12T16:13:39.399Z","pid":159130,"hostname":"dockerja","class":"baileys","histNotification":{"fileSha256":"Qy9qE2/m1lc+Jf5n3DJ3CKXe2Y+HnksTWSJMGCh8Bic=","fileLength":"2977","mediaKey":"Ch0VqYWwmuiPCvC2gCgBlTkJ9iAS/+GfMZ9SfIVQ3FA=","fileEncSha256":"JRb/pv9iVtNYd0fe99lIg6IUvDOCmBP9DPgwBdxuYis=","directPath":"/v/t62.31111-24/604840287_1471058104630534_4840483070675737298_n.enc?ccb=11-4&oh=01_Q5Aa4AH7bQjPJ447Isvd1bL1k_xrVlCSxnIxtwk3F1bPLN1qvg&oe=69DA3E3E&_nc_sid=5e03e0","syncType":"RECENT","chunkOrder":1,"progress":100,"oldestMsgInChunkTimestampSec":"1771882948","encHandle":"AQKaXTNUqKfbX4lDqldC2CAXT31I9oG_Y2aveBMhQXuXUighkvPZr2_-bCI9cfaYq-2MhVxkUX1EeKK7cQbXygLK_CupFmNAPq-HXoRwt_d8y9paYQLdbEBP560kEs2fjpE"},"process":true,"id":"AC12D047CC7670F2A5754050B1009D37","isLatest":false,"msg":"got history notification"}
+2|yukiko-w | {"level":30,"time":"2026-03-12T16:13:39.716Z","pid":159130,"hostname":"dockerja","class":"baileys","msg":"resyncing critical_block from v0"}
+2|yukiko-w | {"level":30,"time":"2026-03-12T16:13:39.888Z","pid":159130,"hostname":"dockerja","class":"baileys","msg":"synced critical_block to v1"}
+2|yukiko-w | {"level":30,"time":"2026-03-12T16:13:40.265Z","pid":159130,"hostname":"dockerja","class":"baileys","histNotification":{"fileSha256":"CXAyckCy9W21xn3CpsXrgaSv8EXg4AqAvQNVeiEWnr0=","fileLength":"14","mediaKey":"8l4kDXosTIvg8YDo2c5Scp6MAm22tyfIysOpvEg5aB0=","fileEncSha256":"VXD5YU6Vym6Tt0/Mtdxb3M3AfqVbAln6L+6pNRmmV+E=","directPath":"/v/t62.31111-24/544128991_1096982512584120_9039077426998462248_n.enc?ccb=11-4&oh=01_Q5Aa4AFdaSjp8_x4-LcINPe5pCACtWWw0LGAckMGx2K68GXsBg&oe=69DA66F0&_nc_sid=5e03e0","syncType":"FULL","chunkOrder":1,"progress":100,"encHandle":"AQIBTOgZ7hjc9ts7uL4wj4aB5_BktAcdaoPtrlNg0bXZF-0xWqZWu6G5PMtwlZpaTFHE2CLpPvKpv6kNnIkRfyTVVsEt-jmJa-T7PGOI9ad_CsL77f4m-pn1-v-iMJgKjfA"},"process":true,"id":"AC6B0ED24FECBFE38C5728663F2DAC0D","isLatest":false,"msg":"got history notification"}
+2|yukiko-w | {"level":30,"time":"2026-03-12T16:13:40.588Z","pid":159130,"hostname":"dockerja","class":"baileys","msg":"resyncing regular from v0"}
+2|yukiko-w | {"level":30,"time":"2026-03-12T16:13:40.763Z","pid":159130,"hostname":"dockerja","class":"baileys","msg":"synced regular to v1"}
+
+/home/dockerja/docker-compose-files/yukiko/logs/whatsapp-error.log last 20 lines:
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
+2|yukiko-w | Trace: { items: 1 } loading from store
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
+2|yukiko-w |     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+2|yukiko-w | Trace: { items: 1 } loading from store
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
+2|yukiko-w | Trace: { keys: 6 } updated cache
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:65:25)
+2|yukiko-w | Trace: { keys: 4 } updated cache
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:65:25)
+2|yukiko-w | Trace: { keys: 1 } updated cache
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:65:25)
+2|yukiko-w |     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+2|yukiko-w | Trace: { items: 1 } loading from store
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
+2|yukiko-w |     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+2|yukiko-w | Trace: { items: 1 } loading from store
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
+2|yukiko-w | Trace: { keys: 2 } updated cache
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:65:25)
+
+dockerja@dockerja:~/docker-compose-files/yukiko$
+
+---
+
+echo "=== PM2 STATUS ===" && pm2 list
+
+
+
+echo "=== LOGS DISCORD ===" && pm2 logs yukiko-discord --lines 30 --nostream
+
+echo "=== LOGS TELEGRAM ===" && pm2 logs yukiko-telegram --lines 30 --nostream
+
+echo "=== LOGS WHATSAPP ===" && pm2 logs yukiko-whatsapp --lines 20 --nostream
+
+```
+
+
+
+Pega el output y tengo todo lo que necesito para continuar.
+
+¿Cómo prefieres pasarme el repo?
+
+1Subir archivos clave uno a uno⏎
+
+2Zip y adjuntar aquí
+
+3Pegar outputs de comandos
+
+Omitir
+
+
+
+Output:
+
+dockerja@dockerja:~/docker-compose-files/yukiko$ echo "=== PM2 STATUS ===" && pm2 list
+
+
+
+echo "=== LOGS DISCORD ===" && pm2 logs yukiko-discord --lines 30 --nostream
+
+echo "=== LOGS TELEGRAM ===" && pm2 logs yukiko-telegram --lines 30 --nostream
+
+echo "=== LOGS WHATSAPP ===" && pm2 logs yukiko-whatsapp --lines 20 --nostream
+=== PM2 STATUS ===
+┌────┬────────────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+│ id │ name               │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+├────┼────────────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+│ 3  │ yukiko-agent       │ default     │ 1.0.0   │ fork    │ 158931   │ 18m    │ 10   │ online    │ 0%       │ 62.3mb   │ dockerja │ disabled │
+│ 0  │ yukiko-discord     │ default     │ 1.0.0   │ fork    │ 158894   │ 18m    │ 43   │ online    │ 0%       │ 66.9mb   │ dockerja │ disabled │
+│ 1  │ yukiko-telegram    │ default     │ 1.0.0   │ fork    │ 158907   │ 18m    │ 43   │ online    │ 0%       │ 67.0mb   │ dockerja │ disabled │
+│ 4  │ yukiko-web         │ default     │ N/A     │ fork    │ 158080   │ 27m    │ 0    │ online    │ 0%       │ 68.3mb   │ dockerja │ disabled │
+│ 2  │ yukiko-whatsapp    │ default     │ 1.0.0   │ fork    │ 159119   │ 12m    │ 36   │ online    │ 0%       │ 66.3mb   │ dockerja │ disabled │
+└────┴────────────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
+=== LOGS DISCORD ===
+[TAILING] Tailing last 30 lines for [yukiko-discord] process (change the value with --lines option)
+/home/dockerja/docker-compose-files/yukiko/logs/discord-error.log last 30 lines:
+0|yukiko-d | (node:151051) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:151232) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:151755) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:152456) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:152689) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:152872) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:153088) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:156324) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:156473) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:156666) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:156851) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:157134) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:157305) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:157546) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+0|yukiko-d | (node:158915) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
+
+/home/dockerja/docker-compose-files/yukiko/logs/discord-out.log last 30 lines:
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
+0|yukiko-d | ✅ Discord slash commands registered (global)
+
+=== LOGS TELEGRAM ===
+[TAILING] Tailing last 30 lines for [yukiko-telegram] process (change the value with --lines option)
+/home/dockerja/docker-compose-files/yukiko/logs/telegram-out.log last 30 lines:
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+1|yukiko-t | 🌨️ Yukiko Telegram bot started
+
+/home/dockerja/docker-compose-files/yukiko/logs/telegram-error.log last 30 lines:
+1|yukiko-t | (node:151078) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:151258) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:151782) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:152483) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:152716) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:152898) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:153115) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:156325) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:156498) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:156687) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:156877) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:157162) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:157332) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:157572) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+1|yukiko-t | (node:158938) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
+
+=== LOGS WHATSAPP ===
+[TAILING] Tailing last 20 lines for [yukiko-whatsapp] process (change the value with --lines option)
+/home/dockerja/docker-compose-files/yukiko/logs/whatsapp-out.log last 20 lines:
+2|yukiko-w | aJ6leAnylMgzUljWql14lctS87vXwqrGcjxkRCThOkfJIkULSN0FWtRZWdJpjZgF8AmjAj7D+N/R51yFWfVmUQmY0P9Jt++F3LlRBxY3PtBkTOy3t8e+LrWJg91rbPUI258DjLW/YE+kWBHZc8Jij21/DifZ5k9DRWFYqHGqIgqcwCkUlGlWFHSWVhS59bK37O84aGOPjaI9exBRpJuw8Y+C3m/9N1OHPh+39ccBF1ccTp7d8+ef5rr+uupiItkM3rYAhomCWIomB/pe/e9uDMT8aNSDjMRwIi9xEDIMBW3/q3ThC8I6c/diK1OgKGuSrtECIpiOCIIygWgmKBzLe5T/B1MaqUmVR65+sm/x2qbpW3rWfftxA9HrxqLylvvSUphG9w/73cttpriQ7EbaGpEITYBIa5WRjhLCqSIaICQPz+oi4/GoGqXKqiJRusaxKnRvumMQWn2bCfYtHZhgphAHu7w/oUioGbDo2HP6vsXuyXNeanh9+msrD+dtZaXyZrDsNhMoEdmzyN4jExxLvjgG70VDjudEFiLFYCDilTX/XgP4ZdszHRZjkWdCWYGKJLOo8hTjQbOfrmlEOf5cUtDI8RohsjAQJHMC/uICb44RRAaTEygg04OBEu/UBDIdrb1s/DYQjCenGOUFgRAZMrJNtL/+A38AfZlr+tH/jLLiXOvTsL8MWfeOf+yMj57J29F/4NEFaYlLzuct2ftit0MD5kVPCk6Tu7obrEyjokfa2Oq1gZlp8x7uWvHnM5uHJP28PfOYMcLy2mOAaAH4SXs0cgJuNz8lS4zG0DSjenTUDTykkIlovKryiipzxGAcaLYlxjUMuvHPGUz8q0dK6pZ+I1VMr5xWzWO+mqH7R5jYkFVT3AdsckRT9tXticjpTHvV/am915ruI4WNyOqjgNgM8LWdV1dXFVmUGEGQZEamdBHNfE/g0dYMYWMb3XgqcfXO2KYh+4Xvs86NOKz9ofhZuSkn9S8De8+uzc/p6977xo8NVjkibWwtx3dnr2TkbLtvztcJ5UOHN0wf8F6mVY7Dbf3nlBi7GCqvCyz0yIrKsDLkPRKyb12RKUlA/4bu3Xf0X6PVf8B+idhZtfoP/OIlEvbx+19M3Rq7MOZINbALhOT51bnJ48ftmTp4z4f9NzaVH+mzqseNvtmJ/tWv/O03VVmHHh/X3LrTfp6wLMUJjATv0ccdkBET8YdpSDE8shgaTSUQOTIvJeYlFIfa7r+9ZlNdl/yuqT7Db+QaoSBOD1e9Y0enpAW09qguAGyNC7v1IiImtwWnoIA8i5U4JP93BF+/cw0K3k0NoEcr6mY07FnxvXR22dTsbKrz+AqWQn6+MG/j8vN+uHql+dPQVUkZk1LPdBc+3f+mOLvlUHAGUZXenFVO49ZbroOhh3Aab1o/6UD00Cd3a3Q5ZZ/SwYuRcHgb3rqXcxEJJ61sPaQDWyYcpq7ZgJySnhmcMGpcWtaTQW+QTpOp0uTx5mjWP600Lc1Xqnj+C33WXKo="},"process":true,"id":"AC590538860590E54B959A894C9AAD51","isLatest":false,"msg":"got history notification"}
+2|yukiko-w | {"level":30,"time":"2026-03-12T16:13:38.790Z","pid":159130,"hostname":"dockerja","class":"baileys","newAppStateSyncKeyId":"AAAAAFH/","newKeys":["AAAAAFH/"],"msg":"injecting new app state sync keys"}
+2|yukiko-w | {"level":30,"time":"2026-03-12T16:13:39.399Z","pid":159130,"hostname":"dockerja","class":"baileys","histNotification":{"fileSha256":"Qy9qE2/m1lc+Jf5n3DJ3CKXe2Y+HnksTWSJMGCh8Bic=","fileLength":"2977","mediaKey":"Ch0VqYWwmuiPCvC2gCgBlTkJ9iAS/+GfMZ9SfIVQ3FA=","fileEncSha256":"JRb/pv9iVtNYd0fe99lIg6IUvDOCmBP9DPgwBdxuYis=","directPath":"/v/t62.31111-24/604840287_1471058104630534_4840483070675737298_n.enc?ccb=11-4&oh=01_Q5Aa4AH7bQjPJ447Isvd1bL1k_xrVlCSxnIxtwk3F1bPLN1qvg&oe=69DA3E3E&_nc_sid=5e03e0","syncType":"RECENT","chunkOrder":1,"progress":100,"oldestMsgInChunkTimestampSec":"1771882948","encHandle":"AQKaXTNUqKfbX4lDqldC2CAXT31I9oG_Y2aveBMhQXuXUighkvPZr2_-bCI9cfaYq-2MhVxkUX1EeKK7cQbXygLK_CupFmNAPq-HXoRwt_d8y9paYQLdbEBP560kEs2fjpE"},"process":true,"id":"AC12D047CC7670F2A5754050B1009D37","isLatest":false,"msg":"got history notification"}
+2|yukiko-w | {"level":30,"time":"2026-03-12T16:13:39.716Z","pid":159130,"hostname":"dockerja","class":"baileys","msg":"resyncing critical_block from v0"}
+2|yukiko-w | {"level":30,"time":"2026-03-12T16:13:39.888Z","pid":159130,"hostname":"dockerja","class":"baileys","msg":"synced critical_block to v1"}
+2|yukiko-w | {"level":30,"time":"2026-03-12T16:13:40.265Z","pid":159130,"hostname":"dockerja","class":"baileys","histNotification":{"fileSha256":"CXAyckCy9W21xn3CpsXrgaSv8EXg4AqAvQNVeiEWnr0=","fileLength":"14","mediaKey":"8l4kDXosTIvg8YDo2c5Scp6MAm22tyfIysOpvEg5aB0=","fileEncSha256":"VXD5YU6Vym6Tt0/Mtdxb3M3AfqVbAln6L+6pNRmmV+E=","directPath":"/v/t62.31111-24/544128991_1096982512584120_9039077426998462248_n.enc?ccb=11-4&oh=01_Q5Aa4AFdaSjp8_x4-LcINPe5pCACtWWw0LGAckMGx2K68GXsBg&oe=69DA66F0&_nc_sid=5e03e0","syncType":"FULL","chunkOrder":1,"progress":100,"encHandle":"AQIBTOgZ7hjc9ts7uL4wj4aB5_BktAcdaoPtrlNg0bXZF-0xWqZWu6G5PMtwlZpaTFHE2CLpPvKpv6kNnIkRfyTVVsEt-jmJa-T7PGOI9ad_CsL77f4m-pn1-v-iMJgKjfA"},"process":true,"id":"AC6B0ED24FECBFE38C5728663F2DAC0D","isLatest":false,"msg":"got history notification"}
+2|yukiko-w | {"level":30,"time":"2026-03-12T16:13:40.588Z","pid":159130,"hostname":"dockerja","class":"baileys","msg":"resyncing regular from v0"}
+2|yukiko-w | {"level":30,"time":"2026-03-12T16:13:40.763Z","pid":159130,"hostname":"dockerja","class":"baileys","msg":"synced regular to v1"}
+
+/home/dockerja/docker-compose-files/yukiko/logs/whatsapp-error.log last 20 lines:
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
+2|yukiko-w | Trace: { items: 1 } loading from store
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
+2|yukiko-w |     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+2|yukiko-w | Trace: { items: 1 } loading from store
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
+2|yukiko-w | Trace: { keys: 6 } updated cache
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:65:25)
+2|yukiko-w | Trace: { keys: 4 } updated cache
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:65:25)
+2|yukiko-w | Trace: { keys: 1 } updated cache
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:65:25)
+2|yukiko-w |     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+2|yukiko-w | Trace: { items: 1 } loading from store
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
+2|yukiko-w |     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+2|yukiko-w | Trace: { items: 1 } loading from store
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
+2|yukiko-w | Trace: { keys: 2 } updated cache
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:65:25)
+
+dockerja@dockerja:~/docker-compose-files/yukiko$ 

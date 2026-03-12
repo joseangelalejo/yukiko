@@ -1,5 +1,7 @@
 import { Bot, Context } from 'grammy';
 import { registry } from '@yukiko/core/src/registry.ts';
+import { db, knownContacts } from '@yukiko/db/index.ts';
+import { eq, and } from 'drizzle-orm';
 import { roleplayCommands } from '@yukiko/roleplay';
 import { economyCommands } from '@yukiko/economy';
 import { adultCommands } from '@yukiko/adult';
@@ -7,6 +9,7 @@ import { aiCommands } from '@yukiko/ai';
 import { moderationCommands } from '@yukiko/moderation';
 import { linkCommands, handleNewUser, buildOnboardingMessage } from '@yukiko/link';
 import { isOnCooldown, remainingCooldown, addXp, logCommand } from '@yukiko/core/src/utils.ts';
+import { checkAdultVerificationNotifications } from '@yukiko/core/src/notifications.ts';
 import type { CommandContext } from '@yukiko/core/src/types.ts';
 import 'dotenv/config';
 
@@ -68,6 +71,30 @@ bot.command('start', async (ctx) => {
 
   const { isNew } = await handleNewUser(userId, 'telegram', displayName, username);
 
+  // Verificar si es un contacto conocido (DM solo)
+  if (ctx.chat?.type === 'private' && isNew) {
+    const [existing] = await db
+      .select()
+      .from(knownContacts)
+      .where(
+        and(
+          eq(knownContacts.platformId, userId),
+          eq(knownContacts.platform, 'telegram')
+        )
+      )
+      .limit(1);
+
+    if (!existing) {
+      // Nuevo contacto — guardar
+      await db.insert(knownContacts).values({
+        platformId: userId,
+        platform: 'telegram',
+        targetPlatformId: userId,
+        targetDisplayName: displayName,
+      });
+    }
+  }
+
   if (isNew) {
     // Usuario nuevo → mostrar onboarding con opción de vincular
     await ctx.reply(buildOnboardingMessage('telegram', displayName), { parse_mode: 'Markdown' });
@@ -89,8 +116,8 @@ function setupCommand(commandName: string) {
     if (!command) return;
 
     const text = ctx.message?.text ?? '';
-    const args = text.split(' ').slice(1).filter(Boolean);
-    const userId = String(ctx.from?.id ?? '');
+    const args = text.split(await isOnCooldown(userId, commandName, command.cooldown)) {
+      const remaining = awaitng(ctx.from?.id ?? '');
     const displayName = [ctx.from?.first_name, ctx.from?.last_name].filter(Boolean).join(' ') || 'Usuario';
 
     // Onboarding silencioso si no es /link o /linkcode
@@ -125,6 +152,18 @@ function setupCommand(commandName: string) {
       await command.execute(yukikoCtx);
       await addXp(userId, 5);
       await logCommand({ platform: 'telegram', userId, command: commandName, args, success: true });
+
+      // Check for adult verification notifications (DM only)
+      if (ctx.chat?.type === 'private') {
+        await checkAdultVerificationNotifications(
+          'telegram',
+          userId,
+          displayName,
+          async (msg: string) => {
+            await ctx.reply(msg, { parse_mode: 'Markdown' });
+          }
+        );
+      }
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Error';
       await logCommand({ platform: 'telegram', userId, command: commandName, args, success: false, error: msg });

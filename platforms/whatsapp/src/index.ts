@@ -5,8 +5,8 @@ import makeWASocket, {
   makeCacheableSignalKeyStore,
 } from '@whiskeysockets/baileys';
 import { Boom } from '@hapi/boom';
-import { registry } from '@yukiko/core/src/registry.ts';
-import { db, knownContacts } from '@yukiko/db/index.ts';
+import { registry } from '@yukiko/core/src/registry';
+import { db, knownContacts } from '@yukiko/db';
 import { eq, and } from 'drizzle-orm';
 import { roleplayCommands } from '@yukiko/roleplay';
 import { economyCommands } from '@yukiko/economy';
@@ -14,9 +14,9 @@ import { adultCommands } from '@yukiko/adult';
 import { aiCommands } from '@yukiko/ai';
 import { moderationCommands } from '@yukiko/moderation';
 import { linkCommands, handleNewUser } from '@yukiko/link';
-import { isOnCooldown, remainingCooldown, addXp, logCommand } from '@yukiko/core/src/utils.ts';
-import { checkAdultVerificationNotifications } from '@yukiko/core/src/notifications.ts';
-import type { CommandContext } from '@yukiko/core/src/types.ts';
+import { isOnCooldown, remainingCooldown, addXp, logCommand } from '@yukiko/core/src/utils';
+import { checkAdultVerificationNotifications } from '@yukiko/core/src/notifications';
+import type { CommandContext } from '@yukiko/core/src/types';
 import { mkdir } from 'fs/promises';
 import 'dotenv/config';
 

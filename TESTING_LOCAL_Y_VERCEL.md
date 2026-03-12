@@ -1,0 +1,330 @@
+# 🧪 TESTING LOCAL Y VALIDACION VERCEL
+
+## 1. ALIAS Y CONFIGURACION DISPONIBLE
+
+### Web (Next.js)
+```json
+// web/tsconfig.json paths:
+"@db/*": ["../db/*"]        // Acceso a modelos DB
+"@core/*": ["../core/src/*"] // Acceso a utilities core
+```
+
+**Ejemplo de uso:**
+```typescript
+import { db, users } from '@db/index.ts';
+import { isOnCooldown } from '@core/utils.ts';
+```
+
+### Root (Bots/Core)
+```json
+// tsconfig.json paths:
+"../../core/src/*.js": ["core/src/*.ts"]
+"../../modules/*/index.js": ["modules/*/index.ts"]
+"../../core/src/*": ["core/src/*"]
+"../../modules/*": ["modules/*"]
+```
+
+## 2. TESTING EN LOCAL
+
+### Opción A: Testing Completo (web + bots)
+```bash
+npm run dev
+# Levanta:
+# - web en http://localhost:3000
+# - discord bot en watch mode
+# - telegram bot en watch mode
+# - whatsapp bot en watch mode
+```
+
+### Opción B: Solo Web (para testing rápido)
+```bash
+npm run dev:web
+# Next.js dev server en http://localhost:3000
+# Requiere que los bots estén corriendo en otro terminal
+```
+
+### Opción C: Solo Bots
+```bash
+npm run dev:discord  # O dev:telegram / dev:whatsapp
+# Cada bot en watch mode, recompila con cambios
+```
+
+### Opción D: Build Production
+```bash
+npm run build
+# Compila web (Next.js) + bots (TypeScript)
+# Genera: web/.next/ + platforms/*/dist/
+```
+
+## 3. VERIFICACIONES ANTES DE DEPLOY A VERCEL
+
+### ✅ Verificacion Local
+```bash
+# 1. Build sin errores
+npm run build
+# Debe terminar sin errores
+
+# 2. Lint
+npm run lint
+# eslint . --ext .ts,.tsx
+
+# 3. Prueba de imports (manual)
+# Asegurar que @db/* y @core/* resuelven correctamente
+# Abrir web/app/api/admin/verifications/route.ts
+# Verificar que imports funcionan (sin errores en editor)
+
+# 4. Git status limpio
+git status
+# No debe haber cambios sin commitear
+```
+
+### ✅ Verificacion BD
+```bash
+# 1. Neon DB accessible
+# En .env.local, verificar DATABASE_URL apunta a Neon
+cat .env.local | grep DATABASE_URL
+
+# 2. Schema actualizado
+# Verificar que cooldowns y knownContacts existen en BD
+# SELECT table_name FROM information_schema.tables 
+# WHERE table_name IN ('cooldowns', 'knownContacts')
+```
+
+### ✅ Verificacion Variables de Entorno
+```bash
+# Copiar .env.local a .env.production
+# Valores necesarios para Vercel:
+# - DATABASE_URL (Neon connection string)
+# - DISCORD_TOKEN (opcional si no se usa en web)
+# - TELEGRAM_BOT_TOKEN (opcional si no se usa en web)
+# - ADMIN_SECRET (para API auth)
+# - HOMELAB_AGENT_URL (opcional)
+```
+
+## 4. CHECKLIST PRE-DEPLOY
+
+- [ ] `npm run build` pasa sin errores
+- [ ] `npm run lint` pasa sin errores
+- [ ] No hay console.error() en código crítico
+- [ ] DB schema aplicado (cooldowns, knownContacts existe)
+- [ ] .env.production configurado con secrets correctos
+- [ ] DATABASE_URL válido en Neon
+- [ ] Todos los cambios commitados (`git status` limpio)
+- [ ] `git log --oneline -5` muestra commits recientes
+
+## 5. DEPLOY A VERCEL
+
+```bash
+# Opción A: CLI de Vercel
+vercel
+
+# Opción B: Push a GitHub (si está conectado)
+git push origin main
+# Vercel detecta automáticamente y deploya
+
+# Opción C: Dashboard Vercel
+# Dashboard.vercel.com -> Select project -> Redeploy
+```
+
+## 6. CHECKLIST POST-DEPLOY VERCEL
+
+### ✅ Verificar Despliegue
+- [ ] URL de Vercel accesible (https://yukiko.vercel.app o custom domain)
+- [ ] Dashboard admin carga (http://vercel-url/admin)
+- [ ] No hay error 500 en logs de Vercel
+- [ ] Logs de Vercel muestran inicio exitoso
+
+### ✅ Verificar Funcionalidad WEB
+```
+GET /api/admin/stats
+- Response: { totalUsers, totalGroups, commandsToday, platforms }
+- Status: 200 OK
+
+GET /api/admin/verifications?status=pending
+- Response: { requests: [...] }
+- Status: 200 OK
+
+GET /api/monitor/metrics
+- Response: { timestamp, db: {...}, app: {...} }
+- Status: 200 OK
+```
+
+### ✅ Verificar DB Conexion
+```bash
+# En Vercel logs, buscar:
+"Connected to Neon" o similar
+"Database migration complete"
+
+# Si hay error:
+"Cannot connect to database"
+-> Verificar DATABASE_URL en Vercel env vars
+```
+
+### ✅ Verificar Bots (desde servidor your-homelab-ip)
+```bash
+ssh dockerja@your-homelab-ip
+pm2 logs yukiko-discord --lines 20
+# Buscar: "Bot connected" o "Ready"
+
+pm2 logs yukiko-telegram --lines 20
+# Buscar: "Bot started" o similar
+
+pm2 logs yukiko-whatsapp --lines 20
+# Buscar: "WhatsApp connected" o "Socket ready"
+```
+
+### ✅ Smoke Tests en Vivo
+**WhatsApp:**
+```
+Enviar: /balance
+Respuesta esperada: Saldo, nivel, XP
+
+Enviar: /daily
+Respuesta esperada: +100 coins, cooldown 24h
+
+Enviar: /buy vip
+Respuesta esperada: Coins deducidos, item en inventory
+```
+
+**Telegram:**
+```
+/start
+Respuesta: Mensaje de bienvenida
+
+/balance
+Respuesta: Stats del usuario
+
+/warn @alguien test
+Respuesta: Advertencia registrada
+```
+
+**Discord:**
+```
+!balance
+Respuesta: Balance coins
+
+!daily
+Respuesta: +100 coins (o cooldown)
+```
+
+## 7. TROUBLESHOOTING POST-DEPLOY
+
+### Error 500 en APIs
+```
+Vercel Logs:
+TypeError: Cannot read property 'x' of undefined
+
+Causas probables:
+- DATABASE_URL no configurada en Vercel env vars
+- Schema no existe en BD (correr migraciones)
+- Imports con alias incorrectos (@db/*, @core/*)
+```
+
+### Error de Conexion BD
+```
+Vercel Logs:
+ECONNREFUSED 127.0.0.1:5432
+
+Causas:
+- DATABASE_URL apunta a localhost en lugar de Neon
+- Neon connection string mal copiada
+
+Solucion:
+- Copiar connection string de Neon dashboard
+- Verificar que contiene "neon.tech"
+- Agregar ?sslmode=require si falla
+```
+
+### Build failures en Vercel
+```
+Error: Failed to compile
+
+Causas:
+- TypeScript errors en web/
+- Import paths incorrectos (@db/*, @core/*)
+- Missing dependencies
+
+Debug:
+- Revisar "Logs" en Vercel dashboard
+- Ejecutar `npm run build` localmente para replicar
+```
+
+## 8. ROLLBACK SI ES NECESARIO
+
+```bash
+# Ver deployments anteriores
+vercel ls
+
+# Revertir a deployment anterior
+vercel rollback [deployment-id]
+
+# O desde GitHub:
+git revert HEAD
+git push origin main
+# Vercel detecta y redeploya automaticamente
+```
+
+## 9. MONITOREO POST-DEPLOY
+
+### Configurar alertas en Vercel:
+- [ ] Notificaciones de build failures
+- [ ] Notificaciones de errors en serverless
+- [ ] Monitoreo de uptime
+
+### Logs a revisar diariamente:
+```bash
+# Vercel
+vercel logs [project-name]
+
+# Servidor (bots)
+pm2 logs
+pm2 monit
+
+# BD
+# Neon dashboard -> Monitoring
+```
+
+## 10. ROLLOUT GRADUAL (OPCIONAL)
+
+Si quieres ser extra cuidadoso:
+
+1. **Canary Deployment:**
+   - Deploy a staging branch solo
+   - Test completo en staging
+   - Merge a main solo después de validar
+
+2. **Feature Flags:**
+   - Agregar env var ENABLE_NEW_FEATURES
+   - Desactivar features nuevas en Vercel inicialmente
+   - Habilitar gradualmente
+
+3. **Bluе/Green:**
+   - Mantener 2 instancias (blue=vieja, green=nueva)
+   - Switchear traffic una vez green es estable
+
+---
+
+## RESUMEN COMANDO RAPIDO PARA HOY
+
+```bash
+# Testing completo local
+npm run dev
+
+# Build final antes de deploy
+npm run build && echo "✅ BUILD OK"
+
+# Hacer commit y push
+git add -A
+git commit -m "Deployment ready"
+git push origin main
+
+# Vercel detecta automáticamente y deploya
+```
+
+**Dashboard post-deploy:** Revisar https://dashboard.vercel.com en ~2-5 minutos
+
+---
+
+**Generado:** 12 de marzo de 2026  
+**Para:** Deployment a Vercel + testing local  
+**Status:** Listo

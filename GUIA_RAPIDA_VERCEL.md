@@ -1,0 +1,268 @@
+# 📖 GUÍA RÁPIDA - SIGUIENTES PASOS
+
+**Fecha:** 12 de marzo de 2026  
+**Proyecto:** Yukiko  
+**Estado:** ✅ LISTO PARA VERCEL
+
+---
+
+## ¿QUÉ SE COMPLETÓ HOY?
+
+✅ Implementación de 5 features críticas:
+1. **Cooldowns persistentes** - Sistema de ratefimit en base de datos
+2. **Comandos de moderación** - /ban, /warn, /clearban, /unban funcionales
+3. **Sistema de economía expandido** - /buy, /inventory, /clear con cookies reales
+4. **Notificaciones +18** - Aprobación/rechazo automática
+5. **Rastreo de contactos** - Primeros mensajes tracked en BD
+
+✅ **Base de datos**: Dos nuevas tablas creadas en Neon PostgreSQL
+✅ **Servidor homelab**: 5 procesos PM2 corriendo sin errores
+✅ **Build local**: Compilando perfectamente sin errores TypeScript
+✅ **Documentación**: 5 documentos generados para referencia
+
+---
+
+## 🎯 LO PRÓXIMO (HOY O MAÑANA)
+
+### Opción 1: Hacer Deploy a Vercel HOY 🚀
+```bash
+# Paso 1: Verificar todo está listo
+cd /home/miniature/gitrepositories/yukiko
+chmod +x verify-vercel-ready.sh
+./verify-vercel-ready.sh
+
+# Paso 2: Si todo pasó ✅
+git push origin main
+
+# Paso 3: Esperar 5 minutos
+# Vercel auto-detecta y deploya
+
+# Paso 4: Visitar URL en Vercel dashboard
+# https://<tu-dominio>.vercel.app
+```
+
+### Opción 2: Preparar todo hoy, deploy mañana
+- Leer: `TESTING_LOCAL_Y_VERCEL.md` (guía completa)
+- Ejecutar: `./verify-vercel-ready.sh` (confirmación)
+- Dejar listo para mañana
+
+---
+
+## 📚 DOCUMENTOS QUE CREÉ
+
+| Documento | Para qué | Cuándo leer |
+|-----------|----------|-----------|
+| `README_VERCEL_DEPLOYMENT.md` | Paso a paso Vercel | **AHORA (2 min)** |
+| `TESTING_LOCAL_Y_VERCEL.md` | Guía completa testing | Si dudas en deploy |
+| `ALIAS_REFERENCE.md` | Imports y alias errors | Si hay problemas |
+| `INFORME_SESION.md` | Estado general proyecto | Referencia histórica |
+| `verify-vercel-ready.sh` | Verificación automática | Ejecutar antes de push |
+
+---
+
+## ⚡ SI QUIERES HACER DEPLOY AHORA MISMO
+
+```bash
+# 1. Abre terminal en la carpeta del proyecto
+cd /home/miniature/gitrepositories/yukiko
+
+# 2. Verifica que build funciona
+npm run build
+# Debe decir "Listo para producción"
+
+# 3. Verifica que no hay cambios sin guardar
+git status
+# Debe mostrar "working tree clean"
+
+# 4. Sube a GitHub (auto-deploy en Vercel)
+git push origin main
+
+# 5. Abre Vercel dashboard
+# https://dashboard.vercel.com
+# En Projects → Yukiko debería estar deployando
+
+# 6. Espera 5 minutos
+
+# 7. Abre tu URL de Vercel
+# Debería cargar sin error 500
+```
+
+---
+
+## ✅ CHECKLIST PRE-DEPLOYMENT
+
+Antes de hacer `git push`, asegúrate:
+
+- [ ] `.env.local` existe con DATABASE_URL válido
+- [ ] `npm run build` pasa sin errores
+- [ ] `git status` limpio (sin cambios)
+- [ ] Variables de entorno configuradas en Vercel dashboard:
+  - [ ] DATABASE_URL (connection string de Neon)
+  - [ ] ADMIN_SECRET (tu secreto)
+  - [ ] NODE_ENV=production
+
+---
+
+## 🔍 SI ALGO FALLA EN VERCEL
+
+### Error 500 en dashboard
+```
+Causa probable: DATABASE_URL no configurada
+Solución:
+  1. Copia connection string de Neon dashboard
+  2. Va a: Vercel → Settings → Environment Variables
+  3. Pega DATABASE_URL
+  4. Redeploy (Vercel → Redeploy)
+```
+
+### Error "Cannot find module @db"
+```
+Causa: Imports con alias incorrectos
+Solución:
+  1. Revisar web/tsconfig.json
+  2. Verificar que @db/* y @core/* existen
+  3. Revisar ALIAS_REFERENCE.md
+```
+
+### Error de conexión a BD
+```
+Causa: DATABASE_URL apunta a localhost o está mal
+Solución:
+  1. Verificar que es neon.tech
+  2. Incluir ?sslmode=require si es necesario
+  3. Copiar exactamente desde Neon
+```
+
+---
+
+## 📱 TESTING DESPUÉS DEL DEPLOY
+
+Una vez Vercel esté live, prueba:
+
+**En Discord:**
+```
+!balance          → Debería mostrar balance
+!daily            → +100 coins
+!buy vip          → Deducir coins
+!warn @user test  → Registrar advertencia
+```
+
+**En Telegram:**
+```
+/start            → Mensaje bienvenida
+/balance          → Mostrar stats
+/buy vip          → Comprar item
+```
+
+**En WhatsApp:**
+```
+/balance
+/daily
+/buy vip
+```
+
+**En Admin Dashboard:**
+```
+1. Abre: https://tu-vercel-domain.com/admin/login
+2. Verifica que carga sin error 500
+3. Intenta acceder a /admin/stats
+4. Intenta acceder a /admin/verifications
+```
+
+---
+
+## 🎓 NOTAS IMPORTANTES
+
+### 1. Los bots NO se despliegan a Vercel
+- Vercel solo corre: `web/` (Next.js admin)
+- Los bots siguen corriendo en: servidor your-homelab-ip
+- Vercel solo es el frontend
+
+### 2. La BD es compartida
+- Bots en servidor usan: PostgreSQL Neon
+- Web en Vercel accede a: Misma BD Neon
+- Se comunican a través de: API + base de datos compartida
+
+### 3. Si necesitas cambios después de deploy
+```bash
+# Para cambios acá en servidor:
+git pull origin main
+npm run build
+pm2 restart all
+
+# Para cambios en web (Next.js):
+git push origin main
+# Vercel auto-redeploya en 2-5 min
+```
+
+---
+
+## 🚨 EN CASO DE EMERGENCIA (ROLLBACK)
+
+Si el deploy en Vercel falla catastóficamente:
+
+```bash
+# Opcion 1: Revertir último commit
+git revert HEAD
+git push origin main
+# Vercel redeploya con versión anterior
+
+# Opcion 2: Desde Vercel dashboard
+# Deployments → Select previous → Promote
+```
+
+---
+
+## 📞 ACCESOS IMPORTANTES
+
+| Servicio | URL/Comando |
+|----------|-----------|
+| **Neon DB** | https://console.neon.tech |
+| **Vercel** | https://dashboard.vercel.com |
+| **GitHub** | github.com/tu-usuario/yukiko |
+| **Servidor** | `ssh dockerja@your-homelab-ip` |
+| **PM2 logs** | `pm2 logs --lines 50` |
+
+---
+
+## 🎯 OBJETIVO FINAL
+
+```
+TODAY:  verificar todo ✅ → push a main → Vercel deploy automático
+TOMORROW: verificar que está live ✅ → Testing en vivo ✅
+NEXT WEEK: Monitorear estabilidad ✅ → Agregar features nuevas
+```
+
+---
+
+## 💡 TIPS
+
+1. **No hagas merge directo a main** si no estás seguro
+   - Usa branches: `git checkout -b feature/nombre`
+   - Después: `git push origin feature/nombre`
+   - Merge desde GitHub solo si estás seguro
+
+2. **Siempre compila antes de push**
+   - `npm run build` debe decir "Listo"
+   - Si falla localmente, fallará en Vercel
+
+3. **Commiteando cambios pequeños es mejor**
+   - `git commit -m "Fix: arreglar cooldown en telegram"`
+   - No hagas commits gigantes con muchos cambios
+
+4. **Revisa logs regularmente**
+   - Servidor: `pm2 logs --lines 50`
+   - Vercel: Dashboard → Logs
+   - Neon: Monitoring tab
+
+---
+
+**¿Preguntas?**  
+Todos los documentos están en `/home/miniature/gitrepositories/yukiko/`
+
+- `README_VERCEL_DEPLOYMENT.md` - Resumen ejecutivo
+- `TESTING_LOCAL_Y_VERCEL.md` - Guía detallada
+- `ALIAS_REFERENCE.md` - Quick lookup aliases
+- `INFORME_SESION.md` - Estado general
+
+**¡Listo para deploy! 🚀**

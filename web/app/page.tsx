@@ -46,7 +46,7 @@ export default function HomePage() {
             ➕ Añadir a Discord
           </a>
           <a
-            href="https://t.me/YukikoBot"
+            href="https://t.me/YukikoNeko_bot"
             className="bg-[#0088cc] hover:bg-[#006699] px-8 py-3 rounded-full font-semibold transition-colors"
           >
             ➕ Añadir a Telegram

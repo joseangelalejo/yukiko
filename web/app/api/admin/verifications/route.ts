@@ -6,7 +6,7 @@ import { eq, desc } from 'drizzle-orm';
 
 function getDb() {
   const sql = neon(process.env.DATABASE_URL!);
-  return drizzle(sql, { schema });
+  return drizzle(sql as any, { schema });
 }
 
 function checkAuth(req: NextRequest): boolean {
@@ -37,19 +37,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid params' }, { status: 400 });
   }
   const db = getDb();
-
   const [request] = await db
     .select()
     .from(schema.adultRequests)
     .where(eq(schema.adultRequests.id, id))
     .limit(1);
-
   if (!request) {
     return NextResponse.json({ error: 'Request not found' }, { status: 404 });
   }
-
   const now = new Date();
-
   if (action === 'approve') {
     await db
       .update(schema.adultRequests)
@@ -65,6 +61,5 @@ export async function POST(req: NextRequest) {
       .set({ status: 'rejected', reviewedAt: now, reviewedBy: 'admin', rejectionReason: reason ?? null })
       .where(eq(schema.adultRequests.id, id));
   }
-
   return NextResponse.json({ success: true });
 }

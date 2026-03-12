@@ -151,6 +151,7 @@ export const adultRequests = pgTable('adult_requests', {
   reviewedAt: timestamp('reviewed_at'),
   reviewedBy: varchar('reviewed_by', { length: 100 }),
   rejectionReason: text('rejection_reason'),
+  notifiedAt: timestamp('notified_at'),
 });
 
 // ── Cooldowns (persistent) ────────────────────────────────────

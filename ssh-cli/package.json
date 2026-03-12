@@ -1,0 +1,13 @@
+{
+  "name": "@yukiko/ssh-cli",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "yukiko": "./yukiko.ts"
+  },
+  "dependencies": {
+    "commander": "*",
+    "dotenv": "*"
+  }
+}

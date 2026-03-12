@@ -17,21 +17,17 @@ import type { CommandContext } from '@yukiko/core/src/types.ts';
 import { mkdir } from 'fs/promises';
 import 'dotenv/config';
 
-// ── Register commands ────────────────────────────────────────
 [
   ...roleplayCommands,
   ...economyCommands,
   ...adultCommands,
   ...aiCommands,
   ...moderationCommands,
-  ...linkCommands,            // ← nuevo
+  ...linkCommands,
 ].forEach(cmd => registry.register(cmd));
 
 const SESSION_PATH = process.env.WHATSAPP_SESSION_PATH ?? './sessions/whatsapp';
 const PREFIX = '/';
-
-// Tracking de usuarios que ya recibieron el onboarding en esta sesión
-// (para no enviar DM cada vez que arranca el proceso)
 const onboardedThisSession = new Set<string>();
 
 async function startWhatsApp() {
@@ -50,18 +46,36 @@ async function startWhatsApp() {
   });
 
   sock.ev.on('creds.update', saveCreds);
+
   // ── Pairing code ─────────────────────────────────────────
   if (!state.creds.registered) {
     const phone = process.env.WHATSAPP_PHONE ?? '';
     if (!phone) { console.error('Pon WHATSAPP_PHONE en el .env'); process.exit(1); }
-    await new Promise(resolve => {
+
+    let pairingRequested = false;
+
+    await new Promise<void>(resolve => {
       sock.ev.on('connection.update', async (update) => {
-        if (update.qr || update.connection === 'connecting') {
+        if ((update.qr || update.connection === 'connecting') && !pairingRequested) {
+          pairingRequested = true;
           try {
+            await new Promise(r => setTimeout(r, 3000)); // esperar 3s a que el socket esté listo
             const pairingCode = await sock.requestPairingCode(phone);
-            console.log('Codigo de vinculacion WhatsApp: ' + pairingCode);
-          } catch(e) { /* reintentara en el proximo ciclo */ }
-          resolve(null);
+            console.log('\n########################################');
+            console.log('#      CODIGO DE VINCULACION WA        #');
+            console.log('#                                      #');
+            console.log(`#          ${pairingCode}              #`);
+            console.log('#                                      #');
+            console.log('########################################\n');
+            console.log('Tienes 60 segundos para introducirlo en WhatsApp.');
+          } catch(e) {
+            console.error('Error al pedir pairing code:', e);
+            pairingRequested = false;
+          }
+        }
+        if (update.connection === 'open') {
+          console.log('🌨️ Yukiko WhatsApp connected!');
+          resolve();
         }
       });
     });
@@ -79,14 +93,11 @@ async function startWhatsApp() {
     }
   });
 
-  // Helper para enviar DM a un número de WhatsApp
   async function sendDM(phone: string, text: string) {
-    // phone = "34612345678" → JID = "34612345678@s.whatsapp.net"
     const jid = phone.includes('@') ? phone : `${phone}@s.whatsapp.net`;
     await sock.sendMessage(jid, { text });
   }
 
-  // ── Message handler ──────────────────────────────────────
   sock.ev.on('messages.upsert', async ({ messages, type }) => {
     if (type !== 'notify') return;
 
@@ -104,32 +115,20 @@ async function startWhatsApp() {
       const userId = senderId.replace('@s.whatsapp.net', '');
       const displayName = msg.pushName ?? userId;
 
-      // ── Onboarding al primer mensaje (con o sin prefijo) ──
       if (!onboardedThisSession.has(userId)) {
         onboardedThisSession.add(userId);
-
         const { isNew } = await handleNewUser(userId, 'whatsapp', displayName);
-
         if (isNew) {
           const onboardMsg = buildOnboardingMessage('whatsapp', displayName);
-
           if (isGroup) {
-            // En grupos: enviar DM al usuario
-            try {
-              await sendDM(userId, onboardMsg);
-            } catch {
-              // Si falla el DM, enviar en el grupo (menos ideal)
-              await sock.sendMessage(jid, { text: onboardMsg });
-            }
+            try { await sendDM(userId, onboardMsg); }
+            catch { await sock.sendMessage(jid, { text: onboardMsg }); }
           } else {
-            // En privado: enviar directamente
             await sock.sendMessage(jid, { text: onboardMsg });
           }
-          // Continuar — si el mensaje actual tiene un comando, procesarlo igualmente
         }
       }
 
-      // Solo procesar si empieza con el prefijo
       if (!body.startsWith(PREFIX)) continue;
 
       const [commandStr, ...args] = body.slice(PREFIX.length).trim().split(/\s+/);
@@ -137,7 +136,6 @@ async function startWhatsApp() {
       const command = registry.get(commandName);
       if (!command) continue;
 
-      // Cooldown
       if (command.cooldown && isOnCooldown(userId, commandName, command.cooldown)) {
         const remaining = remainingCooldown(userId, commandName, command.cooldown);
         await sock.sendMessage(jid, {
@@ -146,7 +144,6 @@ async function startWhatsApp() {
         continue;
       }
 
-      // Build context
       const ctx: CommandContext = {
         platform: 'whatsapp',
         userId,

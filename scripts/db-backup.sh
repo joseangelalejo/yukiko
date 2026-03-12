@@ -22,7 +22,13 @@ if [[ -z "${DATABASE_URL:-}" ]]; then
   exit 1
 fi
 
-pg_dump "$DATABASE_URL" > "$BACKUP_FILE" 2>/dev/null
+if ! command -v pg_dump &>/dev/null; then
+  echo "❌ pg_dump no instalado."
+  echo "   Arch:   sudo pacman -S postgresql"
+  echo "   Debian: sudo apt install postgresql-client"
+  exit 1
+fi
+pg_dump "$DATABASE_URL" > "$BACKUP_FILE"
 ln -sf "$BACKUP_FILE" "$LATEST_LINK"
 
 SIZE=$(du -sh "$BACKUP_FILE" | cut -f1)

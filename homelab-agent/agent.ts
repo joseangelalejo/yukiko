@@ -9,6 +9,15 @@ const PORT = 3001;
 const CWD = '/home/dockerja/docker-compose-files/yukiko';
 
 const server = http.createServer((req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+
+  // Health check público — no requiere auth
+  if (req.url === '/health' && req.method === 'GET') {
+    res.writeHead(200);
+    res.end(JSON.stringify({ ok: true, uptime: process.uptime() }));
+    return;
+  }
+
   const auth = req.headers['authorization']?.replace('Bearer ', '');
   if (auth !== SECRET) {
     res.writeHead(401);

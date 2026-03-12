@@ -3,13 +3,14 @@
 
 Fecha: 12 de marzo de 2026  
 Proyecto: Yukiko Bot + Web  
-Status: ✅ PRODUCCIÓN OPERATIVA (Servidor your-homelab-ip) + BUILD EXITOSO (18:46 GMT)
+Status: ✅ DESARROLLO OPERATIVO (npm run dev) + PRODUCCIÓN PREPARADA (PM2 pausado) - BUILD EXITOSO (18:46 GMT)
 
 🎯 HITOS ALCANZADOS:
    • npm install → Workspace @yukiko/db reconocido ✅
    • npm run build → TypeScript compilado sin errores ✅
-   • pm2 restart all → Los 5 procesos ONLINE ✅
-   • Commits: 8dbfc9d → aaf75c3 → 77305bd → a437842 → a1e701d ✅
+   • npm run dev → 4 procesos + web ONLINE en desarrollo ✅
+   • Vercel deployment intentado → Rate-limited (100+ deploys/day) ⏳
+   • Commits: 8dbfc9d → aaf75c3 → 77305bd → a437842 → a1e701d → b644f43 ✅
 
 ---
 

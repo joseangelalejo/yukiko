@@ -6,6 +6,8 @@ import makeWASocket, {
 } from '@whiskeysockets/baileys';
 import { Boom } from '@hapi/boom';
 import { registry } from '@yukiko/core/src/registry.ts';
+import { db, knownContacts } from '@yukiko/db/index.ts';
+import { eq, and } from 'drizzle-orm';
 import { roleplayCommands } from '@yukiko/roleplay';
 import { economyCommands } from '@yukiko/economy';
 import { adultCommands } from '@yukiko/adult';
@@ -13,6 +15,7 @@ import { aiCommands } from '@yukiko/ai';
 import { moderationCommands } from '@yukiko/moderation';
 import { linkCommands, handleNewUser } from '@yukiko/link';
 import { isOnCooldown, remainingCooldown, addXp, logCommand } from '@yukiko/core/src/utils.ts';
+import { checkAdultVerificationNotifications } from '@yukiko/core/src/notifications.ts';
 import type { CommandContext } from '@yukiko/core/src/types.ts';
 import { mkdir } from 'fs/promises';
 import 'dotenv/config';
@@ -124,6 +127,35 @@ async function startWhatsApp() {
       if (!onboardedThisSession.has(userId)) {
         onboardedThisSession.add(userId);
         await handleNewUser(userId, 'whatsapp', displayName);
+
+        // Verificar si es un contacto conocido
+        // Si no, guardarlo y enviar bienvenida
+        if (!isGroup) {
+          const [existing] = await db
+            .select()
+            .from(knownContacts)
+            .where(
+              and(
+                eq(knownContacts.platformId, userId),
+                eq(knownContacts.platform, 'whatsapp')
+              )
+            )
+            .limit(1);
+
+          if (!existing) {
+            // Nuevo contacto — guardar y enviar bienvenida
+            await db.insert(knownContacts).values({
+              platformId: userId,
+              platform: 'whatsapp',
+              targetPlatformId: userId,
+              targetDisplayName: displayName,
+            });
+
+            await sock.sendMessage(jid, {
+              text: `¡Hola *${displayName}*! 👋\n\nSoy *Yukiko*, un bot multi-plataforma 🌨️\n\nUsa */help* para ver todos mis comandos.\n\n🎮 Puedo:\n• Juegos de rol\n• Sistema de economía\n• Contenido +18\n• IA\n• Y mucho más...\n\n¡Bienvenido/a!`,
+            });
+          }
+        }
       }
 
       if (!body.startsWith(PREFIX)) continue;
@@ -133,8 +165,8 @@ async function startWhatsApp() {
       const command = registry.get(commandName);
       if (!command) continue;
 
-      if (command.cooldown && isOnCooldown(userId, commandName, command.cooldown)) {
-        const remaining = remainingCooldown(userId, commandName, command.cooldown);
+      if (command.cooldown && await isOnCooldown(userId, commandName, command.cooldown)) {
+        const remaining = await remainingCooldown(userId, commandName, command.cooldown);
         await sock.sendMessage(jid, {
           text: `⏰ Espera *${remaining}s* antes de usar este comando.`,
         }, { quoted: msg });
@@ -181,6 +213,18 @@ async function startWhatsApp() {
         await command.execute(ctx);
         await addXp(userId, 5);
         await logCommand({ platform: 'whatsapp', userId, command: commandName, args, success: true });
+
+        // Check for adult verification notifications
+        if (!isGroup) {
+          await checkAdultVerificationNotifications(
+            'whatsapp',
+            userId,
+            displayName,
+            async (msg: string) => {
+              await sock.sendMessage(jid, { text: msg });
+            }
+          );
+        }
       } catch (err) {
         const errMsg = err instanceof Error ? err.message : 'Error';
         await logCommand({ platform: 'whatsapp', userId, command: commandName, args, success: false, error: errMsg });

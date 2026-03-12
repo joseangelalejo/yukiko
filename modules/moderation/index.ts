@@ -1,7 +1,7 @@
 import type { Command, CommandContext } from '../../core/src/types.js';
 import { db, users, warnings, groups } from '../../db/index.js';
 import { eq, and, desc } from 'drizzle-orm';
-import { getOrCreateUser } from '../../core/src/utils.js';
+import { getOrCreateUser, resolveEffectiveUser } from '../../core/src/utils.js';
 
 export const moderationCommands: Command[] = [
   // ── Warn ──────────────────────────────────────────────────
@@ -22,24 +22,51 @@ export const moderationCommands: Command[] = [
         return;
       }
 
-      // Buscar al emisor para usar como issuedBy
-      const issuer = await db
-        .select({ id: users.id })
-        .from(users)
-        .where(and(eq(users.platformId, ctx.userId), eq(users.platform, ctx.platform)))
-        .limit(1);
-
-      if (issuer[0]) {
-        try {
-          await db.insert(warnings).values({
-            userId: issuer[0].id, // placeholder: idealmente sería el ID del target
-            reason,
-            issuedBy: issuer[0].id,
-          });
-        } catch { /* si el target no está en BD, solo respondemos */ }
+      // Obtener al emisor
+      const issuer = await getOrCreateUser(ctx.userId, ctx.platform, ctx.displayName);
+      const effectiveIssuer = await resolveEffectiveUser(issuer.id);
+      if (!effectiveIssuer) {
+        await ctx.reply('❌ Error al procesar el warn.');
+        return;
       }
 
-      await ctx.reply(`⚠️ **${mention}** ha sido advertido/a.\nMotivo: ${reason}`);
+      // Buscar al usuario objetivo por displayName
+      const mentionClean = mention.replace(/^@/, '');
+      const [target] = await db
+        .select()
+        .from(users)
+        .where(and(eq(users.platform, ctx.platform), eq(users.displayName, mentionClean)))
+        .limit(1);
+
+      if (!target) {
+        await ctx.reply(`❌ No se encontró al usuario **${mention}**. Debe haber usado el bot al menos una vez.`);
+        return;
+      }
+
+      // Contar warns previos de este usuario
+      const prevWarns = await db
+        .select()
+        .from(warnings)
+        .where(eq(warnings.userId, target.id));
+
+      // Insertar warn
+      await db.insert(warnings).values({
+        userId: target.id,
+        groupId: ctx.groupId ? undefined : undefined, // podría obtener del grupo
+        reason,
+        issuedBy: effectiveIssuer.id,
+      });
+
+      const newWarnCount = prevWarns.length + 1;
+      let msg = `⚠️ **${target.displayName}** ha sido advertido/a (${newWarnCount}/3)\nMotivo: ${reason}`;
+
+      if (newWarnCount >= 3) {
+        // Auto-ban después de 3 warns
+        await db.update(users).set({ isBanned: true, banReason: 'Acumuló 3 advertencias' }).where(eq(users.id, target.id));
+        msg = `🔨 **${target.displayName}** ha sido BANEADO por acumular 3 advertencias.\nMotivo: ${reason}`;
+      }
+
+      await ctx.reply(msg);
     },
   },
 
@@ -57,7 +84,35 @@ export const moderationCommands: Command[] = [
         await ctx.reply('❌ Uso: /warns @usuario');
         return;
       }
-      await ctx.reply(`📋 Advertencias de ${mention}: (ver panel de admin en /dashboard)`);
+
+      const mentionClean = mention.replace(/^@/, '');
+      const [target] = await db
+        .select()
+        .from(users)
+        .where(and(eq(users.platform, ctx.platform), eq(users.displayName, mentionClean)))
+        .limit(1);
+
+      if (!target) {
+        await ctx.reply(`❌ No se encontró al usuario **${mention}**.`);
+        return;
+      }
+
+      const warns = await db
+        .select()
+        .from(warnings)
+        .where(eq(warnings.userId, target.id))
+        .orderBy(desc(warnings.issuedAt));
+
+      if (!warns.length) {
+        await ctx.reply(`✅ **${target.displayName}** no tiene advertencias.`);
+        return;
+      }
+
+      const lines = warns.map(
+        (w, i) => `${i + 1}. **${w.reason}** (${new Date(w.issuedAt).toLocaleDateString()})`
+      );
+
+      await ctx.reply(`📋 **Advertencias de ${target.displayName}** (${warns.length}/3)\n\n${lines.join('\n')}`);
     },
   },
 
@@ -78,7 +133,26 @@ export const moderationCommands: Command[] = [
         return;
       }
 
-      await ctx.reply(`🔨 **${mention}** ha sido baneado/a del bot.\nMotivo: ${reason}`);
+      const mentionClean = mention.replace(/^@/, '');
+      const [target] = await db
+        .select()
+        .from(users)
+        .where(and(eq(users.platform, ctx.platform), eq(users.displayName, mentionClean)))
+        .limit(1);
+
+      if (!target) {
+        await ctx.reply(`❌ No se encontró al usuario **${mention}**.`);
+        return;
+      }
+
+      if (target.isBanned) {
+        await ctx.reply(`⚠️ **${target.displayName}** ya estaba baneado.`);
+        return;
+      }
+
+      await db.update(users).set({ isBanned: true, banReason: reason }).where(eq(users.id, target.id));
+
+      await ctx.reply(`🔨 **${target.displayName}** ha sido baneado/a del bot.\nMotivo: ${reason}`);
     },
   },
 
@@ -96,26 +170,64 @@ export const moderationCommands: Command[] = [
         await ctx.reply('❌ Uso: /unban @usuario');
         return;
       }
-      await ctx.reply(`✅ **${mention}** ha sido desbaneado/a.`);
+
+      const mentionClean = mention.replace(/^@/, '');
+      const [target] = await db
+        .select()
+        .from(users)
+        .where(and(eq(users.platform, ctx.platform), eq(users.displayName, mentionClean)))
+        .limit(1);
+
+      if (!target) {
+        await ctx.reply(`❌ No se encontró al usuario **${mention}**.`);
+        return;
+      }
+
+      if (!target.isBanned) {
+        await ctx.reply(`⚠️ **${target.displayName}** no está baneado.`);
+        return;
+      }
+
+      await db.update(users).set({ isBanned: false, banReason: null }).where(eq(users.id, target.id));
+
+      await ctx.reply(`✅ **${target.displayName}** ha sido desbaneado/a.`);
     },
   },
 
-  // ── Clear messages (Discord only) ─────────────────────────
+  // ── Clearban (limpiar warns y ban) ────────────────────────
   {
-    name: 'clear',
-    aliases: ['purge', 'limpiar'],
-    description: 'Elimina mensajes del chat (Discord)',
+    name: 'clearban',
+    aliases: ['limpiar_warn'],
+    description: 'Limpia los warns y desbanea a un usuario',
     category: 'moderation',
-    platforms: ['discord'],
+    platforms: ['discord', 'telegram', 'whatsapp'],
     adminOnly: true,
     execute: async (ctx: CommandContext) => {
-      const amount = parseInt(ctx.args[0] ?? '10');
-      if (isNaN(amount) || amount < 1 || amount > 100) {
-        await ctx.reply('❌ Uso: /clear <1-100>');
+      const mention = ctx.args[0];
+      if (!mention) {
+        await ctx.reply('❌ Uso: /clearban @usuario');
         return;
       }
-      // Actual deletion handled by Discord platform adapter
-      await ctx.reply(`🗑️ Eliminando ${amount} mensajes...`);
+
+      const mentionClean = mention.replace(/^@/, '');
+      const [target] = await db
+        .select()
+        .from(users)
+        .where(and(eq(users.platform, ctx.platform), eq(users.displayName, mentionClean)))
+        .limit(1);
+
+      if (!target) {
+        await ctx.reply(`❌ No se encontró al usuario **${mention}**.`);
+        return;
+      }
+
+      // Eliminar todos los warns
+      await db.delete(warnings).where(eq(warnings.userId, target.id));
+
+      // Desbanear
+      await db.update(users).set({ isBanned: false, banReason: null }).where(eq(users.id, target.id));
+
+      await ctx.reply(`✅ **${target.displayName}** — warns eliminados y baneado quitado.`);
     },
   },
 

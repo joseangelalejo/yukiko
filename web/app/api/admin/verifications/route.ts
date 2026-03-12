@@ -61,10 +61,9 @@ export async function POST(req: NextRequest) {
     await db.update(users).set({ isVerifiedAdult: true })
       .where(eq(users.id, request.userId));
 
-    // TODO: send notification to user via their platform bot
-    // This requires inter-process communication (e.g. Redis pub/sub or a shared queue)
-    // Platform bots subscribe to 'yukiko:notifications' channel
-    // and send DM to the user when they receive an approval/rejection message
+    // Notificación: guardar en una tabla temporal o enviar de inmediato  
+    // Por ahora, el bot periódicamente consultará por cambios recientes
+    console.log(`✅ APROBADO: ${request.displayName} (${request.platformUserId}) en ${request.platform}`);
 
     return NextResponse.json({ ok: true, action: 'approved', userId: request.userId });
   } else {
@@ -74,6 +73,8 @@ export async function POST(req: NextRequest) {
       reviewedBy: 'admin',
       rejectionReason: reason ?? null,
     }).where(eq(adultRequests.id, id));
+
+    console.log(`❌ RECHAZADO: ${request.displayName} (${request.platformUserId}) en ${request.platform}`);
 
     return NextResponse.json({ ok: true, action: 'rejected' });
   }

@@ -152,3 +152,22 @@ export const adultRequests = pgTable('adult_requests', {
   reviewedBy: varchar('reviewed_by', { length: 100 }),
   rejectionReason: text('rejection_reason'),
 });
+
+// ── Cooldowns (persistent) ────────────────────────────────────
+export const cooldowns = pgTable('cooldowns', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').references(() => users.id).notNull(),
+  command: varchar('command', { length: 100 }).notNull(),
+  expiresAt: timestamp('expires_at').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+// ── Known contacts (WhatsApp/Telegram: para no spamear con bienvenida) ───
+export const knownContacts = pgTable('known_contacts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  platformId: varchar('platform_id', { length: 100 }).notNull(),
+  platform: varchar('platform', { length: 20 }).notNull(),
+  targetPlatformId: varchar('target_platform_id', { length: 100 }).notNull(),
+  targetDisplayName: varchar('target_display_name', { length: 100 }),
+  firstContactAt: timestamp('first_contact_at').defaultNow().notNull(),
+});

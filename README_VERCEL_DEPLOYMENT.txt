@@ -2,9 +2,9 @@
 🎯 RESUMEN EJECUTIVO - YUKIKO DEPLOYMENT READY
 
 Estado: ✅ LISTO PARA VERCEL & SERVIDOR  
-Última actualización: 12 de marzo de 2026  
-Servidor Producción: your-homelab-ip (5/5 procesos online)
-Últimos fixes: Sintaxis Telegram corregida, imports .ts removidos, bot Telegram @YukikoNeko_bot ✅
+Última actualización: 12 de marzo de 2026 (ACTUALIZADO)  
+Servidor Producción: your-homelab-ip (En sincronización)
+Últimos fixes: Sintaxis Telegram ✅, imports .ts removidos ✅, @YukikoNeko_bot ✅, @yukiko/db workspace ✅
 
 ---
 
@@ -18,11 +18,15 @@ Servidor Producción: your-homelab-ip (5/5 procesos online)
 - Build compilando sin errores de sintaxis o imports
 - ✅ FIXED: Error de sintaxis en Telegram (línea 119-120: extra brace y typo)
 - ✅ FIXED: Imports con extensión .ts removidos de @yukiko/* paths
-- ✅ UPDATED: Bot Telegram link a @YukikoNeko_bot en web/app/page.tsx
+- ✅ FIXED: Bot Telegram link a @YukikoNeko_bot en web/app/page.tsx
+- ✅ FIXED: db no en workspaces (agregado a package.json + db/package.json creado)
 - 4 documentos de referencia generados
+- Servidor your-homelab-ip: git pull completado, listo para npm install && npm run build
 
-⏭️ LISTO PARA HACER:
-- Deploy a Vercel con `git push origin main`
+⏭️ LISTO PARA HACER (EN ORDEN):
+1. En servidor your-homelab-ip: `npm install && npm run build && pm2 restart all`
+2. Esperar que build pase sin errores
+3. Deploy a Vercel con `git push origin main` (o ya está sincronizado)
 
 ---
 

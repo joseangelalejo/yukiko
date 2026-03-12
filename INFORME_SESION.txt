@@ -31,15 +31,16 @@ Trabajo Completado
 
 Host: your-homelab-ip  
 Usuario: dockerja  
-Comando conexión: `ssh dockerja@your-homelab-ip`
+Comando conexión: `ssh dockerja@your-homelab-ip`  
+**Última acción: git pull origin main completado ✅**
 
-Procesos PM2 (Activos)
+Procesos PM2 (Activos - serán reiniciados después de build)
 ```
-[PM2] yukiko-discord (pid 161767)   ✅ ONLINE
-[PM2] yukiko-telegram (pid 161768)  ✅ ONLINE
-[PM2] yukiko-whatsapp (pid 161793)  ✅ ONLINE
-[PM2] yukiko-agent (pid 161794)     ✅ ONLINE
-[PM2] yukiko-web (pid 161838)       ✅ ONLINE
+[PM2] yukiko-discord (pid 161767)   ✅ ONLINE (código anterior)
+[PM2] yukiko-telegram (pid 161768)  ✅ ONLINE (código anterior)
+[PM2] yukiko-whatsapp (pid 161793)  ✅ ONLINE (código anterior)
+[PM2] yukiko-agent (pid 161794)     ✅ ONLINE (código anterior)
+[PM2] yukiko-web (pid 161838)       ✅ ONLINE (código anterior)
 ```
 
 Base de Datos
@@ -50,11 +51,11 @@ Base de Datos
 
 Build Estado
 ```
-✅ npm run build: Sin errores
-✅ Web: 13 páginas compiladas en 2.5s
-✅ Bots: TypeScript compilado sin errores de sintaxis
-✅ Cache: Limpio y optimizado
+⏳ PRÓXIMO: npm install (para resolver nuevo workspace @yukiko/db)
+⏳ PRÓXIMO: npm run build (compilar con workspace actualizado)
 ✅ Imports: Extensiones .ts removidas de @yukiko/* paths
+✅ Workspaces: db agregado al package.json y db/package.json creado
+✅ Git sync: Servidor en sync con origin/main (8dbfc9d)
 ```
 
 ---
@@ -186,11 +187,22 @@ npm run build                # Compilar y ver si alias se resuelven
 
 ---
 
-⚠️ PROBLEMAS CONOCIDOS & SOLUCIONES
+⚠️ FIXES APLICADOS EN ESTA SESION
+
+| Problema | Causa | Solución | Status |
+|----------|-------|----------|--------|
+| Cannot resolve @yukiko/db | db no registrado en workspaces | Crear db/package.json + agregar db a workspaces | ✅ DONE (commit 8dbfc9d) |
+| Syntax error Telegram línea 119 | Extra brace + typo "awaitng" | Reescribir const userId y args parsing | ✅ DONE (commit dfdbcb2) |
+| Cannot find module @yukiko/db/.ts | Imports con extensión .ts | Remover .ts de todos imports @yukiko/* | ✅ DONE (commit dfdbcb2) |
+| Bot link incorrecta en web | @YukikoBot vs @YukikoNeko_bot | Actualizar href en web/app/page.tsx | ✅ DONE (commit c1e2502) |
+
+---
+
+⚠️ PROBLEMAS POTENCIALES (post-npm install)
 
 | Problema | Causa | Solución |
 |----------|-------|----------|
-| Cannot find module @db | web no usa alias | Cambiar a `import from '@db/...'` |
+| "Cannot find module @db" en build | npm install no resolvió workspace | Ejecutar `npm install` nuevamente en servidor |
 | SQL type conflicts | monorepo drizzle-orm mismatch | Usar raw SQL o simplificar queries |
 | Cooldowns no persisten | Función no es async | Cambiar a `await isOnCooldown()` |
 | knownContacts no se inserta | No llamando función | Ir a start command e insertar explícitamente |

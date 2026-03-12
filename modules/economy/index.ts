@@ -1,6 +1,6 @@
 import type { Command, CommandContext } from '../../core/src/types.js';
 import { db, users, transactions, pets } from '../../db/index.js';
-import { eq, desc, sql } from 'drizzle-orm';
+import { eq, desc, sql, and } from 'drizzle-orm';
 import { getOrCreateUser } from '../../core/src/utils.js';
 
 const DAILY_AMOUNT = 100;

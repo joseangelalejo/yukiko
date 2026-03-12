@@ -9,3 +9,8 @@ backups/
 .DS_Store
 *.session.json
 auth_info_*/
+
+# Next.js generated files
+next-env.d.ts
+web/next-env.d.ts
+web/tsconfig.json

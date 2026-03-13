@@ -107,7 +107,7 @@ bot.command('start', async (ctx) => {
     }
   } catch (err) {
     console.error('[/start ERROR]', err);
-    try { await ctx.reply('❌ Error al iniciar. Inténtalo de nuevo.'); } catch (_) {}
+    try { await ctx.reply('❌ Error al iniciar. Inténtalo de nuevo.'); } catch (_) { /* silenced */ }
   }
 });
 

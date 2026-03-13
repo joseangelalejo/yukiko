@@ -217,7 +217,8 @@ client.on('interactionCreate', async interaction => {
       await interaction.editReply('❌ Ocurrió un error al ejecutar el comando.');
     }
   }
-  if (!isGroup) {
+  const isDM = (interaction.channel?.type as number) === (ChannelType.DM as number);
+  if (isDM) {
     checkAdultVerificationNotifications(
       'discord', interaction.user.id, interaction.user.username,
       async (msg) => { await interaction.user.send(msg); }

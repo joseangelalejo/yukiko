@@ -171,26 +171,30 @@ function setupCommand(commandName: string) {
       return;
     }
 
+    const yukikoCtx = buildContext(ctx, commandName, args);
+
     try {
       await command.execute(yukikoCtx);
       await addXp(userId, 5);
       await logCommand({ platform: 'telegram', userId, command: commandName, args, success: true });
+
+      // Check for adult verification notifications (DM only)
+      if (ctx.chat?.type === 'private') {
+        try {
+          await checkAdultVerificationNotifications(
+            'telegram',
+            userId,
+            displayName,
+            async (msg: string) => {
+              await ctx.reply(msg, { parse_mode: 'Markdown' });
+            }
+          );
+        } catch {}
+      }
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Error';
       await logCommand({ platform: 'telegram', userId, command: commandName, args, success: false, error: msg });
       await ctx.reply('❌ Error al ejecutar el comando.');
-    }
-    if (ctx.chat?.type === 'private') {
-      try {
-        await checkAdultVerificationNotifications(
-          'telegram', userId, displayName,
-          async (msg: string) => { await ctx.reply(msg, { parse_mode: 'Markdown' }); }
-        );
-      } catch {}
-    }
-          );
-        } catch {}
-      }
     }
   });
 }

@@ -188,7 +188,7 @@ client.on('interactionCreate', async interaction => {
       // El usuario tiene DMs cerrados — responder en el canal
       await interaction.reply({
         content: buildOnboardingMessage('discord', interaction.user.username),
-        ephemeral: true,
+        flags: 64,
       });
       return;
     }
@@ -198,7 +198,7 @@ client.on('interactionCreate', async interaction => {
   // Cooldown check
   if (command.cooldown && isOnCooldown(interaction.user.id, command.name, command.cooldown)) {
     const remaining = remainingCooldown(interaction.user.id, command.name, command.cooldown);
-    await interaction.reply({ content: `⏰ Espera **${remaining}s** antes de usar este comando.`, ephemeral: true });
+    await interaction.reply({ content: `⏰ Espera **${remaining}s** antes de usar este comando.`, flags: 64 });
     return;
   }
 
@@ -211,6 +211,7 @@ client.on('interactionCreate', async interaction => {
     await logCommand({ platform: 'discord', userId: interaction.user.id, command: command.name, args, success: true });
   } catch (err) {
     const msg = err instanceof Error ? err.message : 'Error desconocido';
+    console.error('[Discord ERROR]', err);
     await logCommand({ platform: 'discord', userId: interaction.user.id, command: command.name, args, success: false, error: msg });
     if (!interaction.replied) {
       await interaction.editReply('❌ Ocurrió un error al ejecutar el comando.');

@@ -22,10 +22,10 @@
 | **Discord** | ✅ ONLINE | Yukiko#3557 (slash commands) |
 | **Telegram** | ✅ ONLINE | @YukikoNeko_bot |
 | **WhatsApp** | ✅ ONLINE | Sesión activa (34694244477) |
-| **Web (Next.js)** | ✅ ONLINE | [your-app-domain.com](https://your-app-domain.com) |
+| **Web (Next.js)** | ✅ ONLINE | [yukiko.vercel.app](https://yukiko.vercel.app) · [your-app-domain.com](https://your-app-domain.com) |
 | **Admin dashboard** | ✅ ONLINE | [your-app-domain.com/admin](https://your-app-domain.com/admin) |
 | **Base de datos** | ✅ READY | Neon PostgreSQL |
-| **Último commit** | ✅ 12 mar 2026 | 5fc7149 |
+| **Último commit** | ✅ Ver [commits](https://github.com/joseangelalejo/yukiko/commits/main) | — |
 
 ---
 
@@ -47,7 +47,7 @@
 | 🎭 Roleplay | hug, kiss, pat, slap, dance, +8 más | ✅ | ✅ | ✅ |
 | 💰 Economía | balance, daily, transfer, top, shop, buy, inventory | ✅ | ✅ | ✅ |
 | 🤖 IA | ask, imagine, rp, translate | ✅ | ✅ | ✅ |
-| 🔨 Moderación | warn, warns, ban, unban, clearban, prefix, stats | ✅ | ✅ | ✅ |
+| 🔨 Moderación | warn, warns, ban, unban, clearban, prefix, stats, help | ✅ | ✅ | ✅ |
 | 🔞 +18 | hentai, redgifs, adult on/off, verify18 | ✅ | ✅ | ✅ |
 | 🔗 Link | link, linkcode, accounts, unlink | ✅ | ✅ | ✅ |
 
@@ -86,10 +86,10 @@ yukiko/
 │   ├── telegram/   # Grammy — BotFather integration
 │   └── whatsapp/   # Baileys — protocolo WA Web
 ├── modules/
-│   ├── roleplay/   # GIFs via Tenor API
+│   ├── roleplay/   # GIFs via Giphy API
 │   ├── economy/    # Monedas, niveles, inventario, tienda
 │   ├── adult/      # Danbooru + RedGifs con verificación +18
-│   ├── ai/         # GPT-4o + DALL-E 3
+│   ├── ai/         # Ollama (llama3.2) + Pollinations.ai
 │   ├── moderation/ # Warn, ban, logs
 │   └── link/       # Vinculación de cuentas multiplataforma
 ├── web/            # Next.js → Vercel (landing + admin + monitor)
@@ -121,11 +121,12 @@ yk-restart-all
 Ver referencia completa de aliases: [ALIASES_YUKIKO.md](ALIASES_YUKIKO.md)
 
 **Flujo CI/CD:**
-1. `git push origin main` → GitHub Actions
+1. `git push origin dev` → GitHub Actions
 2. Lint & Type Check
-3. Deploy bots vía SSH al homelab
-4. Deploy web automático a Vercel
-5. Deploy docs a GitHub Pages
+3. Pull Request `dev` → `main` (requiere lint verde)
+4. Deploy bots vía SSH al homelab
+5. Deploy web automático a Vercel
+6. Deploy docs a GitHub Pages
 
 ---
 
@@ -163,9 +164,10 @@ Disponible en [your-app-domain.com/admin](https://your-app-domain.com/admin)
 | [Vercel](https://vercel.com) | Web (Next.js) | Gratis |
 | GitHub Pages | Documentación | Gratis |
 | GitHub Actions | CI/CD | Gratis |
-| Tenor API | GIFs roleplay | Gratis |
+| Giphy API | GIFs roleplay | Gratis |
 | Danbooru | Imágenes +18 | Gratis |
 | RedGifs | GIFs +18 | Gratis |
+| Ollama (llama3.2:3b) | IA local | Self-hosted |
 | Tailscale Funnel | Túnel HTTPS homelab | Gratis |
 | Homelab Proxmox VE | Bots 24/7 (32 GB RAM DDR4) | Self-hosted |
 

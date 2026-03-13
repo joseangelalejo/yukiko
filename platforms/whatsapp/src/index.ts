@@ -118,9 +118,6 @@ async function startWhatsApp() {
       return false;
     }
   }
-      return false;
-    }
-  }
 
   const startupTime = Date.now();
   const STARTUP_GRACE_MS = 15_000;

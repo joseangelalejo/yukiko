@@ -1,15 +1,12 @@
 import type { Command, CommandContext } from '../../core/src/types.js';
 
-// ── OpenAI chat ────────────────────────────────────────────────
-async function askGPT(prompt: string, systemPrompt?: string): Promise<string> {
-  const res = await fetch('https://api.openai.com/v1/chat/completions', {
+// ── Ollama chat ────────────────────────────────────────────────
+async function askOllama(prompt: string, systemPrompt?: string): Promise<string> {
+  const res = await fetch('http://127.0.0.1:11434/v1/chat/completions', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      model: process.env.OPENAI_MODEL ?? 'gpt-4o',
+      model: process.env.OLLAMA_MODEL ?? 'llama3.2:3b',
       messages: [
         {
           role: 'system',
@@ -32,30 +29,10 @@ async function askGPT(prompt: string, systemPrompt?: string): Promise<string> {
   return data.choices[0].message.content.trim();
 }
 
-// ── DALL-E image generation ───────────────────────────────────
+// ── Pollinations image generation ─────────────────────────────
 async function generateImage(prompt: string): Promise<string> {
-  const res = await fetch('https://api.openai.com/v1/images/generations', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-    },
-    body: JSON.stringify({
-      model: 'dall-e-3',
-      prompt: `anime style, ${prompt}`,
-      n: 1,
-      size: '1024x1024',
-      quality: 'standard',
-    }),
-  });
-
-  const data = await res.json() as {
-    data: Array<{ url: string }>;
-    error?: { message: string };
-  };
-
-  if (data.error) throw new Error(data.error.message);
-  return data.data[0].url;
+  const encoded = encodeURIComponent(`anime style, ${prompt}`);
+  return `https://image.pollinations.ai/prompt/${encoded}?width=1024&height=1024&nologo=true`;
 }
 
 export const aiCommands: Command[] = [
@@ -74,8 +51,9 @@ export const aiCommands: Command[] = [
         return;
       }
 
+      await ctx.reply('🤔 Pensando...');
       try {
-        const response = await askGPT(prompt);
+        const response = await askOllama(prompt);
         await ctx.reply(`🤖 ${response}`);
       } catch (err) {
         await ctx.reply('❌ Hubo un error al consultar la IA. Intenta más tarde.');
@@ -87,7 +65,7 @@ export const aiCommands: Command[] = [
   {
     name: 'imagine',
     aliases: ['generar', 'dream', 'draw'],
-    description: 'Genera una imagen con IA (DALL-E 3)',
+    description: 'Genera una imagen con IA',
     category: 'ai',
     platforms: ['discord', 'telegram', 'whatsapp'],
     cooldown: 30,
@@ -99,6 +77,7 @@ export const aiCommands: Command[] = [
       }
 
       try {
+        await ctx.reply('🎨 Generando imagen...');
         const url = await generateImage(prompt);
         await ctx.replyWithImage(url, `🎨 "${prompt}"`);
       } catch (err) {
@@ -127,8 +106,9 @@ export const aiCommands: Command[] = [
         'Interpretas situaciones de roleplay de anime de forma creativa y divertida. ' +
         'Responde siempre en español y mantén el personaje.';
 
+      await ctx.reply('🐱 Yukiko está pensando...');
       try {
-        const response = await askGPT(text, system);
+        const response = await askOllama(text, system);
         await ctx.reply(`🐱 *${response}*`);
       } catch {
         await ctx.reply('❌ Error en el roleplay IA. Intenta más tarde.');
@@ -152,8 +132,9 @@ export const aiCommands: Command[] = [
         return;
       }
 
+      await ctx.reply('🌐 Traduciendo...');
       try {
-        const response = await askGPT(
+        const response = await askOllama(
           `Traduce al ${lang}: "${text}". Responde SOLO con la traducción, sin explicaciones.`
         );
         await ctx.reply(`🌐 **${lang}:** ${response}`);

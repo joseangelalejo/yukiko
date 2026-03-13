@@ -287,4 +287,51 @@ export const moderationCommands: Command[] = [
       );
     },
   },
+
+  // ── Help ─────────────────────────────────────────────────
+  {
+    name: 'help',
+    aliases: ['ayuda', 'comandos', 'h'],
+    description: 'Muestra todos los comandos disponibles',
+    category: 'utility',
+    platforms: ['discord', 'telegram', 'whatsapp'],
+    execute: async (ctx: CommandContext) => {
+      const msg =
+        '🌨️ **Yukiko — Comandos disponibles**\n\n' +
+        '🤖 **IA**\n' +
+        '`/ask` — Pregúntale algo a Yukiko\n' +
+        '`/imagine` — Genera una imagen con IA\n' +
+        '`/rp` — Roleplay con IA\n' +
+        '`/translate` — Traduce texto\n\n' +
+        '💰 **Economía**\n' +
+        '`/daily` — Recompensa diaria\n' +
+        '`/balance` — Ver tus monedas\n' +
+        '`/shop` — Tienda\n' +
+        '`/buy` — Comprar item\n' +
+        '`/inventory` — Ver inventario\n' +
+        '`/transfer` — Transferir monedas\n' +
+        '`/top` — Ranking de usuarios\n' +
+        '`/levels` — Ver tu nivel\n' +
+        '`/clear` — Limpiar monedas\n\n' +
+        '🎭 **Roleplay**\n' +
+        '`/hug` `/pat` `/kiss` `/slap` `/cuddle`\n' +
+        '`/poke` `/bite` `/lick` `/wave` `/highfive`\n' +
+        '`/dance` `/feed`\n\n' +
+        '🔞 **+18** *(solo grupos habilitados)*\n' +
+        '`/adult` — Gestionar contenido +18\n' +
+        '`/hentai` — Imagen hentai\n' +
+        '`/redgifs` — Vídeo RedGifs\n' +
+        '`/verify18` — Verificar edad\n\n' +
+        '🛠️ **Utilidad**\n' +
+        '`/accounts` — Ver cuentas vinculadas\n' +
+        '`/link` — Vincular plataformas\n' +
+        '`/linkcode` — Código de vinculación\n' +
+        '`/unlink` — Desvincular cuenta\n' +
+        '`/stats` — Estadísticas del bot\n\n' +
+        '🔨 **Moderación** *(solo admins)*\n' +
+        '`/ban` `/unban` `/warn` `/warns`\n' +
+        '`/clearban` `/prefix`\n';
+      await ctx.reply(msg);
+    },
+  },
 ];

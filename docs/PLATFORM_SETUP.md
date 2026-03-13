@@ -315,36 +315,30 @@ rm -rf sessions/whatsapp/
 
 ## 6. APIs externas
 
-### Tenor (GIFs de roleplay) — Gratuito
+### Giphy (GIFs de roleplay) — Gratuito
+1. Ve a **[developers.giphy.com](https://developers.giphy.com)**
+2. **Create an App** -> SDK o API
+3. Copia la **API Key**
+```env
+   GIPHY_API_KEY=xxxxxxxxxx
+```
+   > Nota: Tenor cerro su API a nuevos clientes en enero 2026. Yukiko usa Giphy.
 
-1. Ve a **[developers.google.com/tenor](https://developers.google.com/tenor)**
-2. **Get started** → Crea un proyecto en Google Cloud Console
-3. Activa la **Tenor API**
-4. Credenciales → **API Key**
-   ```env
-   TENOR_API_KEY=AIzaSyxxxxxxxxxx
-   ```
-
-### OpenAI (GPT-4o + DALL-E 3) — De pago
-
-1. Ve a **[platform.openai.com](https://platform.openai.com)**
-2. API Keys → **Create new secret key**
-3. Recarga tu cuenta (mínimo $5 para empezar)
-   ```env
-   OPENAI_API_KEY=sk-proj-xxxxxxxxxx
-   OPENAI_MODEL=gpt-4o
-   ```
-   > 💡 Coste estimado para uso personal: < $1/mes con 100 usuarios y uso moderado
+### Ollama (IA local) — Gratuito / Self-hosted
+1. Instala Ollama: **[ollama.com](https://ollama.com)**
+```bash
+   curl -fsSL https://ollama.com/install.sh | sh
+   ollama pull llama3.2:3b
+```
+2. Ollama corre en http://127.0.0.1:11434 por defecto
+```env
+   OLLAMA_MODEL=llama3.2:3b
+```
+   > No necesita API key. La generacion de imagenes usa Pollinations.ai (gratuito, sin registro).
 
 ### RedGifs (GIFs +18) — Gratuito
-
-1. Ve a **[redgifs.com](https://www.redgifs.com)** → Crea cuenta
-2. Ve a **[redgifs.com/developers](https://www.redgifs.com/developers)** → Solicita API key
-   - O usa la API temporal (sin auth) que ya está implementada en el código
-   ```env
-   REDGIFS_CLIENT_ID=xxxxxxxxxx
-   REDGIFS_CLIENT_SECRET=xxxxxxxxxx
-   ```
+- No necesita credenciales. Yukiko usa autenticacion temporal automatica (POST /v2/auth/temporary).
+- No añadir REDGIFS_CLIENT_ID ni REDGIFS_CLIENT_SECRET al .env.
 
 ### Danbooru (imágenes hentai) — Gratuito / Premium
 

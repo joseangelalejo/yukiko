@@ -17,6 +17,7 @@ import { aiCommands } from '@yukiko/ai';
 import { moderationCommands } from '@yukiko/moderation';
 import { linkCommands, handleNewUser, buildOnboardingMessage } from '@yukiko/link';
 import { getOrCreateUser, isOnCooldown, remainingCooldown, addXp, logCommand } from '@yukiko/core/src/utils.ts';
+import { checkAdultVerificationNotifications } from '@yukiko/core/src/notifications';
 import type { CommandContext } from '@yukiko/core/src/types.ts';
 import 'dotenv/config';
 
@@ -215,6 +216,12 @@ client.on('interactionCreate', async interaction => {
     if (!interaction.replied) {
       await interaction.editReply('❌ Ocurrió un error al ejecutar el comando.');
     }
+  }
+  if (!isGroup) {
+    checkAdultVerificationNotifications(
+      'discord', interaction.user.id, interaction.user.username,
+      async (msg) => { await interaction.user.send(msg); }
+    ).catch(() => {});
   }
 });
 

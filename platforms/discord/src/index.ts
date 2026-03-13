@@ -161,7 +161,7 @@ client.on('interactionCreate', async interaction => {
 
   const homelabOnline = await wakeHomelabIfNeeded();
   if (!homelabOnline) {
-    await interaction.reply({ content: '😴 Mi servidor está apagado, lo estoy encendiendo... Inténtalo de nuevo en unos minutos.', ephemeral: true });
+    await interaction.reply({ content: '😴 Mi servidor está apagado, lo estoy encendiendo... Inténtalo de nuevo en unos minutos.', flags: 64 });
     return;
   }
 

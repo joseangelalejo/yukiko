@@ -16,3 +16,4 @@ web/next-env.d.ts
 web/tsconfig.json
 .vercel
 .env*.local
+*.tar.gz

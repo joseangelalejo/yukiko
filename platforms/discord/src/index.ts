@@ -136,7 +136,7 @@ async function registerSlashCommands() {
 
 async function wakeHomelabIfNeeded(): Promise<boolean> {
   try {
-    const res = await fetch(`${process.env.HOMELAB_AGENT_URL}/health`, {
+    const res = await fetch(`${process.env.HOMELAB_AGENT_URL}/api/health`, {
       signal: AbortSignal.timeout(3000),
     });
     return res.ok;

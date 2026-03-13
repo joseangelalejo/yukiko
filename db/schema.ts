@@ -31,7 +31,7 @@ export const linkTokens = pgTable('link_tokens', {
   // Usuario que genera el código (ya existente en otra plataforma)
   userId: uuid('user_id').references(() => users.id).notNull(),
   platform: varchar('platform', { length: 20 }).notNull(), // plataforma donde se generó
-  token: varchar('token', { length: 12 }).notNull().unique(), // código corto: YUKXXXX1234
+  token: varchar('token', { length: 20 }).notNull().unique(), // código corto: YUKXXXX1234
   expiresAt: timestamp('expires_at').notNull(),              // 10 minutos de validez
   usedAt: timestamp('used_at'),                             // null = no usado aún
   createdAt: timestamp('created_at').defaultNow().notNull(),

@@ -198,7 +198,6 @@ function setupCommand(commandName: string) {
         } catch {}
       }
     }
-    }
   });
 }
 

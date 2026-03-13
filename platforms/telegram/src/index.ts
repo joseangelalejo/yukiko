@@ -189,7 +189,7 @@ function setupCommand(commandName: string) {
               await ctx.reply(msg, { parse_mode: 'Markdown' });
             }
           );
-        } catch {}
+        } catch (_) {}
       }
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Error';

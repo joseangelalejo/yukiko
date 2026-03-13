@@ -185,7 +185,7 @@ function setupCommand(commandName: string) {
             'telegram',
             userId,
             displayName,
-            async (msg: string) => {
+            async (msg) => {
               await ctx.reply(msg, { parse_mode: 'Markdown' });
             }
           );

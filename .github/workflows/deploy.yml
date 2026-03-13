@@ -2,7 +2,7 @@ name: Yukiko CI/CD
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
   pull_request:
     branches: [main]
   # Limpieza diaria de tokens expirados

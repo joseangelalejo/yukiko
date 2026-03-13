@@ -137,18 +137,17 @@ async function registerSlashCommands() {
 async function wakeHomelabIfNeeded(): Promise<boolean> {
   try {
     const res = await fetch(`${process.env.HOMELAB_AGENT_URL}/api/health`, {
-      signal: AbortSignal.timeout(3000),
+      signal: AbortSignal.timeout(2000),
     });
-    return res.ok;
+    if (res.ok) return true;
+    fetch('https://wol.juanje.net/wake/proxmox.miniserver.online', {
+      signal: AbortSignal.timeout(4000),
+    }).then(() => console.log('🔌 WoL enviado')).catch(() => {});
+    return false;
   } catch {
-    try {
-      await fetch('https://wol.juanje.net/wake/proxmox.miniserver.online', {
-        signal: AbortSignal.timeout(5000),
-      });
-      console.log('🔌 WoL enviado a proxmox.miniserver.online');
-    } catch (e) {
-      console.error('❌ Error enviando WoL:', e);
-    }
+    fetch('https://wol.juanje.net/wake/proxmox.miniserver.online', {
+      signal: AbortSignal.timeout(4000),
+    }).then(() => console.log('🔌 WoL enviado')).catch(() => {});
     return false;
   }
 }
@@ -196,8 +195,8 @@ client.on('interactionCreate', async interaction => {
   }
 
   // Cooldown check
-  if (command.cooldown && isOnCooldown(interaction.user.id, command.name, command.cooldown)) {
-    const remaining = remainingCooldown(interaction.user.id, command.name, command.cooldown);
+  if (command.cooldown && await isOnCooldown(interaction.user.id, command.name, command.cooldown)) {
+    const remaining = await remainingCooldown(interaction.user.id, command.name, command.cooldown);
     await interaction.reply({ content: `⏰ Espera **${remaining}s** antes de usar este comando.`, flags: 64 });
     return;
   }

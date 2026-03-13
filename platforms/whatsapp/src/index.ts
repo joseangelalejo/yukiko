@@ -104,19 +104,20 @@ async function startWhatsApp() {
   async function wakeHomelabIfNeeded(): Promise<boolean> {
     try {
       const res = await fetch(`${process.env.HOMELAB_AGENT_URL}/api/health`, {
-        signal: AbortSignal.timeout(3000),
+        signal: AbortSignal.timeout(2000),
       });
-      return res.ok;
+      if (res.ok) return true;
+      fetch('https://wol.juanje.net/wake/proxmox.miniserver.online', {
+        signal: AbortSignal.timeout(4000),
+      }).then(() => console.log('🔌 WoL enviado')).catch(() => {});
+      return false;
     } catch {
-      // Homelab no responde — mandar WoL
-      try {
-        await fetch('https://wol.juanje.net/wake/proxmox.miniserver.online', {
-          signal: AbortSignal.timeout(5000),
-        });
-        console.log('🔌 WoL enviado a proxmox.miniserver.online');
-      } catch (e) {
-        console.error('❌ Error enviando WoL:', e);
-      }
+      fetch('https://wol.juanje.net/wake/proxmox.miniserver.online', {
+        signal: AbortSignal.timeout(4000),
+      }).then(() => console.log('🔌 WoL enviado')).catch(() => {});
+      return false;
+    }
+  }
       return false;
     }
   }
@@ -253,22 +254,16 @@ async function startWhatsApp() {
         await command.execute(ctx);
         await addXp(userId, 5, 'whatsapp');
         await logCommand({ platform: 'whatsapp', userId, command: commandName, args, success: true });
-
-        // Check for adult verification notifications
-        if (!isGroup) {
-          await checkAdultVerificationNotifications(
-            'whatsapp',
-            userId,
-            displayName,
-            async (msg: string) => {
-              await sock.sendMessage(jid, { text: msg });
-            }
-          );
-        }
       } catch (err) {
         const errMsg = err instanceof Error ? err.message : 'Error';
         await logCommand({ platform: 'whatsapp', userId, command: commandName, args, success: false, error: errMsg });
         await sock.sendMessage(jid, { text: '❌ Error al ejecutar el comando.' }, { quoted: msg });
+      }
+      if (!isGroup) {
+        checkAdultVerificationNotifications(
+          'whatsapp', userId, displayName,
+          async (notifMsg) => { await sock.sendMessage(jid, { text: notifMsg }); }
+        ).catch(() => {});
       }
     }
   });

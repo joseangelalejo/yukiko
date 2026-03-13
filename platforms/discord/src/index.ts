@@ -207,7 +207,7 @@ client.on('interactionCreate', async interaction => {
   try {
     await interaction.deferReply();
     await command.execute(ctx);
-    await addXp(interaction.user.id, 5);
+    await addXp(interaction.user.id, 5, 'discord');
     await logCommand({ platform: 'discord', userId: interaction.user.id, command: command.name, args, success: true });
   } catch (err) {
     const msg = err instanceof Error ? err.message : 'Error desconocido';

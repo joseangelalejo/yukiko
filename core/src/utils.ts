@@ -103,9 +103,22 @@ export async function cleanExpiredCooldowns(): Promise<void> {
 }
 
 // ── Add XP — opera sobre el master ───────────────────────────
-export async function addXp(userId: string, amount: number): Promise<{ leveled: boolean; newLevel: number }> {
-  const effective = await resolveEffectiveUser(userId);
-  if (!effective) return { leveled: false, newLevel: 1 };
+export async function addXp(platformId: string, amount: number, platform?: Platform): Promise<{ leveled: boolean; newLevel: number }> {
+  let internalUser: YukikoUser | null = null;
+  if (platform) {
+    const [found] = await db.select().from(users)
+      .where(and(eq(users.platformId, platformId), eq(users.platform, platform)))
+      .limit(1);
+    internalUser = (found as YukikoUser) ?? null;
+  } else {
+    const [found] = await db.select().from(users).where(eq(users.id, platformId)).limit(1);
+    internalUser = (found as YukikoUser) ?? null;
+  }
+  if (!internalUser) return { leveled: false, newLevel: 1 };
+
+  const effective = internalUser.linkedToUserId
+    ? (((await db.select().from(users).where(eq(users.id, internalUser.linkedToUserId)).limit(1))[0] as YukikoUser) ?? internalUser)
+    : internalUser;
 
   const newXp = effective.xp + amount;
   const newLevel = levelFromXp(newXp);

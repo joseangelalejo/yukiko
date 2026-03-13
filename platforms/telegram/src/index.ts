@@ -113,18 +113,18 @@ bot.command('start', async (ctx) => {
 async function wakeHomelabIfNeeded(): Promise<boolean> {
   try {
     const res = await fetch(`${process.env.HOMELAB_AGENT_URL}/api/health`, {
-      signal: AbortSignal.timeout(3000),
+      signal: AbortSignal.timeout(2000),
     });
-    return res.ok;
+    if (res.ok) return true;
+    // Homelab caído — WoL en background, no bloqueamos
+    fetch('https://wol.juanje.net/wake/proxmox.miniserver.online', {
+      signal: AbortSignal.timeout(4000),
+    }).then(() => console.log('🔌 WoL enviado')).catch(() => {});
+    return false;
   } catch {
-    try {
-      await fetch('https://wol.juanje.net/wake/proxmox.miniserver.online', {
-        signal: AbortSignal.timeout(5000),
-      });
-      console.log('🔌 WoL enviado a proxmox.miniserver.online');
-    } catch (e) {
-      console.error('❌ Error enviando WoL:', e);
-    }
+    fetch('https://wol.juanje.net/wake/proxmox.miniserver.online', {
+      signal: AbortSignal.timeout(4000),
+    }).then(() => console.log('🔌 WoL enviado')).catch(() => {});
     return false;
   }
 }
@@ -175,26 +175,18 @@ function setupCommand(commandName: string) {
 
     try {
       await command.execute(yukikoCtx);
-      await addXp(userId, 5);
+      await addXp(userId, 5, 'telegram');
       await logCommand({ platform: 'telegram', userId, command: commandName, args, success: true });
-
-      // Check for adult verification notifications (DM only)
-      if (ctx.chat?.type === 'private') {
-        try {
-          await checkAdultVerificationNotifications(
-            'telegram',
-            userId,
-            displayName,
-            async (msg) => {
-              await ctx.reply(msg, { parse_mode: 'Markdown' });
-            }
-          );
-        } catch (_) {}
-      }
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Error';
       await logCommand({ platform: 'telegram', userId, command: commandName, args, success: false, error: msg });
       await ctx.reply('❌ Error al ejecutar el comando.');
+    }
+    if (ctx.chat?.type === 'private') {
+      checkAdultVerificationNotifications(
+        'telegram', userId, displayName,
+        async (msg) => { await ctx.reply(msg, { parse_mode: 'Markdown' }); }
+      ).catch(() => {});
     }
   });
 }

@@ -251,7 +251,7 @@ async function startWhatsApp() {
 
       try {
         await command.execute(ctx);
-        await addXp(userId, 5);
+        await addXp(userId, 5, 'whatsapp');
         await logCommand({ platform: 'whatsapp', userId, command: commandName, args, success: true });
 
         // Check for adult verification notifications

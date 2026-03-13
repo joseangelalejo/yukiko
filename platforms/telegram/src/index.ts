@@ -65,47 +65,49 @@ function buildContext(ctx: Context, commandName: string, args: string[]): Comman
 
 // ── /start — onboarding ───────────────────────────────────────
 bot.command('start', async (ctx) => {
-  const userId = String(ctx.from?.id ?? '');
-  const displayName = [ctx.from?.first_name, ctx.from?.last_name].filter(Boolean).join(' ') || 'Usuario';
-  const username = ctx.from?.username;
+  try {
+    const userId = String(ctx.from?.id ?? '');
+    const displayName = [ctx.from?.first_name, ctx.from?.last_name].filter(Boolean).join(' ') || 'Usuario';
+    const username = ctx.from?.username;
 
-  const { isNew } = await handleNewUser(userId, 'telegram', displayName, username);
+    const { isNew } = await handleNewUser(userId, 'telegram', displayName, username);
 
-  // Verificar si es un contacto conocido (DM solo)
-  if (ctx.chat?.type === 'private' && isNew) {
-    const [existing] = await db
-      .select()
-      .from(knownContacts)
-      .where(
-        and(
-          eq(knownContacts.platformId, userId),
-          eq(knownContacts.platform, 'telegram')
+    // Verificar si es un contacto conocido (DM solo)
+    if (ctx.chat?.type === 'private' && isNew) {
+      const [existing] = await db
+        .select()
+        .from(knownContacts)
+        .where(
+          and(
+            eq(knownContacts.platformId, userId),
+            eq(knownContacts.platform, 'telegram')
+          )
         )
-      )
-      .limit(1);
+        .limit(1);
 
-    if (!existing) {
-      // Nuevo contacto — guardar
-      await db.insert(knownContacts).values({
-        platformId: userId,
-        platform: 'telegram',
-        targetPlatformId: userId,
-        targetDisplayName: displayName,
-      });
+      if (!existing) {
+        await db.insert(knownContacts).values({
+          platformId: userId,
+          platform: 'telegram',
+          targetPlatformId: userId,
+          targetDisplayName: displayName,
+        });
+      }
     }
-  }
 
-  if (isNew) {
-    // Usuario nuevo → mostrar onboarding con opción de vincular
-    await ctx.reply(buildOnboardingMessage('telegram', displayName), { parse_mode: 'Markdown' });
-  } else {
-    // Usuario conocido → bienvenida breve
-    await ctx.reply(
-      `🌨️ **¡Hola de nuevo, ${displayName}!** 🐱\n\n` +
-      `Usa /help para ver los comandos disponibles.\n` +
-      `Usa /accounts para ver tus plataformas vinculadas.`,
-      { parse_mode: 'Markdown' }
-    );
+    if (isNew) {
+      await ctx.reply(buildOnboardingMessage('telegram', displayName), { parse_mode: 'Markdown' });
+    } else {
+      await ctx.reply(
+        `🌨️ **¡Hola de nuevo, ${displayName}!** 🐱\n\n` +
+        `Usa /help para ver los comandos disponibles.\n` +
+        `Usa /accounts para ver tus plataformas vinculadas.`,
+        { parse_mode: 'Markdown' }
+      );
+    }
+  } catch (err) {
+    console.error('[/start ERROR]', err);
+    try { await ctx.reply('❌ Error al iniciar. Inténtalo de nuevo.'); } catch (_) {}
   }
 });
 

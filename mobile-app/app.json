@@ -12,7 +12,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#0a0a0f"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.yukiko.mobile"
@@ -23,16 +25,19 @@
         "backgroundColor": "#0a0a0f"
       },
       "package": "com.yukiko.mobile",
-      "permissions": ["INTERNET", "VIBRATE"]
+      "permissions": [
+        "INTERNET",
+        "VIBRATE"
+      ]
     },
     "plugins": [
-      "expo-font",
-      "expo-haptics"
+      "expo-font"
     ],
     "extra": {
       "eas": {
-        "projectId": "YOUR_EAS_PROJECT_ID"
+        "projectId": "52b8221d-ff42-470f-b1ec-9195ef7dc90f"
       }
-    }
+    },
+    "owner": "miniaturemistery"
   }
 }

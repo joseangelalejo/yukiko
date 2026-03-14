@@ -112,6 +112,17 @@ async function registerSlashCommands() {
         opt.setName('args').setDescription('Argumentos').setRequired(false)
       );
     }
+    if (cmd.name === 'adult') {
+      builder.addStringOption(opt =>
+        opt.setName('action')
+          .setDescription('Activar o desactivar contenido +18')
+          .setRequired(true)
+          .addChoices(
+            { name: 'on', value: 'on' },
+            { name: 'off', value: 'off' },
+          )
+      );
+    }
 
     return builder.toJSON();
   });
@@ -166,7 +177,8 @@ client.on('interactionCreate', async interaction => {
   }
 
   const argsStr = interaction.options.getString('args') ?? '';
-  const args = argsStr.split(' ').filter(Boolean);
+  const actionStr = interaction.options.getString('action') ?? '';
+  const args = actionStr ? [actionStr, ...argsStr.split(' ').filter(Boolean)] : argsStr.split(' ').filter(Boolean);
 
   // ── Onboarding: detectar usuario nuevo ──────────────────
   const { isNew } = await handleNewUser(

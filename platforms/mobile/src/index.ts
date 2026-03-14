@@ -150,7 +150,7 @@ async function handleMessage(ws: WebSocket, raw: string) {
     const commandName = msg.command?.toLowerCase() ?? '';
     const args = msg.args ?? [];
 
-    const command = registry.get(commandName) ?? registry.getByAlias(commandName);
+    const command = registry.get(commandName);
     if (!command) {
       send(ws, { type: 'error', text: `Comando desconocido: /${commandName}` });
       return;

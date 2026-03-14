@@ -35,12 +35,14 @@ const PLATFORM_NAMES: Record<Platform, string> = {
   discord: 'Discord',
   telegram: 'Telegram',
   whatsapp: 'WhatsApp',
+  mobile: 'Mobile',
 };
 
 const PLATFORM_EMOJIS: Record<Platform, string> = {
   discord: '💜',
   telegram: '🔵',
   whatsapp: '💚',
+  mobile: '📱',
 };
 
 /** Genera un código corto único estilo YUK-XXXX-1234 */

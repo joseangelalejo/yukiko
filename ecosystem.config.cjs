@@ -48,5 +48,17 @@ module.exports = {
       restart_delay: 5000,
       max_restarts: 10,
     },
+{
+  name: 'yukiko-mobile',
+  script: './node_modules/.bin/tsx',
+  args: '--env-file=.env platforms/mobile/src/index.ts',
+  cwd: '/home/dockerja/docker-compose-files/yukiko',
+  watch: false,
+  env: { NODE_ENV: 'production', PLATFORM: 'mobile' },
+  error_file: './logs/mobile-error.log',
+  out_file: './logs/mobile-out.log',
+  restart_delay: 5000,
+  max_restarts: 10,
+},
   ],
 };

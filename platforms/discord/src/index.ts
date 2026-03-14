@@ -196,8 +196,8 @@ client.on('interactionCreate', async interaction => {
   }
 
   // Cooldown check
-  if (command.cooldown && await isOnCooldown(interaction.user.id, command.name, command.cooldown)) {
-    const remaining = await remainingCooldown(interaction.user.id, command.name, command.cooldown);
+  if (command.cooldown && await isOnCooldown(interaction.user.id, command.name, command.cooldown, 'discord')) {
+    const remaining = await remainingCooldown(interaction.user.id, command.name, command.cooldown, 'discord');
     await interaction.reply({ content: `⏰ Espera **${remaining}s** antes de usar este comando.`, flags: 64 });
     return;
   }

@@ -7,7 +7,6 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
-import * as Haptics from 'expo-haptics';
 import { useFonts, Nunito_400Regular, Nunito_700Bold, Nunito_800ExtraBold } from '@expo-google-fonts/nunito';
 
 // ── Config ───────────────────────────────────────────────────
@@ -254,7 +253,6 @@ export default function App() {
           setShowAuth(false);
         }
         addMessage({ type: msg.type, text: msg.text, url: msg.url, caption: msg.caption, sender: 'yukiko' });
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       } catch { /* ignore */ }
     };
 
@@ -321,7 +319,6 @@ export default function App() {
 
     const text = input.trim();
     addMessage({ type: 'user', text, sender: 'user' });
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
 
     if (text.startsWith('/')) {
       const parts = text.slice(1).split(' ');

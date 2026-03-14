@@ -192,8 +192,8 @@ async function startWhatsApp() {
       const command = registry.get(commandName);
       if (!command) continue;
 
-      if (command.cooldown && await isOnCooldown(userId, commandName, command.cooldown)) {
-        const remaining = await remainingCooldown(userId, commandName, command.cooldown);
+      if (command.cooldown && await isOnCooldown(userId, commandName, command.cooldown, 'whatsapp')) {
+        const remaining = await remainingCooldown(userId, commandName, command.cooldown, 'whatsapp');
         await sock.sendMessage(jid, {
           text: `⏰ Espera *${remaining}s* antes de usar este comando.`,
         }, { quoted: msg });

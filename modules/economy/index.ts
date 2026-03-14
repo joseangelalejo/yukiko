@@ -34,7 +34,7 @@ export const economyCommands: Command[] = [
     category: 'economy',
     platforms: ['discord', 'telegram', 'whatsapp'],
     execute: async (ctx: CommandContext) => {
-      const remaining = await remainingCooldown(ctx.userId, 'daily', DAILY_COOLDOWN);
+      const remaining = await remainingCooldown(ctx.userId, 'daily', DAILY_COOLDOWN, ctx.platform);
 
       if (remaining > 0) {
         const hours = Math.floor(remaining / 3600);

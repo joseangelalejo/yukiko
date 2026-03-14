@@ -14,16 +14,14 @@ export async function GET() {
       .where(gte(commandLogs.executedAt, today));
 
     let platforms = { discord: false, telegram: false, whatsapp: false };
-    const agentUrl = process.env.HOMELAB_AGENT_URL;
-    if (agentUrl) {
-      try {
-        const r = await fetch(`${agentUrl}/status`, {
-          headers: { authorization: `Bearer ${process.env.ADMIN_SECRET}` },
-          signal: AbortSignal.timeout(3000),
-        });
-        if (r.ok) platforms = await r.json();
-      } catch { /* agente no disponible */ }
-    }
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000';
+      const r = await fetch(`${baseUrl}/api/agent/status`, {
+        headers: { authorization: `Bearer ${process.env.ADMIN_SECRET}` },
+        signal: AbortSignal.timeout(3000),
+      });
+      if (r.ok) platforms = await r.json();
+    } catch { /* agente no disponible */ }
 
     return NextResponse.json({
       totalUsers: usersResult.count,

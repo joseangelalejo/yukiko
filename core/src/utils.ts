@@ -15,16 +15,25 @@ export function levelFromXp(xp: number): number {
 
 // ── Resolve effective user (master si está vinculado) ─────────
 // Toda la economía y stats deben usar esto para centralizar en el master.
-export async function resolveEffectiveUser(userId: string): Promise<YukikoUser | null> {
-  const [user] = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+export async function resolveEffectiveUser(userId: string, platform?: Platform): Promise<YukikoUser | null> {
+  let user: YukikoUser | null = null;
+  if (platform) {
+    const [found] = await db.select().from(users)
+      .where(and(eq(users.platformId, userId), eq(users.platform, platform)))
+      .limit(1);
+    user = (found as YukikoUser) ?? null;
+  } else {
+    const [found] = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+    user = (found as YukikoUser) ?? null;
+  }
   if (!user) return null;
 
   if (user.linkedToUserId) {
     const [master] = await db.select().from(users).where(eq(users.id, user.linkedToUserId)).limit(1);
-    return (master as YukikoUser) ?? (user as YukikoUser);
+    return (master as YukikoUser) ?? user;
   }
 
-  return user as YukikoUser;
+  return user;
 }
 
 // ── User upsert ───────────────────────────────────────────────
@@ -57,8 +66,8 @@ export async function getOrCreateUser(
 }
 
 // ── Cooldowns (persistent in DB) ──────────────────────────────
-export async function isOnCooldown(userId: string, command: string, seconds: number): Promise<boolean> {
-  const effective = await resolveEffectiveUser(userId);
+export async function isOnCooldown(userId: string, command: string, seconds: number, platform?: Platform): Promise<boolean> {
+  const effective = await resolveEffectiveUser(userId, platform);
   if (!effective) return false;
 
   const now = new Date();
@@ -71,8 +80,8 @@ export async function isOnCooldown(userId: string, command: string, seconds: num
   return !!existing;
 }
 
-export async function remainingCooldown(userId: string, command: string, seconds: number): Promise<number> {
-  const effective = await resolveEffectiveUser(userId);
+export async function remainingCooldown(userId: string, command: string, seconds: number, platform?: Platform): Promise<number> {
+  const effective = await resolveEffectiveUser(userId, platform);
   if (!effective) return 0;
 
   const now = new Date();
@@ -88,8 +97,8 @@ export async function remainingCooldown(userId: string, command: string, seconds
 }
 
 // ── Set cooldown ──────────────────────────────────────────────
-export async function setCooldown(userId: string, command: string, seconds: number): Promise<void> {
-  const effective = await resolveEffectiveUser(userId);
+export async function setCooldown(userId: string, command: string, seconds: number, platform?: Platform): Promise<void> {
+  const effective = await resolveEffectiveUser(userId, platform);
   if (!effective) return;
 
   const expiresAt = new Date(Date.now() + seconds * 1000);

@@ -2,7 +2,7 @@
 // Yukiko Core — Shared Types
 // ============================================================
 
-export type Platform = 'discord' | 'telegram' | 'whatsapp';
+export type Platform = 'discord' | 'telegram' | 'whatsapp' | 'mobile';
 
 export type CommandContext = {
   platform: Platform;

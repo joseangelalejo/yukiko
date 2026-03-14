@@ -36,12 +36,14 @@
     "concurrently": "^8.2.0",
     "eslint": "^8.57.0",
     "prettier": "^3.2.0",
+    "ts-node": "^10.9.2",
     "tsx": "^4.7.0",
-    "typescript": "^5.4.0"
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "@hapi/boom": "^10.0.1",
     "@neondatabase/serverless": "^1.0.2",
+    "@types/ws": "^8.18.1",
     "@whiskeysockets/baileys": "^7.0.0-rc.9",
     "discord.js": "^14.25.1",
     "dotenv": "^17.3.1",
@@ -52,6 +54,7 @@
     "next": "^16.1.6",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "ws": "^8.19.0",
     "zod": "^3.22.0"
   }
 }

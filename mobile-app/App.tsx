@@ -334,7 +334,14 @@ export default function App() {
     setShowSuggestions(false);
   }, [input, addMessage]);
 
-  if (!fontsLoaded) return null;
+  if (!fontsLoaded) {
+    return (
+      <View style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}> 
+        <ActivityIndicator size="large" color={theme.accent} />
+        <Text style={{ color: theme.text, marginTop: 12 }}>Cargando...</Text>
+      </View>
+    );
+  }
 
   if (showAuth) {
     return (

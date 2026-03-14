@@ -114,7 +114,7 @@ bot.command('start', async (ctx) => {
 
 async function wakeHomelabIfNeeded(): Promise<boolean> {
   try {
-    const res = await fetch(`${process.env.HOMELAB_AGENT_URL}/api/health`, {
+    const res = await fetch(`${process.env.HOMELAB_AGENT_URL}/health`, {
       signal: AbortSignal.timeout(2000),
     });
     if (res.ok) return true;

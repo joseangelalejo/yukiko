@@ -76,12 +76,12 @@ function buildContext(interaction: ChatInputCommandInteraction, args: string[]):
       }
     },
     replyWithGif: async (url: string, caption?: string) => {
-      const embed = new EmbedBuilder().setImage(url);
-      if (caption) embed.setDescription(caption);
+      const content = caption ? `${caption}
+${url}` : url;
       if (interaction.replied || interaction.deferred) {
-        await interaction.followUp({ embeds: [embed] });
+        await interaction.followUp({ content });
       } else {
-        await interaction.reply({ embeds: [embed] });
+        await interaction.reply({ content });
       }
     },
     // DM directo al usuario (para onboarding)
@@ -148,7 +148,7 @@ async function registerSlashCommands() {
 
 async function wakeHomelabIfNeeded(): Promise<boolean> {
   try {
-    const res = await fetch(`${process.env.HOMELAB_AGENT_URL}/api/health`, {
+    const res = await fetch(`${process.env.HOMELAB_AGENT_URL}/health`, {
       signal: AbortSignal.timeout(2000),
     });
     if (res.ok) return true;

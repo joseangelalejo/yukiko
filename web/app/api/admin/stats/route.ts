@@ -1,16 +1,18 @@
 import { NextResponse } from 'next/server';
-import { db } from '@db/index.ts';
+import { db, users, groups, commandLogs } from '@db/index.ts';
+import { sql, gte } from 'drizzle-orm';
 
 export async function GET() {
   try {
-    // Para obtener stats básicos, podemos devolver valores dummy o consultar de forma simple
-    // Dado que count() tiene problemas de tipo en monorepo, usamos un enfoque simple
-    
-    const totalUsers = Math.floor(Math.random() * 1000); // Placeholder
-    const totalGroups = Math.floor(Math.random() * 100);
-    const commandsToday = Math.floor(Math.random() * 500);
+    const [usersResult] = await db.select({ count: sql<number>`count(*)::int` }).from(users);
+    const [groupsResult] = await db.select({ count: sql<number>`count(*)::int` }).from(groups);
 
-    // Consultar estado real de bots al agente del homelab
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const [commandsResult] = await db.select({ count: sql<number>`count(*)::int` })
+      .from(commandLogs)
+      .where(gte(commandLogs.executedAt, today));
+
     let platforms = { discord: false, telegram: false, whatsapp: false };
     const agentUrl = process.env.HOMELAB_AGENT_URL;
     if (agentUrl) {
@@ -20,20 +22,17 @@ export async function GET() {
           signal: AbortSignal.timeout(3000),
         });
         if (r.ok) platforms = await r.json();
-      } catch { /* agente no disponible, mantiene false */ }
+      } catch { /* agente no disponible */ }
     }
 
     return NextResponse.json({
-      totalUsers,
-      totalGroups,
-      commandsToday,
+      totalUsers: usersResult.count,
+      totalGroups: groupsResult.count,
+      commandsToday: commandsResult.count,
       platforms,
     });
   } catch (error) {
     console.error('Stats error:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch stats' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to fetch stats' }, { status: 500 });
   }
 }

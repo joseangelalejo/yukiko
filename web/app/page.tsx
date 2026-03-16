@@ -17,7 +17,7 @@ export default function HomePage() {
           </span>
         </div>
         <div className="flex gap-6 text-sm text-white/70">
-          <a href="/admin" className="hover:text-white transition-colors">Comandos</a>
+          <a href="https://joseangelalejo.github.io/yukiko" className="hover:text-white transition-colors">Comandos</a>
           <a href="https://joseangelalejo.github.io/yukiko" className="hover:text-white transition-colors">Docs</a>
           <a href="/admin" className="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-full transition-colors">
             Panel Admin

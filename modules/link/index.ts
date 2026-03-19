@@ -34,14 +34,12 @@ import type { Platform } from '../../core/src/types.js';
 const PLATFORM_NAMES: Record<Platform, string> = {
   discord: 'Discord',
   telegram: 'Telegram',
-  whatsapp: 'WhatsApp',
   mobile: 'Mobile',
 };
 
 const PLATFORM_EMOJIS: Record<Platform, string> = {
   discord: '💜',
   telegram: '🔵',
-  whatsapp: '💚',
   mobile: '📱',
 };
 
@@ -181,7 +179,7 @@ export function buildOnboardingMessage(platform: Platform, displayName: string):
     `Tu compañera neko kawaii en ${emoji} ${platformName}.\n\n` +
     `━━━━━━━━━━━━━━━━━━━\n` +
     `❓ **¿Ya tienes Yukiko en otra app?**\n` +
-    `(Discord, Telegram o WhatsApp)\n\n` +
+    `(Discord o Telegram)\n\n` +
     `Si dices que **SÍ**, podrás vincular tus cuentas y ` +
     `conservar tu saldo, nivel y verificación de edad.\n\n` +
     `👉 **¿Ya tienes cuenta?**\n` +
@@ -202,7 +200,7 @@ export const linkCommands: Command[] = [
     aliases: ['vincular', 'conectar'],
     description: 'Vincula tu cuenta con otra plataforma usando un código',
     category: 'utility',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     execute: async (ctx: CommandContext) => {
       const token = ctx.args[0]?.toUpperCase();
 
@@ -327,7 +325,7 @@ export const linkCommands: Command[] = [
     aliases: ['codigo-vinculacion', 'micodigo'],
     description: 'Genera un código para vincular tu cuenta en otra plataforma',
     category: 'utility',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     execute: async (ctx: CommandContext) => {
       const user = await getOrCreateUser(ctx.userId, ctx.platform, ctx.displayName, ctx.username);
 
@@ -382,7 +380,7 @@ export const linkCommands: Command[] = [
     aliases: ['cuentas', 'plataformas', 'misplataformas'],
     description: 'Ver todas tus plataformas vinculadas',
     category: 'utility',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     execute: async (ctx: CommandContext) => {
       const user = await getOrCreateUser(ctx.userId, ctx.platform, ctx.displayName, ctx.username);
       const effectiveId = await resolveEffectiveUserId(user.id);
@@ -439,7 +437,7 @@ export const linkCommands: Command[] = [
     aliases: ['desvincular'],
     description: 'Desvincula tu cuenta de esta plataforma (avanzado)',
     category: 'utility',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     execute: async (ctx: CommandContext) => {
       const user = await getOrCreateUser(ctx.userId, ctx.platform, ctx.displayName, ctx.username);
 

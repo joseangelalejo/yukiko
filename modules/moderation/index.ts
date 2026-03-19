@@ -10,7 +10,7 @@ export const moderationCommands: Command[] = [
     aliases: ['advertir'],
     description: 'Advierte a un usuario',
     category: 'moderation',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     adminOnly: true,
     groupOnly: true,
     execute: async (ctx: CommandContext) => {
@@ -76,7 +76,7 @@ export const moderationCommands: Command[] = [
     aliases: ['advertencias'],
     description: 'Lista las advertencias de un usuario',
     category: 'moderation',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     adminOnly: true,
     execute: async (ctx: CommandContext) => {
       const mention = ctx.args[0];
@@ -122,7 +122,7 @@ export const moderationCommands: Command[] = [
     aliases: ['banear'],
     description: 'Banea a un usuario del bot',
     category: 'moderation',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     adminOnly: true,
     execute: async (ctx: CommandContext) => {
       const [mention, ...reasonParts] = ctx.args;
@@ -162,7 +162,7 @@ export const moderationCommands: Command[] = [
     aliases: ['desbanear'],
     description: 'Desbanea a un usuario',
     category: 'moderation',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     adminOnly: true,
     execute: async (ctx: CommandContext) => {
       const mention = ctx.args[0];
@@ -200,7 +200,7 @@ export const moderationCommands: Command[] = [
     aliases: ['limpiar_warn'],
     description: 'Limpia los warns y desbanea a un usuario',
     category: 'moderation',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     adminOnly: true,
     execute: async (ctx: CommandContext) => {
       const mention = ctx.args[0];
@@ -237,7 +237,7 @@ export const moderationCommands: Command[] = [
     aliases: ['prefijo'],
     description: 'Cambia el prefijo del bot en este grupo',
     category: 'moderation',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     adminOnly: true,
     groupOnly: true,
     execute: async (ctx: CommandContext) => {
@@ -275,7 +275,7 @@ export const moderationCommands: Command[] = [
     aliases: ['estadisticas'],
     description: 'Muestra estadísticas del bot',
     category: 'moderation',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     execute: async (ctx: CommandContext) => {
       const totalUsers = await db.select().from(users);
       const totalGroups = await db.select().from(groups);
@@ -294,7 +294,7 @@ export const moderationCommands: Command[] = [
     aliases: ['ayuda', 'comandos', 'h'],
     description: 'Muestra todos los comandos disponibles',
     category: 'utility',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     execute: async (ctx: CommandContext) => {
       const msg =
         '🌨️ **Yukiko — Comandos disponibles**\n\n' +
@@ -320,7 +320,7 @@ export const moderationCommands: Command[] = [
         '🔞 **+18** *(solo grupos habilitados)*\n' +
         '`/adult` — Gestionar contenido +18\n' +
         '`/hentai` — Imagen hentai\n' +
-        '`/redgifs` — Vídeo RedGifs\n' +
+        '`/gif18` — GIF +18 animado\n' +
         '`/verify18` — Verificar edad\n\n' +
         '🛠️ **Utilidad**\n' +
         '`/accounts` — Ver cuentas vinculadas\n' +

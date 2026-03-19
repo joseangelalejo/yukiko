@@ -1,10 +1,10 @@
 <div align="center">
-  <img src="yukiko-banner-github.png" alt="Yukiko Bot Banner" width="100%" />
+  <img src="mobile-app/assets/yukiko-banner-github.png" alt="Yukiko Bot Banner" width="100%" />
   <br/><br/>
-  <img src="yukiko-logo-128.png" alt="Yukiko Logo" width="80" style="border-radius:50%;" />
+  <img src="mobile-app/assets/yukiko-logo-128.png" alt="Yukiko Logo" width="80" style="border-radius:50%;" />
 
   <h1>Yukiko Bot</h1>
-  <p><em>Tu compañera neko kawaii multiplataforma — Discord, Telegram &amp; WhatsApp</em></p>
+  <p><em>Tu compañera neko kawaii multiplataforma — Discord, Telegram & Web</em></p>
 
   [![Deploy](https://github.com/joseangelalejo/yukiko/actions/workflows/deploy.yml/badge.svg)](https://github.com/joseangelalejo/yukiko/actions)
   [![GitHub Pages](https://img.shields.io/badge/docs-live-pink?logo=github)](https://joseangelalejo.github.io/yukiko/)
@@ -21,7 +21,7 @@
 |---|---|---|
 | **Discord** | ✅ ONLINE | Yukiko#3557 (slash commands) |
 | **Telegram** | ✅ ONLINE | @YukikoNeko_bot |
-| **WhatsApp** | ✅ ONLINE | Sesión activa (34694244477) |
+| **Web Chat** | ✅ ONLINE | [yukiko.miniserver.online/chat](https://yukiko.miniserver.online/chat) |
 | **Web (Next.js)** | ✅ ONLINE | [yukiko.vercel.app](https://yukiko.vercel.app) · [yukiko.miniserver.online](https://yukiko.miniserver.online) |
 | **Admin dashboard** | ✅ ONLINE | [yukiko.miniserver.online/admin](https://yukiko.miniserver.online/admin) |
 | **Base de datos** | ✅ READY | Neon PostgreSQL |
@@ -33,23 +33,18 @@
 
 **[→ joseangelalejo.github.io/yukiko](https://joseangelalejo.github.io/yukiko/)**
 
-📋 **Documentación interna:**
-- [ALIASES_YUKIKO.md](ALIASES_YUKIKO.md) — Referencia completa de aliases y comandos del servidor
-- [SIGUIENTES_PASOS.txt](SIGUIENTES_PASOS.txt) — Instrucciones paso a paso para servidor
-- [INDICE_DOCUMENTACION.txt](INDICE_DOCUMENTACION.txt) — Índice completo de docs
-
 ---
 
 ## ✨ Módulos
 
-| Módulo | Comandos | Discord | Telegram | WhatsApp |
+| Módulo | Comandos | Discord | Telegram | Web Chat |
 |---|---|:---:|:---:|:---:|
-| 🎭 Roleplay | hug, kiss, pat, slap, dance, +8 más | ✅ | ✅ | ✅ |
-| 💰 Economía | balance, daily, transfer, top, shop, buy, inventory | ✅ | ✅ | ✅ |
+| 🎭 Roleplay | hug, kiss, pat, slap, dance, +8 más | ✅ | ✅ | — |
+| 💰 Economía | balance, daily, transfer, top, shop, buy, inventory | ✅ | ✅ | — |
 | 🤖 IA | ask, imagine, rp, translate | ✅ | ✅ | ✅ |
-| 🔨 Moderación | warn, warns, ban, unban, clearban, prefix, stats, help | ✅ | ✅ | ✅ |
-| 🔞 +18 | hentai, redgifs, adult on/off, verify18 | ✅ | ✅ | ✅ |
-| 🔗 Link | link, linkcode, accounts, unlink | ✅ | ✅ | ✅ |
+| 🔨 Moderación | warn, warns, ban, unban, clearban, prefix, stats, help | ✅ | ✅ | — |
+| 🔞 +18 | hentai, gif18, adult on/off, verify18 | ✅ | ✅ | — |
+| 🔗 Link | link, linkcode, accounts, unlink | ✅ | ✅ | — |
 
 ---
 
@@ -84,17 +79,21 @@ yukiko/
 ├── platforms/
 │   ├── discord/    # Discord.js — slash commands
 │   ├── telegram/   # Grammy — BotFather integration
-│   └── whatsapp/   # Baileys — protocolo WA Web
+│   ├── whatsapp/   # DEPRECATED — excluido de compilación
+│   └── mobile/     # WebSocket server puerto 3002
 ├── modules/
-│   ├── roleplay/   # GIFs via Giphy API
+│   ├── roleplay/   # GIFs via Tenor API
 │   ├── economy/    # Monedas, niveles, inventario, tienda
-│   ├── adult/      # Danbooru + RedGifs con verificación +18
+│   ├── adult/      # Danbooru + Gelbooru con verificación +18
 │   ├── ai/         # Ollama (llama3.2) + Pollinations.ai
 │   ├── moderation/ # Warn, ban, logs
 │   └── link/       # Vinculación de cuentas multiplataforma
-├── web/            # Next.js → Vercel (landing + admin + monitor)
+├── web/            # Next.js → Vercel (landing + admin + monitor + chat)
+│   └── app/
+│       ├── chat/       # Chat web estilo ChatGPT
+│       └── api/chat/   # API Route → homelab agent
 ├── db/             # Drizzle ORM schema → Neon PostgreSQL
-├── homelab-agent/  # Agente HTTP para restart/backup desde web
+├── homelab-agent/  # Agente HTTP: restart/backup/status/chat
 ├── ssh-cli/        # CLI remota para gestionar desde terminal
 ├── scripts/        # install-arch.sh, install-windows.ps1/py, dev.sh...
 ├── docs/           # GitHub Pages
@@ -104,6 +103,7 @@ yukiko/
 ---
 
 ## 🖥️ Deploy en homelab con PM2
+
 ```bash
 ssh dockerja@dockerja
 
@@ -118,7 +118,15 @@ npm run build
 yk-restart-all
 ```
 
-Ver referencia completa de aliases: [ALIASES_YUKIKO.md](ALIASES_YUKIKO.md)
+**Procesos PM2:**
+
+| Proceso | Descripción |
+|---|---|
+| `yukiko-discord` | Bot Discord |
+| `yukiko-telegram` | Bot Telegram |
+| `yukiko-mobile` | WebSocket server (puerto 3002) |
+| `yukiko-agent` | Agente HTTP (puerto 3001) |
+| `yukiko-web` | Next.js panel (puerto 3000) |
 
 **Flujo CI/CD:**
 1. `git push origin dev` → GitHub Actions
@@ -130,17 +138,18 @@ Ver referencia completa de aliases: [ALIASES_YUKIKO.md](ALIASES_YUKIKO.md)
 
 ---
 
-## 🔧 SSH CLI
-```bash
-yukiko status
-yukiko restart discord
-yukiko restart all
-yukiko logs telegram --tail
-yukiko users -n 10
-yukiko ban abc123 -r "Spam"
-yukiko backup
-yukiko deploy
-```
+## 💬 Chat Web
+
+Disponible en [yukiko.miniserver.online/chat](https://yukiko.miniserver.online/chat)
+
+Interfaz de chat estilo ChatGPT que conecta con el homelab via API Route de Next.js.
+
+**Comandos disponibles:**
+- `/ask <pregunta>` — IA con Ollama (llama3.2:3b)
+- `/imagine <descripción>` — Generación de imágenes con Pollinations.ai
+- `/translate <idioma> <texto>` — Traducción automática via IA
+- `/help` — Lista de comandos
+- Texto libre → tratado automáticamente como `/ask`
 
 ---
 
@@ -148,7 +157,7 @@ yukiko deploy
 
 Disponible en [yukiko.miniserver.online/admin](https://yukiko.miniserver.online/admin)
 
-- Estado de plataformas en tiempo real
+- Estado de plataformas en tiempo real (Discord, Telegram)
 - Gestión de usuarios y grupos
 - Aprobar/rechazar solicitudes +18 (`/admin/verifications`)
 - Logs de comandos y métricas
@@ -164,11 +173,11 @@ Disponible en [yukiko.miniserver.online/admin](https://yukiko.miniserver.online/
 | [Vercel](https://vercel.com) | Web (Next.js) | Gratis |
 | GitHub Pages | Documentación | Gratis |
 | GitHub Actions | CI/CD | Gratis |
-| Giphy API | GIFs roleplay | Gratis |
+| Tenor API | GIFs roleplay | Gratis |
 | Danbooru | Imágenes +18 | Gratis |
-| RedGifs | GIFs +18 | Gratis |
+| Gelbooru | GIFs +18 animados | Gratis |
 | Ollama (llama3.2:3b) | IA local | Self-hosted |
-| Tailscale Funnel | Túnel HTTPS homelab | Gratis |
+| Pollinations.ai | Generación de imágenes | Gratis |
 | Homelab Proxmox VE | Bots 24/7 (32 GB RAM DDR4) | Self-hosted |
 
 ---

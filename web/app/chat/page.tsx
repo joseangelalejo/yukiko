@@ -80,7 +80,8 @@ function Bubble({ msg }: { msg: Message }) {
               {msg.text && <p className="whitespace-pre-wrap break-words">{renderText(msg.text)}</p>}
               {msg.imageUrl && (
                 <a href={msg.imageUrl} target="_blank" rel="noopener noreferrer" className="block mt-2">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  
+                  // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={msg.imageUrl}
                     alt="Imagen generada"

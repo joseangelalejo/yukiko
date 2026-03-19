@@ -25,18 +25,6 @@ module.exports = {
       max_restarts: 10,
     },
     {
-      name: 'yukiko-whatsapp',
-      script: './node_modules/.bin/tsx',
-      args: '--env-file=.env platforms/whatsapp/src/index.ts',
-      cwd: '/home/dockerja/docker-compose-files/yukiko',
-      watch: false,
-      env: { NODE_ENV: 'production', PLATFORM: 'whatsapp' },
-      error_file: './logs/whatsapp-error.log',
-      out_file: './logs/whatsapp-out.log',
-      restart_delay: 5000,
-      max_restarts: 10,
-    },
-    {
       name: 'yukiko-agent',
       script: './node_modules/.bin/tsx',
       args: '--env-file=.env homelab-agent/agent.ts',

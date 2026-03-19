@@ -6,7 +6,7 @@ type Stats = {
   totalUsers: number;
   totalGroups: number;
   commandsToday: number;
-  platforms: { discord: boolean; telegram: boolean; whatsapp: boolean };
+  platforms: { discord: boolean; telegram: boolean };
 };
 
 export default function DashboardPage() {
@@ -68,7 +68,7 @@ export default function DashboardPage() {
         <h1 className="text-2xl font-bold mb-8">Panel de Administración</h1>
 
         <div className="grid grid-cols-3 gap-4 mb-8">
-          {(['discord', 'telegram', 'whatsapp'] as const).map(platform => (
+          {(['discord', 'telegram'] as const).map(platform => (
             <div key={platform} className="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-3">
               <span className={`w-3 h-3 rounded-full ${stats?.platforms[platform] ? 'bg-green-400' : 'bg-red-400'}`} />
               <span className="capitalize font-medium">{platform}</span>
@@ -90,7 +90,6 @@ export default function DashboardPage() {
           <div className="flex flex-wrap gap-3">
             <ActionButton label="🔄 Reiniciar Discord" endpoint="/api/admin/restart?platform=discord" />
             <ActionButton label="🔄 Reiniciar Telegram" endpoint="/api/admin/restart?platform=telegram" />
-            <ActionButton label="🔄 Reiniciar WhatsApp" endpoint="/api/admin/restart?platform=whatsapp" />
             <ActionButton label="💾 Backup DB" endpoint="/api/admin/backup" />
           </div>
         </div>

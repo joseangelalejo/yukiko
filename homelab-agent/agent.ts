@@ -28,7 +28,7 @@ const server = http.createServer((req, res) => {
   res.setHeader('Content-Type', 'application/json');
 
   // POST /restart/:platform
-  const restartMatch = req.url?.match(/^\/restart\/(discord|telegram|whatsapp)$/) && req.method === 'POST';
+  const restartMatch = req.url?.match(/^\/restart\/(discord|telegram)$/) && req.method === 'POST';
   if (restartMatch) {
     const platform = req.url!.split('/')[2];
     try {
@@ -47,7 +47,7 @@ const server = http.createServer((req, res) => {
     try {
       const raw = execSync('pm2 jlist', { cwd: CWD }).toString();
       const list = JSON.parse(raw) as Array<{ name: string; pm2_env: { status: string } }>;
-      const platforms = ['discord', 'telegram', 'whatsapp'];
+      const platforms = ['discord', 'telegram'];
       const result: Record<string, boolean> = {};
       for (const p of platforms) {
         const proc = list.find(x => x.name === `yukiko-${p}`);

@@ -169,7 +169,7 @@ function makeRoleplayCommand(action: RoleplayAction): Command {
     aliases: action.aliases,
     description: `Realiza la acción ${action.name} con otro usuario`,
     category: 'roleplay',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     cooldown: 3,
     execute: async (ctx: CommandContext) => {
       const mention = ctx.args[0];

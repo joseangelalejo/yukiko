@@ -42,7 +42,7 @@ export const aiCommands: Command[] = [
     aliases: ['pregunta', 'ia', 'ai', 'gpt'],
     description: 'Pregúntale algo a Yukiko IA',
     category: 'ai',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     cooldown: 5,
     execute: async (ctx: CommandContext) => {
       const prompt = ctx.args.join(' ');
@@ -67,7 +67,7 @@ export const aiCommands: Command[] = [
     aliases: ['generar', 'dream', 'draw'],
     description: 'Genera una imagen con IA',
     category: 'ai',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     cooldown: 30,
     execute: async (ctx: CommandContext) => {
       const prompt = ctx.args.join(' ');
@@ -92,7 +92,7 @@ export const aiCommands: Command[] = [
     aliases: ['roleplay-ai', 'rpai'],
     description: 'Roleplay con IA como personaje de anime',
     category: 'ai',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     cooldown: 10,
     execute: async (ctx: CommandContext) => {
       const text = ctx.args.join(' ');
@@ -122,7 +122,7 @@ export const aiCommands: Command[] = [
     aliases: ['traducir', 'tr'],
     description: 'Traduce texto a otro idioma',
     category: 'ai',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     cooldown: 5,
     execute: async (ctx: CommandContext) => {
       const [lang, ...words] = ctx.args;

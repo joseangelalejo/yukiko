@@ -13,7 +13,7 @@ export const economyCommands: Command[] = [
     aliases: ['bal', 'saldo', 'monedas'],
     description: 'Muestra tu balance de monedas y nivel',
     category: 'economy',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     execute: async (ctx: CommandContext) => {
       const user = await getOrCreateUser(ctx.userId, ctx.platform, ctx.displayName);
       const xpNeeded = Math.floor(100 * Math.pow(1.5, user.level));
@@ -32,7 +32,7 @@ export const economyCommands: Command[] = [
     aliases: ['diario', 'recompensa'],
     description: 'Reclama tu recompensa diaria de monedas',
     category: 'economy',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     execute: async (ctx: CommandContext) => {
       const remaining = await remainingCooldown(ctx.userId, 'daily', DAILY_COOLDOWN, ctx.platform);
 
@@ -63,7 +63,7 @@ export const economyCommands: Command[] = [
     aliases: ['transferir', 'dar', 'send'],
     description: 'Transfiere monedas a otro usuario',
     category: 'economy',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     execute: async (ctx: CommandContext) => {
       const [mention, amountStr] = ctx.args;
       const amount = parseInt(amountStr);
@@ -114,7 +114,7 @@ export const economyCommands: Command[] = [
     aliases: ['ranking', 'leaderboard', 'tabla'],
     description: 'Muestra el ranking global de monedas',
     category: 'economy',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     execute: async (ctx: CommandContext) => {
       const top = await db.select().from(users).orderBy(desc(users.balance)).limit(10);
       const medals = ['🥇', '🥈', '🥉'];
@@ -132,7 +132,7 @@ export const economyCommands: Command[] = [
     aliases: ['niveles', 'xptop'],
     description: 'Ranking de niveles y XP',
     category: 'economy',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     execute: async (ctx: CommandContext) => {
       const top = await db.select().from(users).orderBy(desc(users.xp)).limit(10);
       const lines = top.map((u, i) => `${i + 1}. **${u.displayName}** — Lv.${u.level} (${u.xp} XP)`);
@@ -146,7 +146,7 @@ export const economyCommands: Command[] = [
     aliases: ['tienda'],
     description: 'Muestra la tienda de items',
     category: 'economy',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     execute: async (ctx: CommandContext) => {
       const items = getShopItems();
       const lines = items.map(i => `${i.emoji} **${i.name}** — ${i.price} 🪙\n  ${i.description}`);
@@ -160,7 +160,7 @@ export const economyCommands: Command[] = [
     aliases: ['comprar'],
     description: 'Compra un item de la tienda',
     category: 'economy',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     execute: async (ctx: CommandContext) => {
       const itemName = ctx.args[0]?.toLowerCase();
       if (!itemName) {
@@ -211,7 +211,7 @@ export const economyCommands: Command[] = [
     aliases: ['inv', 'items', 'mochila'],
     description: 'Muestra tu inventario',
     category: 'economy',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     execute: async (ctx: CommandContext) => {
       const user = await getOrCreateUser(ctx.userId, ctx.platform, ctx.displayName);
       const effective = await resolveEffectiveUser(user.id);
@@ -245,7 +245,7 @@ export const economyCommands: Command[] = [
     aliases: ['limpiar_inv', 'sell_all'],
     description: 'Vende todo tu inventario',
     category: 'economy',
-    platforms: ['discord', 'telegram', 'whatsapp'],
+    platforms: ['discord', 'telegram'],
     execute: async (ctx: CommandContext) => {
       const user = await getOrCreateUser(ctx.userId, ctx.platform, ctx.displayName);
       const effective = await resolveEffectiveUser(user.id);

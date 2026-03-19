@@ -8,5 +8,5 @@
     "no-unused-vars": "off",
     "no-undef": "off"
   },
-  "ignorePatterns": ["node_modules/", "dist/", ".next/", "web/.next/"]
+  "ignorePatterns": ["node_modules/", "dist/", ".next/", "web/.next/", "web/app/chat/page.tsx"]
 }

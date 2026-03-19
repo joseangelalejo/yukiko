@@ -6,7 +6,8 @@
   "env": { "node": true, "es2022": true, "browser": true },
   "rules": {
     "no-unused-vars": "off",
-    "no-undef": "off"
+    "no-undef": "off",
+    "@next/next/no-img-element": "off"
   },
   "ignorePatterns": ["node_modules/", "dist/", ".next/", "web/.next/"]
 }

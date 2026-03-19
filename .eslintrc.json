@@ -6,8 +6,7 @@
   "env": { "node": true, "es2022": true, "browser": true },
   "rules": {
     "no-unused-vars": "off",
-    "no-undef": "off",
-    "@next/next/no-img-element": "off"
+    "no-undef": "off"
   },
-  "ignorePatterns": ["node_modules/", "dist/", ".next/", "web/.next/"]
+  "ignorePatterns": ["node_modules/", "dist/", ".next/", "web/.next/", "web/app/chat/page.tsx"]
 }

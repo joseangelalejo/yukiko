@@ -19,12 +19,12 @@
 
 > Definidas como **funciones** en `~/.bashrc`. Arrancan el proceso y preguntan si activar arranque automático.
 
-| Comando             | Proceso                       |
-|---------------------|-------------------------------|
-| `yk-start-discord`  | yukiko-discord                |
-| `yk-start-telegram` | yukiko-telegram               |
-| `yk-start-whatsapp` | yukiko-whatsapp               |
-| `yk-start-all`      | discord + telegram + whatsapp |
+| Comando             | Proceso         |
+|---------------------|-----------------|
+| `yk-start-discord`  | yukiko-discord  |
+| `yk-start-telegram` | yukiko-telegram |
+| `yk-start-mobile`   | yukiko-mobile   |
+| `yk-start-all`      | discord + telegram + mobile |
 
 ---
 
@@ -32,12 +32,12 @@
 
 > No afecta al arranque automático en el próximo reinicio del sistema.
 
-| Comando            | Proceso                       |
-|--------------------|-------------------------------|
-| `yk-stop-discord`  | yukiko-discord                |
-| `yk-stop-telegram` | yukiko-telegram               |
-| `yk-stop-whatsapp` | yukiko-whatsapp               |
-| `yk-stop-all`      | discord + telegram + whatsapp |
+| Comando            | Proceso         |
+|--------------------|-----------------|
+| `yk-stop-discord`  | yukiko-discord  |
+| `yk-stop-telegram` | yukiko-telegram |
+| `yk-stop-mobile`   | yukiko-mobile   |
+| `yk-stop-all`      | discord + telegram + mobile |
 
 ---
 
@@ -45,12 +45,12 @@
 
 > Para el proceso **y** desactiva el arranque automático (`pm2 save`).
 
-| Comando               | Proceso                       |
-|-----------------------|-------------------------------|
-| `yk-disable-discord`  | yukiko-discord                |
-| `yk-disable-telegram` | yukiko-telegram               |
-| `yk-disable-whatsapp` | yukiko-whatsapp               |
-| `yk-disable-all`      | discord + telegram + whatsapp |
+| Comando               | Proceso         |
+|-----------------------|-----------------|
+| `yk-disable-discord`  | yukiko-discord  |
+| `yk-disable-telegram` | yukiko-telegram |
+| `yk-disable-mobile`   | yukiko-mobile   |
+| `yk-disable-all`      | discord + telegram + mobile |
 
 ---
 
@@ -58,14 +58,14 @@
 
 > No toca el arranque automático.
 
-| Comando               | Proceso                       |
-|-----------------------|-------------------------------|
-| `yk-restart-discord`  | yukiko-discord                |
-| `yk-restart-telegram` | yukiko-telegram               |
-| `yk-restart-whatsapp` | yukiko-whatsapp               |
-| `yk-restart-all`      | discord + telegram + whatsapp |
-| `yk-restart-agent`    | yukiko-agent                  |
-| `yk-restart-web`      | yukiko-web                    |
+| Comando               | Proceso         |
+|-----------------------|-----------------|
+| `yk-restart-discord`  | yukiko-discord  |
+| `yk-restart-telegram` | yukiko-telegram |
+| `yk-restart-mobile`   | yukiko-mobile   |
+| `yk-restart-all`      | discord + telegram + mobile |
+| `yk-restart-agent`    | yukiko-agent    |
+| `yk-restart-web`      | yukiko-web      |
 
 ---
 
@@ -78,9 +78,18 @@
 | `yk-logs`          | Todos en tiempo real (`pm2 logs`) |
 | `yk-logs-discord`  | yukiko-discord                    |
 | `yk-logs-telegram` | yukiko-telegram                   |
-| `yk-logs-whatsapp` | yukiko-whatsapp                   |
+| `yk-logs-mobile`   | yukiko-mobile                     |
 | `yk-logs-agent`    | yukiko-agent                      |
 | `yk-logs-web`      | yukiko-web                        |
+
+---
+
+## 🚀 Vercel
+
+| Comando        | Descripción                                  |
+|----------------|----------------------------------------------|
+| `yk-deploy`    | Despliega el web panel en Vercel (producción)|
+| `yk-undeploy`  | Elimina todos los deployments de Vercel      |
 
 ---
 
@@ -112,10 +121,10 @@
 |----|-----------------|-----------|
 | 0  | yukiko-discord  | 🟢 online |
 | 1  | yukiko-telegram | 🟢 online |
-| 2  | yukiko-whatsapp | 🟢 online |
-| 3  | yukiko-agent    | 🟢 online |
-| 4  | yukiko-web      | 🟢 online |
+| 2  | yukiko-agent    | 🟢 online |
+| 3  | yukiko-web      | 🟢 online |
+| 4  | yukiko-mobile   | 🟢 online |
 
 ---
 
-> *Actualizado: 12 de marzo de 2026*
+> *Actualizado: 25 de marzo de 2026*

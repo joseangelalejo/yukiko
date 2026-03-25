@@ -102,7 +102,7 @@ async function registerSlashCommands() {
     // Comandos que aceptan argumento de texto libre
     const withArgs = [
       'ask', 'imagine', 'rp', 'translate',
-      'hentai', 'redgifs',
+      'hentai', 'gif18',
       'warn', 'ban', 'unban', 'clear', 'prefix',
       'link',      // ← acepta el código
       'unlink',    // ← acepta "confirmar"

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Yukiko — Tu compañera neko para Discord, Telegram y WhatsApp',
+  title: 'Yukiko — Tu compañera neko para Discord, Telegram y Mobile',
   description: 'Bot multiplataforma kawaii con roleplay, economía, IA y más.',
 };
 
@@ -34,7 +34,7 @@ export default function HomePage() {
           </span>
         </h1>
         <p className="text-xl text-white/70 max-w-2xl mx-auto mb-10">
-          Tu compañera neko kawaii para <strong className="text-white">WhatsApp</strong>,{' '}
+          Tu compañera neko kawaii para <strong className="text-white">Mobile</strong>,{' '}
           <strong className="text-white">Discord</strong> y{' '}
           <strong className="text-white">Telegram</strong>. Roleplay, economía, IA y mucho más.
         </p>
@@ -97,7 +97,7 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="text-center py-8 text-white/40 text-sm">
         <p>🌨️ Yukiko — Hecho con ❤️ por <a href="https://github.com/joseangelalejo" className="hover:text-white">joseangelalejo</a></p>
-        <p className="mt-1">WhatsApp · Discord · Telegram</p>
+        <p className="mt-1">Mobile · Discord · Telegram</p>
       </footer>
     </div>
   );
@@ -117,12 +117,12 @@ const features = [
   {
     emoji: '🤖',
     title: 'Inteligencia Artificial',
-    desc: 'Chat con GPT-4o, generación de imágenes con DALL-E 3 y traducción automática.',
+    desc: 'Chat con Ollama llama3.2, generación de imágenes con Pollinations.ai y traducción automática.',
   },
   {
     emoji: '🔞',
     title: 'Contenido +18',
-    desc: 'Hentai de Danbooru y GIFs de RedGifs, solo en grupos verificados y usuarios adultos.',
+    desc: 'Imágenes y GIFs de Gelbooru, solo en grupos verificados y usuarios adultos.',
   },
   {
     emoji: '🔨',

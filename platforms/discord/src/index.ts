@@ -16,6 +16,7 @@ import { adultCommands } from '@yukiko/adult';
 import { aiCommands } from '@yukiko/ai';
 import { moderationCommands } from '@yukiko/moderation';
 import { linkCommands, handleNewUser, buildOnboardingMessage } from '@yukiko/link';
+import { musicCommands } from '@yukiko/music';
 import { getOrCreateUser, isOnCooldown, remainingCooldown, addXp, logCommand } from '@yukiko/core/src/utils.ts';
 import { checkAdultVerificationNotifications } from '@yukiko/core/src/notifications';
 import type { CommandContext } from '@yukiko/core/src/types.ts';
@@ -28,7 +29,8 @@ import 'dotenv/config';
   ...adultCommands,
   ...aiCommands,
   ...moderationCommands,
-  ...linkCommands,           // ← nuevo
+  ...linkCommands,
+  ...musicCommands,
 ].forEach(cmd => registry.register(cmd));
 
 const client = new Client({
@@ -103,6 +105,7 @@ async function registerSlashCommands() {
     const withArgs = [
       'ask', 'imagine', 'rp', 'translate',
       'hentai', 'gif18',
+      'play', 'skip',
       'warn', 'ban', 'unban', 'clear', 'prefix',
       'link',      // ← acepta el código
       'unlink',    // ← acepta "confirmar"

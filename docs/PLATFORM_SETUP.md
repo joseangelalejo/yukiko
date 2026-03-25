@@ -386,7 +386,7 @@ await isOnCooldown(interaction.user.id, 'daily', 30, 'discord')
 3. Prueba desde el homelab: `curl http://localhost:3001/health`
 
 ### TypeScript errors en CI
-Recuerda que `platforms/whatsapp` está excluido del `tsconfig.base.json`. Si añades plataformas nuevas, actualiza el `include` del tsconfig.
+Si añades plataformas nuevas, actualiza el `include` del tsconfig.
 
 ### Next.js build falla en web
 ```bash

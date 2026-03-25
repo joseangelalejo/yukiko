@@ -55,7 +55,7 @@ MOBILE_WS_PORT=3002
 ### Añadir 'mobile' al tipo Platform en core/src/types.ts
 
 ```ts
-export type Platform = 'discord' | 'telegram' | 'whatsapp' | 'mobile';
+export type Platform = 'discord' | 'telegram' | 'mobile';
 ```
 
 ### Arrancar

@@ -44,8 +44,9 @@
 | 💰 Economía | balance, daily, transfer, top, shop, buy, inventory | ✅ | ✅ | ✅ | — |
 | 🤖 IA | ask, imagine, rp, translate | ✅ | ✅ | ✅ | ✅ |
 | 🔨 Moderación | warn, warns, ban, unban, clearban, prefix, stats, help | ✅ | ✅ | ✅ | — |
-| 🔞 +18 | hentai, gif18, adult on/off, verify18 | ✅ | ✅ | ✅ | — |
+| 🔞 +18 | hentai, gif18, adult on/off, verify18 | ✅ | ✅ | — | — |
 | 🔗 Link | link, linkcode, accounts, unlink | ✅ | ✅ | ✅ | — |
+| 🎵 Música | play, stop, skip, queue *(próximamente)* | 🔜 | — | — | — |
 
 ---
 
@@ -80,15 +81,16 @@ yukiko/
 ├── platforms/
 │   ├── discord/    # Discord.js — slash commands
 │   ├── telegram/   # Grammy — BotFather integration
-│   ├── mobile/     # WebSocket server puerto 3002
-│   └── whatsapp/   # DEPRECATED — ignorado en compilación
+│   └── mobile/     # WebSocket server puerto 3002
 ├── modules/
 │   ├── roleplay/   # GIFs via Giphy API
 │   ├── economy/    # Monedas, niveles, inventario, tienda
 │   ├── adult/      # Gelbooru con verificación +18
 │   ├── ai/         # Ollama (llama3.2) + Pollinations.ai
 │   ├── moderation/ # Warn, ban, logs
+│   ├── music/      # Scaffold — provider pendiente de decidir
 │   └── link/       # Vinculación de cuentas multiplataforma
+├── mobile-app/     # App Android (React Native/Expo)
 ├── web/            # Next.js → Vercel (landing + admin + monitor + chat)
 │   └── app/
 │       ├── chat/       # Chat web estilo ChatGPT
@@ -165,7 +167,7 @@ Interfaz de chat estilo ChatGPT que conecta con el homelab via API Route de Next
 
 Disponible en [your-app-domain.com/admin](https://your-app-domain.com/admin)
 
-- Estado de plataformas en tiempo real (Discord, Telegram)
+- Estado de plataformas en tiempo real (Discord, Telegram, Mobile)
 - Gestión de usuarios y grupos
 - Aprobar/rechazar solicitudes +18 (`/admin/verifications`)
 - Logs de comandos y métricas
@@ -182,7 +184,7 @@ Disponible en [your-app-domain.com/admin](https://your-app-domain.com/admin)
 | GitHub Pages | Documentación | Gratis |
 | GitHub Actions | CI/CD | Gratis |
 | Giphy API | GIFs roleplay | Gratis |
-| Gelbooru | GIFs +18 animados | Gratis |
+| Gelbooru | Imágenes y GIFs +18 | Gratis |
 | Ollama (llama3.2:3b) | IA local | Self-hosted |
 | Pollinations.ai | Generación de imágenes | Gratis |
 | Homelab Proxmox VE | Bots 24/7 (32 GB RAM DDR4) | Self-hosted |

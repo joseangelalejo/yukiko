@@ -8,6 +8,7 @@ import { adultCommands } from '@yukiko/adult';
 import { aiCommands } from '@yukiko/ai';
 import { moderationCommands } from '@yukiko/moderation';
 import { linkCommands, handleNewUser, buildOnboardingMessage } from '@yukiko/link';
+import { musicCommands } from '@yukiko/music';
 import { isOnCooldown, remainingCooldown, addXp, logCommand } from '@yukiko/core/src/utils';
 import { checkAdultVerificationNotifications } from '@yukiko/core/src/notifications';
 import type { CommandContext } from '@yukiko/core/src/types';
@@ -20,7 +21,8 @@ import 'dotenv/config';
   ...adultCommands,
   ...aiCommands,
   ...moderationCommands,
-  ...linkCommands,           // ← nuevo
+  ...linkCommands,
+  ...musicCommands,
 ].forEach(cmd => registry.register(cmd));
 
 const bot = new Bot(process.env.TELEGRAM_BOT_TOKEN!);

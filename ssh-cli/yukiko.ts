@@ -5,7 +5,7 @@
  *
  * Commands:
  *   status              — Show bot platform status
- *   restart <platform>  — Restart a platform (discord|telegram|whatsapp|all)
+ *   restart <platform>  — Restart a platform (discord|telegram|mobile|all)
  *   logs [--tail]       — Show recent logs
  *   users               — List recent users
  *   ban <userId>        — Ban a user
@@ -32,7 +32,7 @@ program
   .description('Muestra el estado de todas las plataformas')
   .action(() => {
     console.log('\n🌨️ Yukiko Bot Status\n');
-    const processes = ['yukiko-discord', 'yukiko-telegram', 'yukiko-whatsapp'];
+    const processes = ['yukiko-discord', 'yukiko-telegram', 'yukiko-mobile'];
     for (const proc of processes) {
       try {
         const result = execSync(`pgrep -f ${proc}`, { encoding: 'utf8' }).trim();
@@ -52,7 +52,7 @@ program
   .description('Reinicia una plataforma del bot')
   .action((platform: string = 'all') => {
     const platforms = platform === 'all'
-      ? ['discord', 'telegram', 'whatsapp']
+      ? ['discord', 'telegram', 'mobile']
       : [platform];
 
     for (const p of platforms) {

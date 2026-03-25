@@ -38,21 +38,6 @@ services:
       - redis
     command: tsx platforms/telegram/src/index.ts
 
-  # ── WhatsApp Bot ───────────────────────────────────────────
-  yukiko-whatsapp:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile.bot
-    restart: unless-stopped
-    environment:
-      - PLATFORM=whatsapp
-    env_file: .env
-    depends_on:
-      - redis
-    volumes:
-      - ./sessions:/app/sessions
-    command: tsx platforms/whatsapp/src/index.ts
-
   # ── Lavalink (music) ───────────────────────────────────────
   lavalink:
     image: ghcr.io/lavalink-devs/lavalink:4

@@ -2,46 +2,41 @@ import type { Command, CommandContext } from '../../core/src/types.js';
 import { db, users, groups, adultRequests } from '../../db/index.js';
 import { eq, and } from 'drizzle-orm';
 
-// ── RedGifs token cache ───────────────────────────────────────
-let redgifsToken: string | null = null;
-let tokenExpiry = 0;
-
-async function getRedGifsToken(): Promise<string> {
-  if (redgifsToken && Date.now() < tokenExpiry) return redgifsToken;
-  const res = await fetch('https://api.redgifs.com/v2/auth/temporary');
-  const data = await res.json() as { token: string };
-  redgifsToken = data.token;
-  tokenExpiry = Date.now() + 55 * 60 * 1000;
-  return redgifsToken;
-}
-
-async function fetchRedGif(tags: string): Promise<string | null> {
+// ── Gelbooru fetch ────────────────────────────────────────────
+async function fetchGelbooru(tags: string): Promise<string | null> {
   try {
-    const token = await getRedGifsToken();
+    const apiKey = process.env.GELBOORU_API_KEY;
+    const userId = process.env.GELBOORU_USER_ID;
+    const auth = apiKey && userId ? `&api_key=${apiKey}&user_id=${userId}` : '';
     const res = await fetch(
-      `https://api.redgifs.com/v2/gifs/search?search_text=${encodeURIComponent(tags)}&count=20&order=trending`,
-      { headers: { Authorization: `Bearer ${token}` } }
+      `https://gelbooru.com/index.php?page=dapi&s=post&q=index&json=1&limit=30&tags=${encodeURIComponent(tags + ' rating:explicit')}${auth}`
     );
-    const data = await res.json() as { gifs: Array<{ urls: { hd: string; sd: string } }> };
-    if (!data.gifs?.length) return null;
-    const random = data.gifs[Math.floor(Math.random() * data.gifs.length)];
-    return random.urls.hd ?? random.urls.sd;
+    const data = await res.json() as { post?: Array<{ file_url?: string; sample_url?: string }> };
+    const posts = data.post ?? [];
+    const valid = posts.filter(p => p.file_url || p.sample_url);
+    if (!valid.length) return null;
+    const random = valid[Math.floor(Math.random() * valid.length)];
+    return random.file_url ?? random.sample_url ?? null;
   } catch { return null; }
 }
 
-async function fetchDanbooru(tags: string): Promise<string | null> {
+async function fetchGelbooruGif(tags: string): Promise<string | null> {
   try {
-    const login = process.env.DANBOORU_LOGIN;
-    const apiKey = process.env.DANBOORU_API_KEY;
-    const auth = login && apiKey ? `&login=${login}&api_key=${apiKey}` : '';
+    const apiKey = process.env.GELBOORU_API_KEY;
+    const userId = process.env.GELBOORU_USER_ID;
+    const auth = apiKey && userId ? `&api_key=${apiKey}&user_id=${userId}` : '';
     const res = await fetch(
-      `https://danbooru.donmai.us/posts.json?tags=${encodeURIComponent(tags + ' rating:explicit')}&limit=30&random=true${auth}`
+      `https://gelbooru.com/index.php?page=dapi&s=post&q=index&json=1&limit=30&tags=${encodeURIComponent(tags + ' animated rating:explicit')}${auth}`
     );
-    const posts = await res.json() as Array<{ file_url?: string; large_file_url?: string }>;
-    const valid = posts.filter(p => p.file_url || p.large_file_url);
+    const data = await res.json() as { post?: Array<{ file_url?: string; sample_url?: string }> };
+    const posts = data.post ?? [];
+    const valid = posts.filter(p => {
+      const url = p.file_url ?? p.sample_url ?? '';
+      return url.endsWith('.gif') || url.endsWith('.webm') || url.endsWith('.mp4');
+    });
     if (!valid.length) return null;
     const random = valid[Math.floor(Math.random() * valid.length)];
-    return random.large_file_url ?? random.file_url ?? null;
+    return random.file_url ?? random.sample_url ?? null;
   } catch { return null; }
 }
 
@@ -76,7 +71,6 @@ async function checkAdultAccess(ctx: CommandContext): Promise<boolean> {
 
   if (user[0].isVerifiedAdult) return true;
 
-  // Not verified — check request state
   const [pending] = await db
     .select()
     .from(adultRequests)
@@ -112,7 +106,6 @@ async function checkAdultAccess(ctx: CommandContext): Promise<boolean> {
 }
 
 export const adultCommands: Command[] = [
-  // ── Solicitar verificación ────────────────────────────────
   {
     name: 'verify18',
     aliases: ['solicitar18', 'verificar18', 'requestadult'],
@@ -164,8 +157,6 @@ export const adultCommands: Command[] = [
       );
     },
   },
-
-  // ── Activar +18 en grupo ──────────────────────────────────
   {
     name: 'adult',
     aliases: ['nsfw'],
@@ -204,12 +195,10 @@ export const adultCommands: Command[] = [
       );
     },
   },
-
-  // ── Hentai ────────────────────────────────────────────────
   {
     name: 'hentai',
     aliases: ['h'],
-    description: 'Imagen hentai aleatoria (requiere verificación +18)',
+    description: 'Imagen hentai aleatoria de Gelbooru (requiere verificación +18)',
     category: 'adult',
     platforms: ['discord', 'telegram'],
     adultOnly: true,
@@ -217,25 +206,23 @@ export const adultCommands: Command[] = [
     execute: async (ctx: CommandContext) => {
       if (!await checkAdultAccess(ctx)) return;
       const tags = ctx.args.join(' ') || 'anime';
-      const url = await fetchDanbooru(tags);
+      const url = await fetchGelbooru(tags);
       if (!url) { await ctx.reply('❌ Sin resultados. Intenta otras etiquetas.'); return; }
       await ctx.replyWithImage(url, `🔞 ${tags}`);
     },
   },
-
-  // ── RedGifs ───────────────────────────────────────────────
   {
-    name: 'redgifs',
-    aliases: ['rgif', 'gif18'],
-    description: 'GIF de RedGifs +18 (requiere verificación)',
+    name: 'gif18',
+    aliases: ['hgif', 'agif'],
+    description: 'GIF/animación +18 de Gelbooru (requiere verificación)',
     category: 'adult',
     platforms: ['discord', 'telegram'],
     adultOnly: true,
     cooldown: 5,
     execute: async (ctx: CommandContext) => {
       if (!await checkAdultAccess(ctx)) return;
-      const tags = ctx.args.join(' ') || 'hentai';
-      const url = await fetchRedGif(tags);
+      const tags = ctx.args.join(' ') || 'animated';
+      const url = await fetchGelbooruGif(tags);
       if (!url) { await ctx.reply('❌ Sin resultados.'); return; }
       await ctx.replyWithGif(url, `🔞 ${tags}`);
     },

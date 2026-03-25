@@ -13,7 +13,7 @@ export async function GET() {
       .from(commandLogs)
       .where(gte(commandLogs.executedAt, today));
 
-    let platforms = { discord: false, telegram: false, whatsapp: false };
+    let platforms = { discord: false, telegram: false, mobile: false };
     try {
       const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000';
       const r = await fetch(`${baseUrl}/api/agent/status`, {

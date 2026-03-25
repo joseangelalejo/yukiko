@@ -209,7 +209,7 @@ export const linkCommands: Command[] = [
         await ctx.reply(
           `🔗 **Vinculación de cuentas**\n\n` +
           `Este comando conecta tu cuenta de Yukiko entre plataformas ` +
-          `(Discord, Telegram y WhatsApp).\n\n` +
+          `(Discord, Telegram y Mobile).\n\n` +
           `**¿Cómo funciona?**\n` +
           `1. Ve a la app donde **ya tienes** tu cuenta de Yukiko\n` +
           `2. Escribe \`/linkcode\` — recibirás un código temporal\n` +

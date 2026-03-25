@@ -4,7 +4,7 @@ import { pgTable, text, integer, boolean, timestamp, uuid, varchar, jsonb, uniqu
 export const users = pgTable('users', {
   id: uuid('id').primaryKey().defaultRandom(),
   platformId: varchar('platform_id', { length: 100 }).notNull(),
-  platform: varchar('platform', { length: 20 }).notNull(), // discord | telegram | whatsapp
+  platform: varchar('platform', { length: 20 }).notNull(), // discord | telegram | mobile
 
   // ── Linked account (master user) ────────────────────────
   // Si este usuario es una cuenta secundaria, apunta al usuario principal
@@ -163,7 +163,7 @@ export const cooldowns = pgTable('cooldowns', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 
-// ── Known contacts (WhatsApp/Telegram: para no spamear con bienvenida) ───
+// ── Known contacts (Telegram/Mobile: para no spamear con bienvenida) ───
 export const knownContacts = pgTable('known_contacts', {
   id: uuid('id').primaryKey().defaultRandom(),
   platformId: varchar('platform_id', { length: 100 }).notNull(),

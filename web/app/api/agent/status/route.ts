@@ -13,6 +13,6 @@ export async function GET(req: NextRequest) {
     const data = await r.json();
     return NextResponse.json(data);
   } catch {
-    return NextResponse.json({ discord: false, telegram: false, whatsapp: false });
+    return NextResponse.json({ discord: false, telegram: false, mobile: false });
   }
 }

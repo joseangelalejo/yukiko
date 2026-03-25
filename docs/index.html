@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Yukiko Bot — Documentación</title>
-  <meta name="description" content="Yukiko — Tu compañera neko kawaii multiplataforma. Bot para Discord, Telegram y WhatsApp con IA, economía, roleplay y más." />
+  <meta name="description" content="Yukiko — Tu compañera neko kawaii multiplataforma. Bot para Discord, Telegram y Mobile con IA local, economía, roleplay y más." />
 
   <!-- ─── Favicons ───────────────────────────────────────────────── -->
   <link rel="icon" type="image/png" sizes="32x32" href="assets/yukiko-favicon-32.png" />
@@ -16,13 +16,13 @@
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content="https://joseangelalejo.github.io/yukiko/" />
   <meta property="og:title"       content="Yukiko Bot — Tu compañera neko kawaii multiplataforma" />
-  <meta property="og:description" content="Bot para Discord, Telegram y WhatsApp con IA GPT-4o, economía, roleplay, música y más. 100% gratuito y open source." />
+  <meta property="og:description" content="Bot para Discord, Telegram y Mobile con IA local, economía, roleplay y más. 100% gratuito y open source." />
   <meta property="og:image"       content="assets/yukiko-social-og.png" />
   <meta property="og:image:width"  content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card"        content="summary_large_image" />
   <meta name="twitter:title"       content="Yukiko Bot" />
-  <meta name="twitter:description" content="Tu compañera neko kawaii multiplataforma — Discord · Telegram · WhatsApp" />
+  <meta name="twitter:description" content="Tu compañera neko kawaii multiplataforma — Discord · Telegram · Mobile" />
   <meta name="twitter:image"       content="assets/yukiko-social-og.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -451,8 +451,8 @@
     .platform-discord:hover { box-shadow: 0 0 40px rgba(88,101,242,0.2); }
     .platform-telegram { border-color: rgba(41,182,246,0.4); background: rgba(41,182,246,0.06); }
     .platform-telegram:hover { box-shadow: 0 0 40px rgba(41,182,246,0.2); }
-    .platform-whatsapp { border-color: rgba(37,211,102,0.4); background: rgba(37,211,102,0.06); }
-    .platform-whatsapp:hover { box-shadow: 0 0 40px rgba(37,211,102,0.2); }
+    .platform-mobile { border-color: rgba(37,211,102,0.4); background: rgba(37,211,102,0.06); }
+    .platform-mobile:hover { box-shadow: 0 0 40px rgba(37,211,102,0.2); }
 
     .platform-icon { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
     .platform-card h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; }
@@ -710,7 +710,7 @@
         </h1>
         <p class="hero-sub">
           Tu compañera <strong>neko kawaii</strong> multiplataforma.<br/>
-          Discord, Telegram y WhatsApp — un solo bot, todo gratis.
+          Discord, Telegram y Mobile — un solo bot, todo gratis.
         </p>
         <div class="hero-ctas">
           <a class="btn btn-primary" href="#setup">🚀 Empezar</a>
@@ -741,7 +741,7 @@
         <div class="feature-card">
           <span class="feature-icon">🎭</span>
           <h3>Roleplay</h3>
-          <p>Abrazos, besos, palmaditas y más de 10 acciones con GIFs animados via Tenor. Contadores de quién da y recibe más.</p>
+          <p>Abrazos, besos, palmaditas y más de 10 acciones con GIFs animados via Giphy. Contadores de quién da y recibe más.</p>
           <div class="feature-tags">
             <span class="tag">hug</span>
             <span class="tag">kiss</span>
@@ -767,7 +767,7 @@
         <div class="feature-card">
           <span class="feature-icon">🤖</span>
           <h3>Inteligencia Artificial</h3>
-          <p>Chat con GPT-4o con personalidad kawaii, generación de imágenes con DALL-E 3, roleplay IA y traducción instantánea.</p>
+          <p>Chat con IA local (Ollama/llama3.2) con personalidad kawaii, generación de imágenes con Pollinations.ai, roleplay IA y traducción instantánea.</p>
           <div class="feature-tags">
             <span class="tag">ask</span>
             <span class="tag">imagine</span>
@@ -790,7 +790,7 @@
         <div class="feature-card">
           <span class="feature-icon">🔞</span>
           <h3>Contenido +18</h3>
-          <p>Sistema de verificación por capas: solo en grupos, activado por admin y cada usuario confirma edad en privado. Fuentes: Danbooru + RedGifs.</p>
+          <p>Sistema de verificación por capas: solo en grupos, activado por admin y cada usuario confirma edad en privado. Fuentes: Gelbooru.</p>
           <div class="feature-tags">
             <span class="tag">hentai</span>
             <span class="tag">redgifs</span>
@@ -894,13 +894,13 @@
         <div class="cmd-card" data-cat="ai">
           <div class="cmd-name">/ask &lt;pregunta&gt;</div>
           <div class="cmd-aliases">alias: pregunta, ia, ai, gpt</div>
-          <div class="cmd-desc">Pregúntale cualquier cosa a Yukiko IA (GPT-4o). Responde en español con personalidad kawaii.</div>
+          <div class="cmd-desc">Pregúntale cualquier cosa a Yukiko IA (Ollama/llama3.2). Responde en español con personalidad kawaii.</div>
           <div class="cmd-meta"><span class="cmd-badge badge-cooldown">⏱ 5s</span></div>
         </div>
         <div class="cmd-card" data-cat="ai">
           <div class="cmd-name">/imagine &lt;descripción&gt;</div>
           <div class="cmd-aliases">alias: generar, dream, draw</div>
-          <div class="cmd-desc">Genera una imagen anime con DALL-E 3 a partir de tu descripción.</div>
+          <div class="cmd-desc">Genera una imagen anime con Pollinations.ai a partir de tu descripción.</div>
           <div class="cmd-meta"><span class="cmd-badge badge-cooldown">⏱ 30s</span></div>
         </div>
         <div class="cmd-card" data-cat="ai">
@@ -956,13 +956,13 @@
         <div class="cmd-card" data-cat="adult">
           <div class="cmd-name">/hentai &lt;tags&gt;</div>
           <div class="cmd-aliases">alias: h, lewd</div>
-          <div class="cmd-desc">Imagen aleatoria de Danbooru por tags. Requiere verificación de edad y grupo activado.</div>
+          <div class="cmd-desc">Imagen/GIF de Gelbooru por tags. Requiere verificación de edad y grupo activado.</div>
           <div class="cmd-meta"><span class="cmd-badge badge-adult">🔞 Verificado</span><span class="cmd-badge badge-group">👥 Grupo</span></div>
         </div>
         <div class="cmd-card" data-cat="adult">
           <div class="cmd-name">/redgifs &lt;búsqueda&gt;</div>
           <div class="cmd-aliases">alias: rgif</div>
-          <div class="cmd-desc">GIF +18 de RedGifs. Requiere verificación de edad y grupo activado.</div>
+          <div class="cmd-desc">GIF +18 de Gelbooru. Requiere verificación de edad y grupo activado.</div>
           <div class="cmd-meta"><span class="cmd-badge badge-adult">🔞 Verificado</span><span class="cmd-badge badge-group">👥 Grupo</span></div>
         </div>
         <!-- Utility -->
@@ -1018,10 +1018,10 @@
             <li>Sin token de pago requerido</li>
           </ul>
         </div>
-        <div class="platform-card platform-whatsapp">
-          <span class="platform-icon">💚</span>
-          <h3>WhatsApp</h3>
-          <p>Via Baileys (protocolo WhatsApp Web). Autenticación por QR, sin API oficial necesaria.</p>
+        <div class="platform-card platform-mobile">
+          <span class="platform-icon">📱</span>
+          <h3>Mobile</h3>
+          <p>App React Native (Expo) que conecta vía WebSocket al servidor en puerto 3002. Autenticación por token persistente.</p>
           <ul>
             <li>Auth por QR code (como WA Web)</li>
             <li>Sesión persistente en disco</li>
@@ -1098,7 +1098,7 @@ bash scripts/db-studio.sh</pre>
           <div class="step-num">05</div>
           <div class="step-content">
             <h3>Tokens de bots</h3>
-            <p>Discord en developer.discord.com · Telegram con @BotFather · WhatsApp usa QR (sin token).</p>
+            <p>Discord en developer.discord.com · Telegram con @BotFather · Mobile via WebSocket (token persistente).</p>
             <pre><span class="c"># Ver guía completa de configuración de cada plataforma:</span>
 cat docs/PLATFORM_SETUP.md</pre>
           </div>
@@ -1114,7 +1114,7 @@ npm run dev
 <span class="c"># O por separado</span>
 npm run dev:discord
 npm run dev:telegram
-npm run dev:whatsapp
+npm run dev:mobile
 npm run dev:web    <span class="c"># → http://localhost:3000</span></pre>
           </div>
         </div>
@@ -1172,7 +1172,7 @@ cd web && npx vercel --prod</pre>
         <div class="stack-item">
           <span class="stack-emoji">🎭</span>
           <div class="stack-info">
-            <h4>Tenor API</h4>
+            <h4>Giphy API</h4>
             <p>GIFs para roleplay (hugs, kisses, etc). API Key gratuita via Google Cloud.</p>
             <span class="free-badge">GRATIS</span>
           </div>
@@ -1188,8 +1188,8 @@ cd web && npx vercel --prod</pre>
         <div class="stack-item">
           <span class="stack-emoji">🤖</span>
           <div class="stack-info">
-            <h4>OpenAI (opcional)</h4>
-            <p>GPT-4o + DALL-E 3. De pago pero &lt;$1/mes con uso moderado.</p>
+            <h4>Pollinations.ai + Ollama</h4>
+            <p>Ollama (llama3.2:3b) self-hosted + Pollinations.ai. 100% gratuito.</p>
             <span class="free-badge" style="background:rgba(255,180,50,0.15);color:#ffb432;">OPCIONAL $</span>
           </div>
         </div>
@@ -1236,7 +1236,7 @@ cd web && npx vercel --prod</pre>
         <div class="stack-item">
           <span class="stack-emoji">🔞</span>
           <div class="stack-info">
-            <h4>Danbooru + RedGifs</h4>
+            <h4>Gelbooru</h4>
             <p>APIs gratuitas para contenido +18 con cuenta (tier gratuito suficiente).</p>
             <span class="free-badge">GRATIS</span>
           </div>
@@ -1263,12 +1263,12 @@ cd web && npx vercel --prod</pre>
 ├── <span class="dir">platforms/</span>
 │   ├── <span class="dir">discord/src/index.ts</span>   <span class="desc"># Discord.js — slash commands, embeds, música</span>
 │   ├── <span class="dir">telegram/src/index.ts</span>  <span class="desc"># Grammy — comandos Telegram, BotFather</span>
-│   └── <span class="dir">whatsapp/src/index.ts</span>  <span class="desc"># Baileys — protocolo WA Web, QR auth</span>
+│   └── <span class="dir">mobile/src/index.ts</span>    <span class="desc"># WebSocket server — puerto 3002, React Native</span>
 ├── <span class="dir">modules/</span>
-│   ├── <span class="dir">roleplay/</span>              <span class="desc"># GIFs via Tenor API</span>
+│   ├── <span class="dir">roleplay/</span>              <span class="desc"># GIFs via Giphy API</span>
 │   ├── <span class="dir">economy/</span>               <span class="desc"># Monedas, niveles, mascotas, matrimonios</span>
-│   ├── <span class="dir">adult/</span>                 <span class="desc"># Danbooru + RedGifs con sistema de verificación</span>
-│   ├── <span class="dir">ai/</span>                    <span class="desc"># GPT-4o + DALL-E 3 (OpenAI)</span>
+│   ├── <span class="dir">adult/</span>                 <span class="desc"># Gelbooru con sistema de verificación</span>
+│   ├── <span class="dir">ai/</span>                    <span class="desc"># Ollama (llama3.2) + Pollinations.ai</span>
 │   └── <span class="dir">moderation/</span>            <span class="desc"># Warn, ban, clear, logs</span>
 ├── <span class="dir">web/</span>                       <span class="desc"># Next.js — landing + admin + monitor (→ Vercel)</span>
 │   └── <span class="dir">app/</span>

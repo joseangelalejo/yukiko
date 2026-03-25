@@ -4,7 +4,7 @@
   <img src="mobile-app/assets/yukiko-logo-128.png" alt="Yukiko Logo" width="80" style="border-radius:50%;" />
 
   <h1>Yukiko Bot</h1>
-  <p><em>Tu compañera neko kawaii multiplataforma — Discord, Telegram & Web</em></p>
+  <p><em>Tu compañera neko kawaii multiplataforma — Discord, Telegram, Mobile & Web</em></p>
 
   [![Deploy](https://github.com/joseangelalejo/yukiko/actions/workflows/deploy.yml/badge.svg)](https://github.com/joseangelalejo/yukiko/actions)
   [![GitHub Pages](https://img.shields.io/badge/docs-live-pink?logo=github)](https://joseangelalejo.github.io/yukiko/)
@@ -21,6 +21,7 @@
 |---|---|---|
 | **Discord** | ✅ ONLINE | Yukiko#3557 (slash commands) |
 | **Telegram** | ✅ ONLINE | @YukikoNeko_bot |
+| **Mobile** | ✅ ONLINE | WebSocket puerto 3002 |
 | **Web Chat** | ✅ ONLINE | [yukiko.miniserver.online/chat](https://yukiko.miniserver.online/chat) |
 | **Web (Next.js)** | ✅ ONLINE | [yukiko.vercel.app](https://yukiko.vercel.app) · [yukiko.miniserver.online](https://yukiko.miniserver.online) |
 | **Admin dashboard** | ✅ ONLINE | [yukiko.miniserver.online/admin](https://yukiko.miniserver.online/admin) |
@@ -37,14 +38,14 @@
 
 ## ✨ Módulos
 
-| Módulo | Comandos | Discord | Telegram | Web Chat |
-|---|---|:---:|:---:|:---:|
-| 🎭 Roleplay | hug, kiss, pat, slap, dance, +8 más | ✅ | ✅ | — |
-| 💰 Economía | balance, daily, transfer, top, shop, buy, inventory | ✅ | ✅ | — |
-| 🤖 IA | ask, imagine, rp, translate | ✅ | ✅ | ✅ |
-| 🔨 Moderación | warn, warns, ban, unban, clearban, prefix, stats, help | ✅ | ✅ | — |
-| 🔞 +18 | hentai, gif18, adult on/off, verify18 | ✅ | ✅ | — |
-| 🔗 Link | link, linkcode, accounts, unlink | ✅ | ✅ | — |
+| Módulo | Comandos | Discord | Telegram | Mobile | Web Chat |
+|---|---|:---:|:---:|:---:|:---:|
+| 🎭 Roleplay | hug, kiss, pat, slap, dance, +8 más | ✅ | ✅ | ✅ | — |
+| 💰 Economía | balance, daily, transfer, top, shop, buy, inventory | ✅ | ✅ | ✅ | — |
+| 🤖 IA | ask, imagine, rp, translate | ✅ | ✅ | ✅ | ✅ |
+| 🔨 Moderación | warn, warns, ban, unban, clearban, prefix, stats, help | ✅ | ✅ | ✅ | — |
+| 🔞 +18 | hentai, gif18, adult on/off, verify18 | ✅ | ✅ | ✅ | — |
+| 🔗 Link | link, linkcode, accounts, unlink | ✅ | ✅ | ✅ | — |
 
 ---
 
@@ -79,12 +80,12 @@ yukiko/
 ├── platforms/
 │   ├── discord/    # Discord.js — slash commands
 │   ├── telegram/   # Grammy — BotFather integration
-│   ├── whatsapp/   # DEPRECATED — excluido de compilación
-│   └── mobile/     # WebSocket server puerto 3002
+│   ├── mobile/     # WebSocket server puerto 3002
+│   └── whatsapp/   # DEPRECATED — ignorado en compilación
 ├── modules/
-│   ├── roleplay/   # GIFs via Tenor API
+│   ├── roleplay/   # GIFs via Giphy API
 │   ├── economy/    # Monedas, niveles, inventario, tienda
-│   ├── adult/      # Danbooru + Gelbooru con verificación +18
+│   ├── adult/      # Gelbooru con verificación +18
 │   ├── ai/         # Ollama (llama3.2) + Pollinations.ai
 │   ├── moderation/ # Warn, ban, logs
 │   └── link/       # Vinculación de cuentas multiplataforma
@@ -95,7 +96,7 @@ yukiko/
 ├── db/             # Drizzle ORM schema → Neon PostgreSQL
 ├── homelab-agent/  # Agente HTTP: restart/backup/status/chat
 ├── ssh-cli/        # CLI remota para gestionar desde terminal
-├── scripts/        # install-arch.sh, install-windows.ps1/py, dev.sh...
+├── scripts/        # install-arch.sh, vercel-deploy.sh, vercel-undeploy.sh...
 ├── docs/           # GitHub Pages
 └── .github/        # CI/CD: lint → Vercel + SSH homelab + Pages
 ```
@@ -128,6 +129,13 @@ yk-restart-all
 | `yukiko-agent` | Agente HTTP (puerto 3001) |
 | `yukiko-web` | Next.js panel (puerto 3000) |
 
+**Gestión Vercel:**
+
+```bash
+yk-deploy      # Despliega web panel en producción
+yk-undeploy    # Elimina todos los deployments
+```
+
 **Flujo CI/CD:**
 1. `git push origin dev` → GitHub Actions
 2. Lint & Type Check
@@ -142,7 +150,7 @@ yk-restart-all
 
 Disponible en [yukiko.miniserver.online/chat](https://yukiko.miniserver.online/chat)
 
-Interfaz de chat estilo ChatGPT que conecta con el homelab via API Route de Next.js.
+Interfaz de chat estilo ChatGPT que conecta con el homelab via API Route de Next.js → agente en puerto 3001.
 
 **Comandos disponibles:**
 - `/ask <pregunta>` — IA con Ollama (llama3.2:3b)
@@ -173,8 +181,7 @@ Disponible en [yukiko.miniserver.online/admin](https://yukiko.miniserver.online/
 | [Vercel](https://vercel.com) | Web (Next.js) | Gratis |
 | GitHub Pages | Documentación | Gratis |
 | GitHub Actions | CI/CD | Gratis |
-| Tenor API | GIFs roleplay | Gratis |
-| Danbooru | Imágenes +18 | Gratis |
+| Giphy API | GIFs roleplay | Gratis |
 | Gelbooru | GIFs +18 animados | Gratis |
 | Ollama (llama3.2:3b) | IA local | Self-hosted |
 | Pollinations.ai | Generación de imágenes | Gratis |

@@ -6,7 +6,7 @@ export type Platform = 'discord' | 'telegram' | 'mobile';
 
 export type CommandContext = {
   platform: Platform;
-  userId: string;        // ID de la plataforma (discord snowflake / telegram id / wa jid)
+  userId: string;        // ID de la plataforma (discord snowflake / telegram id / mobile uuid)
   chatId: string;
   groupId?: string;
   username?: string;

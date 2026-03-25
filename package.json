@@ -1,7 +1,7 @@
 {
   "name": "yukiko",
   "version": "1.0.0",
-  "description": "Yukiko — Multi-platform bot for WhatsApp, Discord & Telegram",
+  "description": "Yukiko — Multi-platform bot for Discord, Telegram & Mobile",
   "private": true,
   "workspaces": [
     "core",
@@ -12,14 +12,13 @@
     "ssh-cli"
   ],
   "scripts": {
-    "dev": "concurrently \"npm run dev:web\" \"npm run dev:discord\" \"npm run dev:telegram\" \"npm run dev:whatsapp\"",
+    "dev": "concurrently \"npm run dev:web\" \"npm run dev:discord\" \"npm run dev:telegram\"",
     "dev:web": "cd web && next dev",
     "dev:discord": "tsx watch --env-file=.env platforms/discord/src/index.ts",
     "dev:telegram": "tsx watch --env-file=.env platforms/telegram/src/index.ts",
-    "dev:whatsapp": "tsx watch --env-file=.env platforms/whatsapp/src/index.ts",
     "build": "npm run build:web && npm run build:bots",
     "build:web": "cd web && next build",
-    "build:bots": "tsc -b platforms/discord platforms/telegram platforms/whatsapp",
+    "build:bots": "tsc -b platforms/discord platforms/telegram",
     "db:migrate": "node scripts/migrate.js",
     "db:seed": "node scripts/seed.js",
     "docker:up": "docker-compose up -d",
@@ -44,7 +43,6 @@
     "@hapi/boom": "^10.0.1",
     "@neondatabase/serverless": "^1.0.2",
     "@types/ws": "^8.18.1",
-    "@whiskeysockets/baileys": "^7.0.0-rc.9",
     "discord.js": "^14.25.1",
     "dotenv": "^17.3.1",
     "drizzle-kit": "^0.31.9",

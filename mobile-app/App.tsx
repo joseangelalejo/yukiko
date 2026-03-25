@@ -10,7 +10,7 @@ import { BlurView } from 'expo-blur';
 import { useFonts, Nunito_400Regular, Nunito_700Bold, Nunito_800ExtraBold } from '@expo-google-fonts/nunito';
 
 // ── Config ───────────────────────────────────────────────────
-const WS_URL = 'ws://YOUR_HOMELAB_IP:3002'; // Cambiar por IP real
+const WS_URL = 'ws://100.66.214.108:3002'; // Cambiar por IP real
 
 // ── Theme ────────────────────────────────────────────────────
 const theme = {

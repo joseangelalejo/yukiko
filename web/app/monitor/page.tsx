@@ -6,7 +6,7 @@ type Metrics = {
   cpu: number;
   memory: { used: number; total: number };
   commandsPerHour: number[];
-  latency: { discord: number; telegram: number; whatsapp: number; db: number };
+  latency: { discord: number; telegram: number; mobile: number; db: number };
   errors: number;
 };
 

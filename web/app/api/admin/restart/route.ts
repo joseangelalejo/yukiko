@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
   }
 
   const platform = req.nextUrl.searchParams.get('platform');
-  if (!platform || !['discord', 'telegram', 'whatsapp'].includes(platform)) {
+  if (!platform || !['discord', 'telegram', 'mobile'].includes(platform)) {
     return NextResponse.json({ error: 'Invalid platform' }, { status: 400 });
   }
 

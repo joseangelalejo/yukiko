@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Yukiko',
-  description: 'Multi-platform bot — Discord, Telegram & WhatsApp',
+  description: 'Multi-platform bot — Discord, Telegram & Mobile',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

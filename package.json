@@ -9,7 +9,8 @@
     "platforms/*",
     "modules/*",
     "web",
-    "ssh-cli"
+    "ssh-cli",
+    "modules/music"
   ],
   "scripts": {
     "dev": "concurrently \"npm run dev:web\" \"npm run dev:discord\" \"npm run dev:telegram\"",

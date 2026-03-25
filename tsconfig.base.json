@@ -3,7 +3,9 @@
     "target": "ES2022",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "lib": ["ES2022"],
+    "lib": [
+      "ES2022"
+    ],
     "strict": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -12,6 +14,17 @@
     "allowImportingTsExtensions": true,
     "noEmit": true
   },
-  "include": ["core/**/*", "modules/**/*", "platforms/**/*", "db/**/*", "ssh-cli/**/*"],
-  "exclude": ["node_modules", "dist", "web", "yukiko-mobile", "platforms/whatsapp"]
+  "include": [
+    "core/**/*",
+    "modules/**/*",
+    "platforms/**/*",
+    "db/**/*",
+    "ssh-cli/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "web",
+    "yukiko-mobile"
+  ]
 }

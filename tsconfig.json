@@ -11,18 +11,23 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "../../core/src/*.js": ["core/src/*.ts"],
-      "../../modules/*/index.js": ["modules/*/index.ts"],
-      "../../core/src/*": ["core/src/*"],
-      "../../modules/*": ["modules/*"]
+      "../../core/src/*.js": [
+        "core/src/*.ts"
+      ],
+      "../../modules/*/index.js": [
+        "modules/*/index.ts"
+      ],
+      "../../core/src/*": [
+        "core/src/*"
+      ],
+      "../../modules/*": [
+        "modules/*"
+      ]
     }
   },
   "include": [
     "core/src/**/*",
     "modules/**/*",
     "platforms/**/*"
-  ],
-  "exclude": [
-    "platforms/whatsapp/**/*"
   ]
 }

@@ -153,7 +153,7 @@ yukiko/
 ## 🖥️ Deploy en homelab con PM2
 
 ```bash
-ssh dockerja@dockerja
+ssh <usuario>@<hostname-o-ip>
 
 # Ver estado
 yk-status

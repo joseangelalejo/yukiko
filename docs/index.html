@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Yukiko Bot — Documentación</title>
-  <meta name="description" content="Yukiko — Tu compañera neko kawaii multiplataforma. Bot para Discord, Telegram y Mobile con IA local, economía, roleplay y más." />
+  <meta name="description"
+    content="Yukiko — Tu compañera neko kawaii multiplataforma. Bot para Discord, Telegram y Mobile con IA local, economía, roleplay y más." />
 
   <!-- ─── Favicons ───────────────────────────────────────────────── -->
   <link rel="icon" type="image/png" sizes="32x32" href="assets/yukiko-favicon-32.png" />
@@ -13,41 +15,52 @@
   <link rel="apple-touch-icon" sizes="256x256" href="assets/yukiko-logo-256.png" />
 
   <!-- ─── Open Graph / Twitter Card ─────────────────────────────── -->
-  <meta property="og:type"        content="website" />
-  <meta property="og:url"         content="https://joseangelalejo.github.io/yukiko/" />
-  <meta property="og:title"       content="Yukiko Bot — Tu compañera neko kawaii multiplataforma" />
-  <meta property="og:description" content="Bot para Discord, Telegram y Mobile con IA local, economía, roleplay y más. 100% gratuito y open source." />
-  <meta property="og:image"       content="assets/yukiko-social-og.png" />
-  <meta property="og:image:width"  content="1200" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://joseangelalejo.github.io/yukiko/" />
+  <meta property="og:title" content="Yukiko Bot — Tu compañera neko kawaii multiplataforma" />
+  <meta property="og:description"
+    content="Bot para Discord, Telegram y Mobile con IA local, economía, roleplay y más. 100% gratuito y open source." />
+  <meta property="og:image" content="assets/yukiko-social-og.png" />
+  <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta name="twitter:card"        content="summary_large_image" />
-  <meta name="twitter:title"       content="Yukiko Bot" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Yukiko Bot" />
   <meta name="twitter:description" content="Tu compañera neko kawaii multiplataforma — Discord · Telegram · Mobile" />
-  <meta name="twitter:image"       content="assets/yukiko-social-og.png" />
+  <meta name="twitter:image" content="assets/yukiko-social-og.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet" />
   <style>
     /* ─── Reset & Variables ──────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg:        #0b0d17;
-      --bg2:       #111425;
-      --bg3:       #181b2e;
-      --pink:      #ff6b9d;
-      --pink-soft: #ff9ec4;
-      --blue:      #7eb8ff;
-      --cyan:      #67e8f9;
-      --purple:    #b48ef4;
-      --white:     #f0f4ff;
-      --muted:     #7a85a8;
-      --border:    rgba(255,107,157,0.18);
-      --glow:      0 0 30px rgba(255,107,157,0.25);
-      --r:         14px;
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    html { scroll-behavior: smooth; }
+    :root {
+      --bg: #0b0d17;
+      --bg2: #111425;
+      --bg3: #181b2e;
+      --pink: #ff6b9d;
+      --pink-soft: #ff9ec4;
+      --blue: #7eb8ff;
+      --cyan: #67e8f9;
+      --purple: #b48ef4;
+      --white: #f0f4ff;
+      --muted: #7a85a8;
+      --border: rgba(255, 107, 157, 0.18);
+      --glow: 0 0 30px rgba(255, 107, 157, 0.25);
+      --r: 14px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
       background: var(--bg);
@@ -59,9 +72,18 @@
     }
 
     /* ─── Scrollbar ─────────────────────────────────────────────── */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--pink); border-radius: 3px; }
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--pink);
+      border-radius: 3px;
+    }
 
     /* ─── Noise overlay ─────────────────────────────────────────── */
     body::before {
@@ -76,9 +98,11 @@
     /* ─── Nav ───────────────────────────────────────────────────── */
     nav {
       position: fixed;
-      top: 0; left: 0; right: 0;
+      top: 0;
+      left: 0;
+      right: 0;
       z-index: 100;
-      background: rgba(11,13,23,0.85);
+      background: rgba(11, 13, 23, 0.85);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
       padding: 0 2rem;
@@ -97,13 +121,17 @@
       color: var(--white);
       text-decoration: none;
     }
-    .nav-brand span { color: var(--pink); }
+
+    .nav-brand span {
+      color: var(--pink);
+    }
 
     .nav-links {
       display: flex;
       gap: 1.5rem;
       list-style: none;
     }
+
     .nav-links a {
       color: var(--muted);
       text-decoration: none;
@@ -111,7 +139,10 @@
       font-weight: 500;
       transition: color 0.2s;
     }
-    .nav-links a:hover { color: var(--pink); }
+
+    .nav-links a:hover {
+      color: var(--pink);
+    }
 
     /* ─── Hero ──────────────────────────────────────────────────── */
     .hero {
@@ -131,16 +162,23 @@
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(255,107,157,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,107,157,0.04) 1px, transparent 1px);
+        linear-gradient(rgba(255, 107, 157, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 107, 157, 0.04) 1px, transparent 1px);
       background-size: 60px 60px;
       mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 20%, transparent 100%);
       animation: gridPulse 8s ease-in-out infinite;
     }
 
     @keyframes gridPulse {
-      0%, 100% { opacity: 0.5; }
-      50% { opacity: 1; }
+
+      0%,
+      100% {
+        opacity: 0.5;
+      }
+
+      50% {
+        opacity: 1;
+      }
     }
 
     /* Floating orbs */
@@ -151,13 +189,43 @@
       pointer-events: none;
       animation: float 12s ease-in-out infinite;
     }
-    .orb1 { width: 400px; height: 400px; background: rgba(255,107,157,0.12); top: -100px; left: -100px; }
-    .orb2 { width: 300px; height: 300px; background: rgba(126,184,255,0.1); bottom: -50px; right: -50px; animation-delay: -6s; }
-    .orb3 { width: 200px; height: 200px; background: rgba(180,142,244,0.08); top: 40%; left: 60%; animation-delay: -3s; }
+
+    .orb1 {
+      width: 400px;
+      height: 400px;
+      background: rgba(255, 107, 157, 0.12);
+      top: -100px;
+      left: -100px;
+    }
+
+    .orb2 {
+      width: 300px;
+      height: 300px;
+      background: rgba(126, 184, 255, 0.1);
+      bottom: -50px;
+      right: -50px;
+      animation-delay: -6s;
+    }
+
+    .orb3 {
+      width: 200px;
+      height: 200px;
+      background: rgba(180, 142, 244, 0.08);
+      top: 40%;
+      left: 60%;
+      animation-delay: -3s;
+    }
 
     @keyframes float {
-      0%, 100% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-30px) scale(1.05); }
+
+      0%,
+      100% {
+        transform: translateY(0) scale(1);
+      }
+
+      50% {
+        transform: translateY(-30px) scale(1.05);
+      }
     }
 
     .hero-content {
@@ -168,8 +236,8 @@
 
     .hero-badge {
       display: inline-block;
-      background: rgba(255,107,157,0.12);
-      border: 1px solid rgba(255,107,157,0.3);
+      background: rgba(255, 107, 157, 0.12);
+      border: 1px solid rgba(255, 107, 157, 0.3);
       color: var(--pink);
       font-size: 0.8rem;
       font-weight: 600;
@@ -202,7 +270,10 @@
       font-weight: 400;
     }
 
-    .hero-sub strong { color: var(--pink-soft); font-weight: 600; }
+    .hero-sub strong {
+      color: var(--pink-soft);
+      font-weight: 600;
+    }
 
     .hero-ctas {
       display: flex;
@@ -229,21 +300,23 @@
     .btn-primary {
       background: var(--pink);
       color: #0b0d17;
-      box-shadow: 0 0 30px rgba(255,107,157,0.35);
+      box-shadow: 0 0 30px rgba(255, 107, 157, 0.35);
     }
+
     .btn-primary:hover {
       background: var(--pink-soft);
-      box-shadow: 0 0 50px rgba(255,107,157,0.55);
+      box-shadow: 0 0 50px rgba(255, 107, 157, 0.55);
       transform: translateY(-2px);
     }
 
     .btn-secondary {
-      background: rgba(255,255,255,0.06);
+      background: rgba(255, 255, 255, 0.06);
       color: var(--white);
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid rgba(255, 255, 255, 0.12);
     }
+
     .btn-secondary:hover {
-      background: rgba(255,255,255,0.1);
+      background: rgba(255, 255, 255, 0.1);
       transform: translateY(-2px);
     }
 
@@ -299,7 +372,7 @@
     }
 
     .feature-card:hover {
-      border-color: rgba(255,107,157,0.45);
+      border-color: rgba(255, 107, 157, 0.45);
       box-shadow: var(--glow);
       transform: translateY(-4px);
     }
@@ -334,13 +407,15 @@
       font-size: 0.7rem;
       padding: 0.2rem 0.6rem;
       border-radius: 100px;
-      background: rgba(255,107,157,0.1);
+      background: rgba(255, 107, 157, 0.1);
       color: var(--pink);
-      border: 1px solid rgba(255,107,157,0.2);
+      border: 1px solid rgba(255, 107, 157, 0.2);
     }
 
     /* ─── Commands section ──────────────────────────────────────── */
-    .commands-section { background: var(--bg2); }
+    .commands-section {
+      background: var(--bg2);
+    }
 
     .cmd-categories {
       display: flex;
@@ -355,15 +430,17 @@
       font-weight: 600;
       padding: 0.5rem 1.1rem;
       border-radius: 100px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       color: var(--muted);
       cursor: pointer;
       transition: all 0.2s;
     }
-    .cat-btn.active, .cat-btn:hover {
-      background: rgba(255,107,157,0.15);
-      border-color: rgba(255,107,157,0.4);
+
+    .cat-btn.active,
+    .cat-btn:hover {
+      background: rgba(255, 107, 157, 0.15);
+      border-color: rgba(255, 107, 157, 0.4);
       color: var(--pink);
     }
 
@@ -375,13 +452,14 @@
 
     .cmd-card {
       background: var(--bg3);
-      border: 1px solid rgba(255,255,255,0.06);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 10px;
       padding: 1.2rem;
       transition: all 0.2s;
     }
+
     .cmd-card:hover {
-      border-color: rgba(255,107,157,0.3);
+      border-color: rgba(255, 107, 157, 0.3);
     }
 
     .cmd-name {
@@ -417,10 +495,26 @@
       padding: 0.15rem 0.5rem;
       border-radius: 4px;
     }
-    .badge-adult   { background: rgba(255,100,100,0.2); color: #ff7070; }
-    .badge-admin   { background: rgba(255,180,50,0.2);  color: #ffb432; }
-    .badge-group   { background: rgba(126,184,255,0.2); color: var(--blue); }
-    .badge-cooldown{ background: rgba(103,232,249,0.15); color: var(--cyan); }
+
+    .badge-adult {
+      background: rgba(255, 100, 100, 0.2);
+      color: #ff7070;
+    }
+
+    .badge-admin {
+      background: rgba(255, 180, 50, 0.2);
+      color: #ffb432;
+    }
+
+    .badge-group {
+      background: rgba(126, 184, 255, 0.2);
+      color: var(--blue);
+    }
+
+    .badge-cooldown {
+      background: rgba(103, 232, 249, 0.15);
+      color: var(--cyan);
+    }
 
     /* ─── Platforms ─────────────────────────────────────────────── */
     .platforms-grid {
@@ -437,7 +531,10 @@
       overflow: hidden;
       transition: transform 0.3s, box-shadow 0.3s;
     }
-    .platform-card:hover { transform: translateY(-4px); }
+
+    .platform-card:hover {
+      transform: translateY(-4px);
+    }
 
     .platform-card::before {
       content: '';
@@ -447,16 +544,51 @@
       background-size: cover;
     }
 
-    .platform-discord { border-color: rgba(88,101,242,0.4); background: rgba(88,101,242,0.06); }
-    .platform-discord:hover { box-shadow: 0 0 40px rgba(88,101,242,0.2); }
-    .platform-telegram { border-color: rgba(41,182,246,0.4); background: rgba(41,182,246,0.06); }
-    .platform-telegram:hover { box-shadow: 0 0 40px rgba(41,182,246,0.2); }
-    .platform-mobile { border-color: rgba(37,211,102,0.4); background: rgba(37,211,102,0.06); }
-    .platform-mobile:hover { box-shadow: 0 0 40px rgba(37,211,102,0.2); }
+    .platform-discord {
+      border-color: rgba(88, 101, 242, 0.4);
+      background: rgba(88, 101, 242, 0.06);
+    }
 
-    .platform-icon { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
-    .platform-card h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; }
-    .platform-card p { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.25rem; line-height: 1.6; }
+    .platform-discord:hover {
+      box-shadow: 0 0 40px rgba(88, 101, 242, 0.2);
+    }
+
+    .platform-telegram {
+      border-color: rgba(41, 182, 246, 0.4);
+      background: rgba(41, 182, 246, 0.06);
+    }
+
+    .platform-telegram:hover {
+      box-shadow: 0 0 40px rgba(41, 182, 246, 0.2);
+    }
+
+    .platform-mobile {
+      border-color: rgba(37, 211, 102, 0.4);
+      background: rgba(37, 211, 102, 0.06);
+    }
+
+    .platform-mobile:hover {
+      box-shadow: 0 0 40px rgba(37, 211, 102, 0.2);
+    }
+
+    .platform-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .platform-card h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .platform-card p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 1.25rem;
+      line-height: 1.6;
+    }
 
     .platform-card ul {
       list-style: none;
@@ -464,6 +596,7 @@
       flex-direction: column;
       gap: 0.4rem;
     }
+
     .platform-card ul li {
       font-size: 0.875rem;
       color: var(--muted);
@@ -471,7 +604,12 @@
       align-items: center;
       gap: 0.5rem;
     }
-    .platform-card ul li::before { content: '→'; color: var(--pink); font-size: 0.8rem; }
+
+    .platform-card ul li::before {
+      content: '→';
+      color: var(--pink);
+      font-size: 0.8rem;
+    }
 
     /* ─── Setup steps ───────────────────────────────────────────── */
     .setup-steps {
@@ -492,8 +630,8 @@
       width: 48px;
       height: 48px;
       border-radius: 50%;
-      background: rgba(255,107,157,0.1);
-      border: 2px solid rgba(255,107,157,0.3);
+      background: rgba(255, 107, 157, 0.1);
+      border: 2px solid rgba(255, 107, 157, 0.3);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -504,13 +642,22 @@
       flex-shrink: 0;
     }
 
-    .step-content h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.35rem; }
-    .step-content p  { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.75rem; }
+    .step-content h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+
+    .step-content p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
 
     /* ─── Code blocks ───────────────────────────────────────────── */
     pre {
-      background: rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 10px;
       padding: 1.25rem;
       overflow-x: auto;
@@ -520,12 +667,30 @@
       color: #c9d1d9;
     }
 
-    code { font-family: 'Space Mono', monospace; }
-    pre .c { color: var(--muted); font-style: italic; }
-    pre .k { color: var(--cyan); }
-    pre .s { color: var(--pink-soft); }
-    pre .v { color: var(--blue); }
-    pre .co{ color: #7ec8e3; }
+    code {
+      font-family: 'Space Mono', monospace;
+    }
+
+    pre .c {
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    pre .k {
+      color: var(--cyan);
+    }
+
+    pre .s {
+      color: var(--pink-soft);
+    }
+
+    pre .v {
+      color: var(--blue);
+    }
+
+    pre .co {
+      color: #7ec8e3;
+    }
 
     /* ─── Stack / Free services ─────────────────────────────────── */
     .stack-grid {
@@ -544,10 +709,22 @@
       gap: 0.85rem;
     }
 
-    .stack-emoji { font-size: 1.6rem; flex-shrink: 0; }
+    .stack-emoji {
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
 
-    .stack-info h4 { font-size: 0.92rem; font-weight: 700; margin-bottom: 0.2rem; }
-    .stack-info p  { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+    .stack-info h4 {
+      font-size: 0.92rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    .stack-info p {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
 
     .free-badge {
       display: inline-block;
@@ -555,20 +732,20 @@
       font-weight: 700;
       padding: 0.1rem 0.45rem;
       border-radius: 4px;
-      background: rgba(100,220,100,0.15);
+      background: rgba(100, 220, 100, 0.15);
       color: #6dda6d;
       margin-top: 0.35rem;
     }
 
     .homelab-badge {
-      background: rgba(126,184,255,0.15);
+      background: rgba(126, 184, 255, 0.15);
       color: var(--blue);
     }
 
     /* ─── Structure tree ────────────────────────────────────────── */
     .tree {
-      background: rgba(0,0,0,0.4);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--r);
       padding: 2rem;
       font-family: 'Space Mono', monospace;
@@ -577,10 +754,22 @@
       overflow-x: auto;
     }
 
-    .tree .dir  { color: var(--blue); }
-    .tree .file { color: var(--muted); }
-    .tree .desc { color: rgba(255,107,157,0.7); }
-    .tree .root { color: var(--pink); font-weight: 700; }
+    .tree .dir {
+      color: var(--blue);
+    }
+
+    .tree .file {
+      color: var(--muted);
+    }
+
+    .tree .desc {
+      color: rgba(255, 107, 157, 0.7);
+    }
+
+    .tree .root {
+      color: var(--pink);
+      font-weight: 700;
+    }
 
     /* ─── Footer ────────────────────────────────────────────────── */
     footer {
@@ -592,9 +781,23 @@
       text-align: center;
     }
 
-    .footer-logo { font-size: 2rem; margin-bottom: 0.5rem; }
-    .footer-name { font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 0.25rem; }
-    .footer-sub  { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.25rem; }
+    .footer-logo {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.25rem;
+    }
+
+    .footer-sub {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
 
     .footer-links {
       display: flex;
@@ -602,37 +805,70 @@
       gap: 1.5rem;
       flex-wrap: wrap;
     }
+
     .footer-links a {
       color: var(--muted);
       text-decoration: none;
       font-size: 0.85rem;
       transition: color 0.2s;
     }
-    .footer-links a:hover { color: var(--pink); }
+
+    .footer-links a:hover {
+      color: var(--pink);
+    }
 
     .footer-copy {
       margin-top: 1.5rem;
       font-size: 0.8rem;
-      color: rgba(122,133,168,0.6);
+      color: rgba(122, 133, 168, 0.6);
     }
 
     /* ─── Responsive ────────────────────────────────────────────── */
     @media (max-width: 640px) {
-      .nav-links { display: none; }
-      .step { grid-template-columns: 36px 1fr; gap: 1rem; }
-      .step-num { width: 36px; height: 36px; font-size: 0.75rem; }
+      .nav-links {
+        display: none;
+      }
+
+      .step {
+        grid-template-columns: 36px 1fr;
+        gap: 1rem;
+      }
+
+      .step-num {
+        width: 36px;
+        height: 36px;
+        font-size: 0.75rem;
+      }
     }
 
     /* ─── Animations ────────────────────────────────────────────── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    .hero-badge   { animation: fadeUp 0.6s ease both; }
-    .hero h1      { animation: fadeUp 0.6s ease 0.1s both; }
-    .hero-sub     { animation: fadeUp 0.6s ease 0.2s both; }
-    .hero-ctas    { animation: fadeUp 0.6s ease 0.3s both; }
+    .hero-badge {
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero h1 {
+      animation: fadeUp 0.6s ease 0.1s both;
+    }
+
+    .hero-sub {
+      animation: fadeUp 0.6s ease 0.2s both;
+    }
+
+    .hero-ctas {
+      animation: fadeUp 0.6s ease 0.3s both;
+    }
 
     /* Intersection observer fade */
     .reveal {
@@ -640,18 +876,21 @@
       transform: translateY(20px);
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
+
     .reveal.visible {
       opacity: 1;
       transform: none;
     }
   </style>
 </head>
+
 <body>
 
   <!-- ─── NAV ──────────────────────────────────────────────────── -->
   <nav>
     <a class="nav-brand" href="#">
-      <img src="assets/yukiko-logo-128.png" alt="Yukiko" style="height:32px;width:32px;border-radius:50%;object-fit:cover;" />
+      <img src="assets/yukiko-logo-128.png" alt="Yukiko"
+        style="height:32px;width:32px;border-radius:50%;object-fit:cover;" />
       <span>Yukiko</span>
     </a>
     <ul class="nav-links">
@@ -671,9 +910,7 @@
     <div class="orb orb3"></div>
 
     <!-- Vídeo animado de fondo del hero -->
-    <video
-      autoplay muted loop playsinline
-      style="
+    <video autoplay muted loop playsinline style="
         position: absolute;
         inset: 0;
         width: 100%; height: 100%;
@@ -681,41 +918,54 @@
         opacity: 0.08;
         pointer-events: none;
         z-index: 0;
-      "
-    >
+      ">
       <source src="assets/yukiko-animated2.mp4" type="video/mp4" />
     </video>
 
-    <div class="hero-content" style="position:relative;z-index:1;display:flex;align-items:center;gap:3rem;flex-wrap:wrap;justify-content:center;">
+    <div class="hero-content"
+      style="position:relative;z-index:1;display:flex;align-items:center;gap:3rem;flex-wrap:wrap;justify-content:center;">
 
       <!-- Personaje Yukiko -->
       <div style="flex-shrink:0;animation:floatChar 4s ease-in-out infinite;">
-        <img
-          src="assets/yukiko-character-chatgpt.png"
-          alt="Yukiko — personaje neko kawaii"
-          style="
+        <img src="assets/yukiko-character-chatgpt.png" alt="Yukiko — personaje neko kawaii" style="
             width: 280px;
             height: 280px;
             object-fit: contain;
             filter: drop-shadow(0 0 32px rgba(255,107,157,0.5));
-          "
-        />
+          " />
       </div>
 
       <!-- Texto -->
       <div style="flex:1;min-width:280px;text-align:left;">
-        <div class="hero-badge"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><path d="M12 2l-4 4h8l-4-4zM4 6h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/><circle cx="8" cy="12" r="1.5" fill="currentColor"/><circle cx="16" cy="12" r="1.5" fill="currentColor"/></svg> Open Source · 100% Gratuito</div>
+        <div class="hero-badge"><svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+            <path d="M12 2l-4 4h8l-4-4zM4 6h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"
+              stroke="currentColor" stroke-width="1" stroke-linejoin="round" />
+            <circle cx="8" cy="12" r="1.5" fill="currentColor" />
+            <circle cx="16" cy="12" r="1.5" fill="currentColor" />
+          </svg> Open Source · 100% Gratuito</div>
         <h1>
-          <span class="gradient">Yukiko</span><br/>Bot
+          <span class="gradient">Yukiko</span><br />Bot
         </h1>
         <p class="hero-sub">
-          Tu compañera <strong>neko kawaii</strong> multiplataforma.<br/>
+          Tu compañera <strong>neko kawaii</strong> multiplataforma.<br />
           Discord, Telegram y Mobile — un solo bot, todo gratis.
         </p>
         <div class="hero-ctas">
-          <a class="btn btn-primary" href="#setup"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><path d="M12 2v10M12 2l-2.5 4h5L12 2z" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="14" r="3" stroke="currentColor" stroke-width="1"/><path d="M9 19c-1 1-2 3-2 3M15 19c1 1 2 3 2 3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> Empezar</a>
-          <a class="btn btn-secondary" href="https://github.com/joseangelalejo/yukiko" target="_blank">⭐ Ver en GitHub</a>
-          <a class="btn btn-secondary" href="https://github.com/joseangelalejo/yukiko/blob/main/docs/PLATFORM_SETUP.md" target="_blank"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><path d="M4 3h16v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V3z" stroke="currentColor" stroke-width="1"/><path d="M12 6v12M12 6h1M12 6H7M12 10h1M12 10H7M12 14h1M12 14H7" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> Guía completa</a>
+          <a class="btn btn-primary" href="#setup"><svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+              <path d="M12 2v10M12 2l-2.5 4h5L12 2z" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <circle cx="12" cy="14" r="3" stroke="currentColor" stroke-width="1" />
+              <path d="M9 19c-1 1-2 3-2 3M15 19c1 1 2 3 2 3" stroke="currentColor" stroke-width="1"
+                stroke-linecap="round" />
+            </svg> Empezar</a>
+          <a class="btn btn-secondary" href="https://github.com/joseangelalejo/yukiko" target="_blank">⭐ Ver en
+            GitHub</a>
+          <a class="btn btn-secondary" href="https://github.com/joseangelalejo/yukiko/blob/main/docs/PLATFORM_SETUP.md"
+            target="_blank"><svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+              <path d="M4 3h16v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V3z" stroke="currentColor" stroke-width="1" />
+              <path d="M12 6v12M12 6h1M12 6H7M12 10h1M12 10H7M12 14h1M12 14H7" stroke="currentColor" stroke-width="1"
+                stroke-linecap="round" />
+            </svg> Guía completa</a>
         </div>
       </div>
 
@@ -724,8 +974,15 @@
 
   <style>
     @keyframes floatChar {
-      0%, 100% { transform: translateY(0px); }
-      50%       { transform: translateY(-14px); }
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-14px);
+      }
     }
   </style>
 
@@ -734,14 +991,24 @@
     <div class="container">
       <div class="reveal">
         <p class="section-label">// módulos</p>
-        <h2 class="section-title">Todo lo que Yukiko sabe hacer</h2>
-        <p class="section-desc">Cada módulo está disponible en las tres plataformas. Sin diferencias, sin limitaciones según la plataforma.</p>
+        <h2 class="section-title" data-es="Todo lo que Yukiko sabe hacer" data-en="Everything Yukiko can do">Todo lo que
+          Yukiko sabe hacer</h2>
+        <p class="section-desc"
+          data-es="Cada módulo está disponible en las tres plataformas. Sin diferencias, sin limitaciones según la plataforma."
+          data-en="Each module is available on all three platforms. No differences, no platform limitations.">Cada
+          módulo está disponible en las tres plataformas. Sin diferencias, sin limitaciones según la plataforma.</p>
       </div>
       <div class="features-grid reveal">
         <div class="feature-card">
-          <span class="feature-icon"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><path d="M7 6h10M7 12h10M4 18h16a2 2 0 0 1 2 2v2H2v-2a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><circle cx="8" cy="10" r="2" fill="currentColor"/><circle cx="16" cy="10" r="2" fill="currentColor"/></svg></span>
-          <h3>Roleplay</h3>
-          <p>Abrazos, besos, palmaditas y más de 10 acciones con GIFs animados via Giphy. Contadores de quién da y recibe más.</p>
+          <span class="feature-icon"><svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+              <path d="M7 6h10M7 12h10M4 18h16a2 2 0 0 1 2 2v2H2v-2a2 2 0 0 1 2-2z" stroke="currentColor"
+                stroke-width="1" stroke-linecap="round" />
+              <circle cx="8" cy="10" r="2" fill="currentColor" />
+              <circle cx="16" cy="10" r="2" fill="currentColor" />
+            </svg></span>
+          <h3 data-es="Roleplay" data-en="Roleplay">Roleplay</h3>
+          <p>Abrazos, besos, palmaditas y más de 10 acciones con GIFs animados via Giphy. Contadores de quién da y
+            recibe más.</p>
           <div class="feature-tags">
             <span class="tag">hug</span>
             <span class="tag">kiss</span>
@@ -752,9 +1019,14 @@
           </div>
         </div>
         <div class="feature-card">
-          <span class="feature-icon"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="13" r="5" stroke="currentColor" stroke-width="1"/><circle cx="12" cy="13" r="3" fill="currentColor"/><path d="M12 3v4M12 17v4M3 13h4M17 13h4" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></span>
-          <h3>Economía</h3>
-          <p>Sistema de monedas con recompensas diarias, transferencias, tienda de ítems, mascotas, matrimonios y clasificaciones.</p>
+          <span class="feature-icon"><svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+              <circle cx="12" cy="13" r="5" stroke="currentColor" stroke-width="1" />
+              <circle cx="12" cy="13" r="3" fill="currentColor" />
+              <path d="M12 3v4M12 17v4M3 13h4M17 13h4" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
+            </svg></span>
+          <h3 data-es="Economía" data-en="Economy">Economía</h3>
+          <p>Sistema de monedas con recompensas diarias, transferencias, tienda de ítems, mascotas, matrimonios y
+            clasificaciones.</p>
           <div class="feature-tags">
             <span class="tag">balance</span>
             <span class="tag">daily</span>
@@ -765,9 +1037,16 @@
           </div>
         </div>
         <div class="feature-card">
-          <span class="feature-icon"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><rect x="4" y="3" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/><path d="M7 15h10" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><path d="M6 5v2M18 5v2" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></span>
-          <h3>Inteligencia Artificial</h3>
-          <p>Chat con IA local (Ollama/llama3.2) con personalidad kawaii, generación de imágenes con Pollinations.ai, roleplay IA y traducción instantánea.</p>
+          <span class="feature-icon"><svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+              <rect x="4" y="3" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1" />
+              <circle cx="9" cy="10" r="1" fill="currentColor" />
+              <circle cx="15" cy="10" r="1" fill="currentColor" />
+              <path d="M7 15h10" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
+              <path d="M6 5v2M18 5v2" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
+            </svg></span>
+          <h3 data-es="Inteligencia Artificial" data-en="Artificial Intelligence">Inteligencia Artificial</h3>
+          <p>Chat con IA local (Ollama/llama3.2) con personalidad kawaii, generación de imágenes con Pollinations.ai,
+            roleplay IA y traducción instantánea.</p>
           <div class="feature-tags">
             <span class="tag">ask</span>
             <span class="tag">imagine</span>
@@ -776,9 +1055,13 @@
           </div>
         </div>
         <div class="feature-card">
-          <span class="feature-icon"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h2v8M9 4l2-2 8 8-2 2-8-8z" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <h3>Moderación</h3>
-          <p>Advertencias, baneos, limpieza de mensajes, cambio de prefijo por grupo y estadísticas de uso de comandos.</p>
+          <span class="feature-icon"><svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+              <path d="M5 12h2v8M9 4l2-2 8 8-2 2-8-8z" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></span>
+          <h3 data-es="Moderación" data-en="Moderation">Moderación</h3>
+          <p>Advertencias, baneos, limpieza de mensajes, cambio de prefijo por grupo y estadísticas de uso de comandos.
+          </p>
           <div class="feature-tags">
             <span class="tag">warn</span>
             <span class="tag">ban</span>
@@ -788,9 +1071,13 @@
           </div>
         </div>
         <div class="feature-card">
-          <span class="feature-icon"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1"/><text x="12" y="15" text-anchor="middle" fill="currentColor" font-size="10" font-weight="bold">18</text></svg></span>
-          <h3>Contenido +18</h3>
-          <p>Sistema de verificación por capas: solo en grupos, activado por admin y cada usuario confirma edad en privado. Fuentes: Gelbooru.</p>
+          <span class="feature-icon"><svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1" /><text x="12" y="15"
+                text-anchor="middle" fill="currentColor" font-size="10" font-weight="bold">18</text>
+            </svg></span>
+          <h3 data-es="Contenido +18" data-en="+18 Content">Contenido +18</h3>
+          <p>Sistema de verificación por capas: solo en grupos, activado por admin y cada usuario confirma edad en
+            privado. Fuentes: Gelbooru.</p>
           <div class="feature-tags">
             <span class="tag">hentai</span>
             <span class="tag">redgifs</span>
@@ -799,9 +1086,14 @@
           </div>
         </div>
         <div class="feature-card">
-          <span class="feature-icon"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><path d="M4 17v-4a6 6 0 1 1 12 0v4M4 17h16" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><path d="M10 2v10M16 2v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
-          <h3>Música</h3>
-          <p>Reproducción via Lavalink con soporte de YouTube y Spotify (metadatos). Cola, pausa, saltar, volumen — en Discord.</p>
+          <span class="feature-icon"><svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+              <path d="M4 17v-4a6 6 0 1 1 12 0v4M4 17h16" stroke="currentColor" stroke-width="1"
+                stroke-linecap="round" />
+              <path d="M10 2v10M16 2v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            </svg></span>
+          <h3 data-es="Música" data-en="Music">Música</h3>
+          <p>Reproducción via Lavalink con soporte de YouTube y Spotify (metadatos). Cola, pausa, saltar, volumen — en
+            Discord.</p>
           <div class="feature-tags">
             <span class="tag">play</span>
             <span class="tag">queue</span>
@@ -819,17 +1111,48 @@
       <div class="reveal">
         <p class="section-label">// comandos</p>
         <h2 class="section-title">Referencia de comandos</h2>
-        <p class="section-desc">Prefijo por defecto: <code>/</code> — configurable por grupo con <code>/prefix</code></p>
+        <p class="section-desc">Prefijo por defecto: <code>/</code> — configurable por grupo con <code>/prefix</code>
+        </p>
       </div>
 
       <div class="cmd-categories reveal">
         <button class="cat-btn active" onclick="filterCmds('all')">Todos</button>
-        <button class="cat-btn" onclick="filterCmds('roleplay')"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><path d="M7 6h10M7 12h10M4 18h16a2 2 0 0 1 2 2v2H2v-2a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><circle cx="8" cy="10" r="2" fill="currentColor"/><circle cx="16" cy="10" r="2" fill="currentColor"/></svg> Roleplay</button>
-        <button class="cat-btn" onclick="filterCmds('economy')"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="13" r="5" stroke="currentColor" stroke-width="1"/><circle cx="12" cy="13" r="3" fill="currentColor"/><path d="M12 3v4M12 17v4M3 13h4M17 13h4" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> Economía</button>
-        <button class="cat-btn" onclick="filterCmds('ai')"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><rect x="4" y="3" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/><path d="M7 15h10" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><path d="M6 5v2M18 5v2" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> IA</button>
-        <button class="cat-btn" onclick="filterCmds('moderation')"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h2v8M9 4l2-2 8 8-2 2-8-8z" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Moderación</button>
-        <button class="cat-btn" onclick="filterCmds('adult')"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1"/><text x="12" y="15" text-anchor="middle" fill="currentColor" font-size="10" font-weight="bold">18</text></svg> +18</button>
-        <button class="cat-btn" onclick="filterCmds('utility')"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><path d="M8.5 4a3.5 3.5 0 0 0 0 7h5M9 16l-1 4 4-1" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="2" stroke="currentColor" stroke-width="1"/></svg> Utilidad</button>
+        <button class="cat-btn" onclick="filterCmds('roleplay')"><svg fill="none" viewBox="0 0 24 24" width="18"
+            height="18">
+            <path d="M7 6h10M7 12h10M4 18h16a2 2 0 0 1 2 2v2H2v-2a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="1"
+              stroke-linecap="round" />
+            <circle cx="8" cy="10" r="2" fill="currentColor" />
+            <circle cx="16" cy="10" r="2" fill="currentColor" />
+          </svg> Roleplay</button>
+        <button class="cat-btn" onclick="filterCmds('economy')"><svg fill="none" viewBox="0 0 24 24" width="18"
+            height="18">
+            <circle cx="12" cy="13" r="5" stroke="currentColor" stroke-width="1" />
+            <circle cx="12" cy="13" r="3" fill="currentColor" />
+            <path d="M12 3v4M12 17v4M3 13h4M17 13h4" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
+          </svg> Economía</button>
+        <button class="cat-btn" onclick="filterCmds('ai')"><svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+            <rect x="4" y="3" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1" />
+            <circle cx="9" cy="10" r="1" fill="currentColor" />
+            <circle cx="15" cy="10" r="1" fill="currentColor" />
+            <path d="M7 15h10" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
+            <path d="M6 5v2M18 5v2" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
+          </svg> IA</button>
+        <button class="cat-btn" onclick="filterCmds('moderation')"><svg fill="none" viewBox="0 0 24 24" width="18"
+            height="18">
+            <path d="M5 12h2v8M9 4l2-2 8 8-2 2-8-8z" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg> Moderación</button>
+        <button class="cat-btn" onclick="filterCmds('adult')"><svg fill="none" viewBox="0 0 24 24" width="18"
+            height="18">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1" /><text x="12" y="15"
+              text-anchor="middle" fill="currentColor" font-size="10" font-weight="bold">18</text>
+          </svg> +18</button>
+        <button class="cat-btn" onclick="filterCmds('utility')"><svg fill="none" viewBox="0 0 24 24" width="18"
+            height="18">
+            <path d="M8.5 4a3.5 3.5 0 0 0 0 7h5M9 16l-1 4 4-1" stroke="currentColor" stroke-width="1"
+              stroke-linecap="round" stroke-linejoin="round" />
+            <circle cx="9" cy="7" r="2" stroke="currentColor" stroke-width="1" />
+          </svg> Utilidad</button>
       </div>
 
       <div class="commands-grid reveal" id="cmdsGrid">
@@ -894,7 +1217,8 @@
         <div class="cmd-card" data-cat="ai">
           <div class="cmd-name">/ask &lt;pregunta&gt;</div>
           <div class="cmd-aliases">alias: pregunta, ia, ai, gpt</div>
-          <div class="cmd-desc">Pregúntale cualquier cosa a Yukiko IA (Ollama/llama3.2). Responde en español con personalidad kawaii.</div>
+          <div class="cmd-desc">Pregúntale cualquier cosa a Yukiko IA (Ollama/llama3.2). Responde en español con
+            personalidad kawaii.</div>
           <div class="cmd-meta"><span class="cmd-badge badge-cooldown">⏱ 5s</span></div>
         </div>
         <div class="cmd-card" data-cat="ai">
@@ -920,50 +1244,126 @@
           <div class="cmd-name">/warn @usuario &lt;razón&gt;</div>
           <div class="cmd-aliases">alias: advertir</div>
           <div class="cmd-desc">Emite una advertencia a un usuario del grupo. Requiere ser admin.</div>
-          <div class="cmd-meta"><span class="cmd-badge badge-admin"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><path d="M12 2L5 6v6c0 5 7 8 7 8s7-3 7-8V6l-7-4z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg> Admin</span><span class="cmd-badge badge-group"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1"/><circle cx="15" cy="8" r="3" stroke="currentColor" stroke-width="1"/><path d="M3 20c0-2.21 2.69-4 6-4s6 1.79 6 4" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><path d="M15 20c0-1.5 2-3 4-3s4 1.5 4 3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> Grupo</span></div>
+          <div class="cmd-meta"><span class="cmd-badge badge-admin"><svg fill="none" viewBox="0 0 24 24" width="18"
+                height="18">
+                <path d="M12 2L5 6v6c0 5 7 8 7 8s7-3 7-8V6l-7-4z" stroke="currentColor" stroke-width="1"
+                  stroke-linejoin="round" />
+              </svg> Admin</span><span class="cmd-badge badge-group"><svg fill="none" viewBox="0 0 24 24" width="18"
+                height="18">
+                <circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1" />
+                <circle cx="15" cy="8" r="3" stroke="currentColor" stroke-width="1" />
+                <path d="M3 20c0-2.21 2.69-4 6-4s6 1.79 6 4" stroke="currentColor" stroke-width="1"
+                  stroke-linecap="round" />
+                <path d="M15 20c0-1.5 2-3 4-3s4 1.5 4 3" stroke="currentColor" stroke-width="1"
+                  stroke-linecap="round" />
+              </svg> Grupo</span></div>
         </div>
         <div class="cmd-card" data-cat="moderation">
           <div class="cmd-name">/ban @usuario &lt;razón&gt;</div>
           <div class="cmd-aliases">alias: banear</div>
           <div class="cmd-desc">Banea a un usuario del bot en el grupo actual. Admin del bot.</div>
-          <div class="cmd-meta"><span class="cmd-badge badge-admin"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><path d="M12 2L5 6v6c0 5 7 8 7 8s7-3 7-8V6l-7-4z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg> Admin</span></div>
+          <div class="cmd-meta"><span class="cmd-badge badge-admin"><svg fill="none" viewBox="0 0 24 24" width="18"
+                height="18">
+                <path d="M12 2L5 6v6c0 5 7 8 7 8s7-3 7-8V6l-7-4z" stroke="currentColor" stroke-width="1"
+                  stroke-linejoin="round" />
+              </svg> Admin</span></div>
         </div>
         <div class="cmd-card" data-cat="moderation">
           <div class="cmd-name">/clear &lt;número&gt;</div>
           <div class="cmd-aliases">alias: purge, limpiar</div>
           <div class="cmd-desc">Elimina los últimos N mensajes del chat. Solo Discord.</div>
-          <div class="cmd-meta"><span class="cmd-badge badge-admin"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><path d="M12 2L5 6v6c0 5 7 8 7 8s7-3 7-8V6l-7-4z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg> Admin</span></div>
+          <div class="cmd-meta"><span class="cmd-badge badge-admin"><svg fill="none" viewBox="0 0 24 24" width="18"
+                height="18">
+                <path d="M12 2L5 6v6c0 5 7 8 7 8s7-3 7-8V6l-7-4z" stroke="currentColor" stroke-width="1"
+                  stroke-linejoin="round" />
+              </svg> Admin</span></div>
         </div>
         <div class="cmd-card" data-cat="moderation">
           <div class="cmd-name">/prefix &lt;nuevo&gt;</div>
           <div class="cmd-aliases">—</div>
           <div class="cmd-desc">Cambia el prefijo del bot en este grupo (por defecto /).</div>
-          <div class="cmd-meta"><span class="cmd-badge badge-admin"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><path d="M12 2L5 6v6c0 5 7 8 7 8s7-3 7-8V6l-7-4z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg> Admin</span><span class="cmd-badge badge-group"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1"/><circle cx="15" cy="8" r="3" stroke="currentColor" stroke-width="1"/><path d="M3 20c0-2.21 2.69-4 6-4s6 1.79 6 4" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><path d="M15 20c0-1.5 2-3 4-3s4 1.5 4 3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> Grupo</span></div>
+          <div class="cmd-meta"><span class="cmd-badge badge-admin"><svg fill="none" viewBox="0 0 24 24" width="18"
+                height="18">
+                <path d="M12 2L5 6v6c0 5 7 8 7 8s7-3 7-8V6l-7-4z" stroke="currentColor" stroke-width="1"
+                  stroke-linejoin="round" />
+              </svg> Admin</span><span class="cmd-badge badge-group"><svg fill="none" viewBox="0 0 24 24" width="18"
+                height="18">
+                <circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1" />
+                <circle cx="15" cy="8" r="3" stroke="currentColor" stroke-width="1" />
+                <path d="M3 20c0-2.21 2.69-4 6-4s6 1.79 6 4" stroke="currentColor" stroke-width="1"
+                  stroke-linecap="round" />
+                <path d="M15 20c0-1.5 2-3 4-3s4 1.5 4 3" stroke="currentColor" stroke-width="1"
+                  stroke-linecap="round" />
+              </svg> Grupo</span></div>
         </div>
         <!-- Adult -->
         <div class="cmd-card" data-cat="adult">
           <div class="cmd-name">/adult on|off</div>
           <div class="cmd-aliases">—</div>
           <div class="cmd-desc">Activa/desactiva el módulo +18 en el grupo. Solo admins del grupo.</div>
-          <div class="cmd-meta"><span class="cmd-badge badge-adult"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1"/><text x="12" y="15" text-anchor="middle" fill="currentColor" font-size="10" font-weight="bold">18</text></svg> +18</span><span class="cmd-badge badge-admin"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><path d="M12 2L5 6v6c0 5 7 8 7 8s7-3 7-8V6l-7-4z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg> Admin</span><span class="cmd-badge badge-group"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1"/><circle cx="15" cy="8" r="3" stroke="currentColor" stroke-width="1"/><path d="M3 20c0-2.21 2.69-4 6-4s6 1.79 6 4" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><path d="M15 20c0-1.5 2-3 4-3s4 1.5 4 3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> Grupo</span></div>
+          <div class="cmd-meta"><span class="cmd-badge badge-adult"><svg fill="none" viewBox="0 0 24 24" width="18"
+                height="18">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1" /><text x="12" y="15"
+                  text-anchor="middle" fill="currentColor" font-size="10" font-weight="bold">18</text>
+              </svg> +18</span><span class="cmd-badge badge-admin"><svg fill="none" viewBox="0 0 24 24" width="18"
+                height="18">
+                <path d="M12 2L5 6v6c0 5 7 8 7 8s7-3 7-8V6l-7-4z" stroke="currentColor" stroke-width="1"
+                  stroke-linejoin="round" />
+              </svg> Admin</span><span class="cmd-badge badge-group"><svg fill="none" viewBox="0 0 24 24" width="18"
+                height="18">
+                <circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1" />
+                <circle cx="15" cy="8" r="3" stroke="currentColor" stroke-width="1" />
+                <path d="M3 20c0-2.21 2.69-4 6-4s6 1.79 6 4" stroke="currentColor" stroke-width="1"
+                  stroke-linecap="round" />
+                <path d="M15 20c0-1.5 2-3 4-3s4 1.5 4 3" stroke="currentColor" stroke-width="1"
+                  stroke-linecap="round" />
+              </svg> Grupo</span></div>
         </div>
         <div class="cmd-card" data-cat="adult">
           <div class="cmd-name">/verify18</div>
           <div class="cmd-aliases">alias: verify</div>
           <div class="cmd-desc">Solicita acceso al contenido +18. El admin del bot aprueba/rechaza.</div>
-          <div class="cmd-meta"><span class="cmd-badge badge-adult"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1"/><text x="12" y="15" text-anchor="middle" fill="currentColor" font-size="10" font-weight="bold">18</text></svg> +18</span></div>
+          <div class="cmd-meta"><span class="cmd-badge badge-adult"><svg fill="none" viewBox="0 0 24 24" width="18"
+                height="18">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1" /><text x="12" y="15"
+                  text-anchor="middle" fill="currentColor" font-size="10" font-weight="bold">18</text>
+              </svg> +18</span></div>
         </div>
         <div class="cmd-card" data-cat="adult">
           <div class="cmd-name">/hentai &lt;tags&gt;</div>
           <div class="cmd-aliases">alias: h, lewd</div>
           <div class="cmd-desc">Imagen/GIF de Gelbooru por tags. Requiere verificación de edad y grupo activado.</div>
-          <div class="cmd-meta"><span class="cmd-badge badge-adult"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1"/><text x="12" y="15" text-anchor="middle" fill="currentColor" font-size="10" font-weight="bold">18</text></svg> Verificado</span><span class="cmd-badge badge-group"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1"/><circle cx="15" cy="8" r="3" stroke="currentColor" stroke-width="1"/><path d="M3 20c0-2.21 2.69-4 6-4s6 1.79 6 4" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><path d="M15 20c0-1.5 2-3 4-3s4 1.5 4 3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> Grupo</span></div>
+          <div class="cmd-meta"><span class="cmd-badge badge-adult"><svg fill="none" viewBox="0 0 24 24" width="18"
+                height="18">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1" /><text x="12" y="15"
+                  text-anchor="middle" fill="currentColor" font-size="10" font-weight="bold">18</text>
+              </svg> Verificado</span><span class="cmd-badge badge-group"><svg fill="none" viewBox="0 0 24 24"
+                width="18" height="18">
+                <circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1" />
+                <circle cx="15" cy="8" r="3" stroke="currentColor" stroke-width="1" />
+                <path d="M3 20c0-2.21 2.69-4 6-4s6 1.79 6 4" stroke="currentColor" stroke-width="1"
+                  stroke-linecap="round" />
+                <path d="M15 20c0-1.5 2-3 4-3s4 1.5 4 3" stroke="currentColor" stroke-width="1"
+                  stroke-linecap="round" />
+              </svg> Grupo</span></div>
         </div>
         <div class="cmd-card" data-cat="adult">
           <div class="cmd-name">/redgifs &lt;búsqueda&gt;</div>
           <div class="cmd-aliases">alias: rgif</div>
           <div class="cmd-desc">GIF +18 de Gelbooru. Requiere verificación de edad y grupo activado.</div>
-          <div class="cmd-meta"><span class="cmd-badge badge-adult"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1"/><text x="12" y="15" text-anchor="middle" fill="currentColor" font-size="10" font-weight="bold">18</text></svg> Verificado</span><span class="cmd-badge badge-group"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1"/><circle cx="15" cy="8" r="3" stroke="currentColor" stroke-width="1"/><path d="M3 20c0-2.21 2.69-4 6-4s6 1.79 6 4" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><path d="M15 20c0-1.5 2-3 4-3s4 1.5 4 3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> Grupo</span></div>
+          <div class="cmd-meta"><span class="cmd-badge badge-adult"><svg fill="none" viewBox="0 0 24 24" width="18"
+                height="18">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1" /><text x="12" y="15"
+                  text-anchor="middle" fill="currentColor" font-size="10" font-weight="bold">18</text>
+              </svg> Verificado</span><span class="cmd-badge badge-group"><svg fill="none" viewBox="0 0 24 24"
+                width="18" height="18">
+                <circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1" />
+                <circle cx="15" cy="8" r="3" stroke="currentColor" stroke-width="1" />
+                <path d="M3 20c0-2.21 2.69-4 6-4s6 1.79 6 4" stroke="currentColor" stroke-width="1"
+                  stroke-linecap="round" />
+                <path d="M15 20c0-1.5 2-3 4-3s4 1.5 4 3" stroke="currentColor" stroke-width="1"
+                  stroke-linecap="round" />
+              </svg> Grupo</span></div>
         </div>
         <!-- Utility -->
         <div class="cmd-card" data-cat="utility">
@@ -995,11 +1395,15 @@
       </div>
       <div class="platforms-grid reveal">
         <div class="platform-card platform-discord">
-          <span class="platform-icon"><svg fill="currentColor" viewBox="0 0 24 24" width="18" height="18"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="currentColor" stroke-width="1" fill="none" stroke-linejoin="round"/></svg></span>
-          <h3>Discord</h3>
+          <span class="platform-icon"><svg fill="currentColor" viewBox="0 0 24 24" width="18" height="18">
+              <path
+                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                stroke="currentColor" stroke-width="1" fill="none" stroke-linejoin="round" />
+            </svg></span>
+          <h3 data-es="Discord" data-en="Discord">Discord</h3>
           <p>Integración completa con slash commands, embeds ricos, música con Lavalink y moderación avanzada.</p>
           <ul>
-            <li>Slash commands nativos (/)  </li>
+            <li>Slash commands nativos (/) </li>
             <li>Embeds con imágenes y botones</li>
             <li>Módulo de música completo</li>
             <li>Roles y permisos nativos</li>
@@ -1007,8 +1411,10 @@
           </ul>
         </div>
         <div class="platform-card platform-telegram">
-          <span class="platform-icon"><svg fill="currentColor" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1"/></svg></span>
-          <h3>Telegram</h3>
+          <span class="platform-icon"><svg fill="currentColor" viewBox="0 0 24 24" width="18" height="18">
+              <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1" />
+            </svg></span>
+          <h3 data-es="Telegram" data-en="Telegram">Telegram</h3>
           <p>Bot nativo via Grammy con soporte de grupos e inline queries. Comandos registrados en BotFather.</p>
           <ul>
             <li>Comandos registrados en BotFather</li>
@@ -1019,9 +1425,14 @@
           </ul>
         </div>
         <div class="platform-card platform-mobile">
-          <span class="platform-icon"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1"/><circle cx="12" cy="19" r="1" fill="currentColor"/><line x1="8" y1="8" x2="16" y2="8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></span>
-          <h3>Mobile</h3>
-          <p>App React Native (Expo) que conecta vía WebSocket al servidor en puerto 3002. Autenticación por token persistente.</p>
+          <span class="platform-icon"><svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+              <rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1" />
+              <circle cx="12" cy="19" r="1" fill="currentColor" />
+              <line x1="8" y1="8" x2="16" y2="8" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
+            </svg></span>
+          <h3 data-es="Mobile" data-en="Mobile">Mobile</h3>
+          <p>App React Native (Expo) que conecta vía WebSocket al servidor en puerto 3002. Autenticación por token
+            persistente.</p>
           <ul>
             <li>Auth por QR code (como WA Web)</li>
             <li>Sesión persistente en disco</li>
@@ -1040,13 +1451,14 @@
       <div class="reveal">
         <p class="section-label">// instalación</p>
         <h2 class="section-title">Puesta en marcha</h2>
-        <p class="section-desc">Desde cero hasta funcionando. Usa los scripts de instalación automática para las dependencias.</p>
+        <p class="section-desc">Desde cero hasta funcionando. Usa los scripts de instalación automática para las
+          dependencias.</p>
       </div>
       <div class="setup-steps reveal">
         <div class="step">
           <div class="step-num">01</div>
           <div class="step-content">
-            <h3>Clonar el repositorio</h3>
+            <h3 data-es="Clonar el repositorio" data-en="Clone the Repository">Clonar el repositorio</h3>
             <p>Clona el repo y entra en el directorio.</p>
             <pre><span class="c"># Clonar</span>
 git clone git@github.com:joseangelalejo/yukiko.git
@@ -1056,7 +1468,8 @@ cd yukiko</pre>
         <div class="step">
           <div class="step-num">02</div>
           <div class="step-content">
-            <h3>Instalar dependencias del sistema</h3>
+            <h3 data-es="Instalar dependencias del sistema" data-en="Install System Dependencies">Instalar dependencias
+              del sistema</h3>
             <p>Usa el script automático según tu SO. También disponible para Windows.</p>
             <pre><span class="c"># Arch Linux (usa pacman)</span>
 bash scripts/install-arch.sh
@@ -1072,7 +1485,8 @@ python scripts/install-windows.py</pre>
         <div class="step">
           <div class="step-num">03</div>
           <div class="step-content">
-            <h3>Configurar variables de entorno</h3>
+            <h3 data-es="Configurar variables de entorno" data-en="Configure Environment Variables">Configurar variables
+              de entorno</h3>
             <p>Copia el ejemplo y rellena tus tokens. Todo lo gratuito viene marcado.</p>
             <pre>cp .env.example .env
 <span class="c"># Edita .env con tu editor favorito</span>
@@ -1082,7 +1496,8 @@ nano .env   <span class="c"># o: code .env</span></pre>
         <div class="step">
           <div class="step-num">04</div>
           <div class="step-content">
-            <h3>Base de datos — Neon PostgreSQL (gratuito)</h3>
+            <h3 data-es="Base de datos — Neon PostgreSQL (gratuito)" data-en="Database — Neon PostgreSQL (Free)">Base de
+              datos — Neon PostgreSQL (gratuito)</h3>
             <p>Crea un proyecto en neon.tech, copia la connection string y aplica las migraciones.</p>
             <pre><span class="c"># Instalar dependencias Node</span>
 npm install
@@ -1097,8 +1512,9 @@ bash scripts/db-studio.sh</pre>
         <div class="step">
           <div class="step-num">05</div>
           <div class="step-content">
-            <h3>Tokens de bots</h3>
-            <p>Discord en developer.discord.com · Telegram con @BotFather · Mobile via WebSocket (token persistente).</p>
+            <h3 data-es="Tokens de bots" data-en="Bot Tokens">Tokens de bots</h3>
+            <p>Discord en developer.discord.com · Telegram con @BotFather · Mobile via WebSocket (token persistente).
+            </p>
             <pre><span class="c"># Ver guía completa de configuración de cada plataforma:</span>
 cat docs/PLATFORM_SETUP.md</pre>
           </div>
@@ -1106,7 +1522,7 @@ cat docs/PLATFORM_SETUP.md</pre>
         <div class="step">
           <div class="step-num">06</div>
           <div class="step-content">
-            <h3>Arrancar en desarrollo</h3>
+            <h3 data-es="Arrancar en desarrollo" data-en="Start Development">Arrancar en desarrollo</h3>
             <p>Levanta todos los bots y la web de administración a la vez.</p>
             <pre><span class="c"># Todo junto</span>
 npm run dev
@@ -1121,7 +1537,8 @@ npm run dev:web    <span class="c"># → http://localhost:3000</span></pre>
         <div class="step">
           <div class="step-num">07</div>
           <div class="step-content">
-            <h3>Producción — Homelab / VPS</h3>
+            <h3 data-es="Producción — Homelab / VPS" data-en="Production — Homelab / VPS">Producción — Homelab / VPS
+            </h3>
             <p>Para 24/7 usa PM2 en tu servidor. El CI/CD de GitHub Actions lo automatiza.</p>
             <pre><span class="c"># En tu servidor (Ubuntu homelab / VPS)</span>
 npm install -g pm2 tsx
@@ -1142,11 +1559,16 @@ cd web && npx vercel --prod</pre>
       <div class="reveal">
         <p class="section-label">// stack tecnológico</p>
         <h2 class="section-title">100% gratuito en producción</h2>
-        <p class="section-desc">Cada servicio tiene plan gratuito generoso. Lo que no lo tiene lo levantamos en el homelab Proxmox.</p>
+        <p class="section-desc">Cada servicio tiene plan gratuito generoso. Lo que no lo tiene lo levantamos en el
+          homelab Proxmox.</p>
       </div>
       <div class="stack-grid reveal">
         <div class="stack-item">
-          <span class="stack-emoji"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="10" r="4" stroke="currentColor" stroke-width="1"/><path d="M8 10l-2 8M16 10l2 8M12 14v4" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><path d="M9 7l-1 2M15 7l1 2" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></span>
+          <span class="stack-emoji"><svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+              <circle cx="12" cy="10" r="4" stroke="currentColor" stroke-width="1" />
+              <path d="M8 10l-2 8M16 10l2 8M12 14v4" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
+              <path d="M9 7l-1 2M15 7l1 2" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
+            </svg></span>
           <div class="stack-info">
             <h4>Neon PostgreSQL</h4>
             <p>Base de datos serverless. 0.5 GB gratis, conexión nativa con Vercel.</p>
@@ -1162,7 +1584,9 @@ cd web && npx vercel --prod</pre>
           </div>
         </div>
         <div class="stack-item">
-          <span class="stack-emoji"><svg fill="currentColor" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1"/></svg></span>
+          <span class="stack-emoji"><svg fill="currentColor" viewBox="0 0 24 24" width="18" height="18">
+              <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1" />
+            </svg></span>
           <div class="stack-info">
             <h4>Redis</h4>
             <p>Cache y rate limiting. Self-hosted en homelab con Docker.</p>
@@ -1170,7 +1594,12 @@ cd web && npx vercel --prod</pre>
           </div>
         </div>
         <div class="stack-item">
-          <span class="stack-emoji"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><path d="M7 6h10M7 12h10M4 18h16a2 2 0 0 1 2 2v2H2v-2a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><circle cx="8" cy="10" r="2" fill="currentColor"/><circle cx="16" cy="10" r="2" fill="currentColor"/></svg></span>
+          <span class="stack-emoji"><svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+              <path d="M7 6h10M7 12h10M4 18h16a2 2 0 0 1 2 2v2H2v-2a2 2 0 0 1 2-2z" stroke="currentColor"
+                stroke-width="1" stroke-linecap="round" />
+              <circle cx="8" cy="10" r="2" fill="currentColor" />
+              <circle cx="16" cy="10" r="2" fill="currentColor" />
+            </svg></span>
           <div class="stack-info">
             <h4>Giphy API</h4>
             <p>GIFs para roleplay (hugs, kisses, etc). API Key gratuita via Google Cloud.</p>
@@ -1178,7 +1607,10 @@ cd web && npx vercel --prod</pre>
           </div>
         </div>
         <div class="stack-item">
-          <span class="stack-emoji"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><path d="M2 20h20M4 14l3-3 4 4 5-5 4 4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="stack-emoji"><svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+              <path d="M2 20h20M4 14l3-3 4 4 5-5 4 4" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></span>
           <div class="stack-info">
             <h4>Grafana + Prometheus</h4>
             <p>Monitorización y dashboards. Self-hosted en homelab Proxmox.</p>
@@ -1186,7 +1618,13 @@ cd web && npx vercel --prod</pre>
           </div>
         </div>
         <div class="stack-item">
-          <span class="stack-emoji"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><rect x="4" y="3" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/><path d="M7 15h10" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><path d="M6 5v2M18 5v2" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></span>
+          <span class="stack-emoji"><svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+              <rect x="4" y="3" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1" />
+              <circle cx="9" cy="10" r="1" fill="currentColor" />
+              <circle cx="15" cy="10" r="1" fill="currentColor" />
+              <path d="M7 15h10" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
+              <path d="M6 5v2M18 5v2" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
+            </svg></span>
           <div class="stack-info">
             <h4>Pollinations.ai + Ollama</h4>
             <p>Ollama (llama3.2:3b) self-hosted + Pollinations.ai. 100% gratuito.</p>
@@ -1194,7 +1632,11 @@ cd web && npx vercel --prod</pre>
           </div>
         </div>
         <div class="stack-item">
-          <span class="stack-emoji"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><path d="M12 4l3 3H9l3-3zM3 12h18M4 14l2 6M20 14l-2 6M12 14v6" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="12" cy="12" rx="8" ry="5" stroke="currentColor" stroke-width="1"/></svg></span>
+          <span class="stack-emoji"><svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+              <path d="M12 4l3 3H9l3-3zM3 12h18M4 14l2 6M20 14l-2 6M12 14v6" stroke="currentColor" stroke-width="1"
+                stroke-linecap="round" stroke-linejoin="round" />
+              <ellipse cx="12" cy="12" rx="8" ry="5" stroke="currentColor" stroke-width="1" />
+            </svg></span>
           <div class="stack-info">
             <h4>Docker + Compose</h4>
             <p>Contenedores para bots, Redis, Lavalink, Grafana, Prometheus.</p>
@@ -1202,7 +1644,11 @@ cd web && npx vercel --prod</pre>
           </div>
         </div>
         <div class="stack-item">
-          <span class="stack-emoji"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><path d="M4 17v-4a6 6 0 1 1 12 0v4M4 17h16" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><path d="M10 2v10M16 2v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          <span class="stack-emoji"><svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+              <path d="M4 17v-4a6 6 0 1 1 12 0v4M4 17h16" stroke="currentColor" stroke-width="1"
+                stroke-linecap="round" />
+              <path d="M10 2v10M16 2v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            </svg></span>
           <div class="stack-info">
             <h4>Lavalink</h4>
             <p>Servidor de audio para música Discord. Self-hosted, open source.</p>
@@ -1210,7 +1656,10 @@ cd web && npx vercel --prod</pre>
           </div>
         </div>
         <div class="stack-item">
-          <span class="stack-emoji"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><rect x="2" y="3" width="20" height="12" rx="1" stroke="currentColor" stroke-width="1"/><path d="M7 17h10M9 17v2M15 17v2M10 19h4" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></span>
+          <span class="stack-emoji"><svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+              <rect x="2" y="3" width="20" height="12" rx="1" stroke="currentColor" stroke-width="1" />
+              <path d="M7 17h10M9 17v2M15 17v2M10 19h4" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
+            </svg></span>
           <div class="stack-info">
             <h4>Homelab Proxmox VE</h4>
             <p>32 GB DDR4. Bots 24/7 via PM2 o Docker en VM Ubuntu.</p>
@@ -1218,7 +1667,10 @@ cd web && npx vercel --prod</pre>
           </div>
         </div>
         <div class="stack-item">
-          <span class="stack-emoji"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+          <span class="stack-emoji"><svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                stroke-linejoin="round" fill="none" />
+            </svg></span>
           <div class="stack-info">
             <h4>GitHub Actions</h4>
             <p>CI/CD: lint → deploy web (Vercel) → deploy bots (SSH al homelab).</p>
@@ -1226,7 +1678,11 @@ cd web && npx vercel --prod</pre>
           </div>
         </div>
         <div class="stack-item">
-          <span class="stack-emoji"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><path d="M5 3h10l4 4v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V3z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/><path d="M15 3v4h4" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg></span>
+          <span class="stack-emoji"><svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+              <path d="M5 3h10l4 4v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V3z" stroke="currentColor" stroke-width="1"
+                stroke-linejoin="round" />
+              <path d="M15 3v4h4" stroke="currentColor" stroke-width="1" stroke-linejoin="round" />
+            </svg></span>
           <div class="stack-info">
             <h4>GitHub Pages</h4>
             <p>Esta página de documentación. Deploy automático con GitHub Actions.</p>
@@ -1234,7 +1690,10 @@ cd web && npx vercel --prod</pre>
           </div>
         </div>
         <div class="stack-item">
-          <span class="stack-emoji"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1"/><text x="12" y="15" text-anchor="middle" fill="currentColor" font-size="10" font-weight="bold">18</text></svg></span>
+          <span class="stack-emoji"><svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1" /><text x="12" y="15"
+                text-anchor="middle" fill="currentColor" font-size="10" font-weight="bold">18</text>
+            </svg></span>
           <div class="stack-info">
             <h4>Gelbooru</h4>
             <p>APIs gratuitas para contenido +18 con cuenta (tier gratuito suficiente).</p>
@@ -1254,38 +1713,44 @@ cd web && npx vercel --prod</pre>
         <p class="section-desc">Monorepo con workspaces npm. Cada plataforma y módulo es independiente.</p>
       </div>
       <div class="tree reveal">
-<span class="root">yukiko/</span>
-├── <span class="dir">core/</span>                  <span class="desc"># Tipos, registry y utils compartidos entre plataformas</span>
-│   └── <span class="dir">src/</span>
-│       ├── <span class="file">types.ts</span>           <span class="desc"># CommandContext, Command, YukikoUser, YukikoGroup...</span>
-│       ├── <span class="file">registry.ts</span>        <span class="desc"># Registro global de comandos con cooldowns</span>
-│       └── <span class="file">utils.ts</span>           <span class="desc"># Helpers compartidos</span>
-├── <span class="dir">platforms/</span>
-│   ├── <span class="dir">discord/src/index.ts</span>   <span class="desc"># Discord.js — slash commands, embeds, música</span>
-│   ├── <span class="dir">telegram/src/index.ts</span>  <span class="desc"># Grammy — comandos Telegram, BotFather</span>
-│   └── <span class="dir">mobile/src/index.ts</span>    <span class="desc"># WebSocket server — puerto 3002, React Native</span>
-├── <span class="dir">modules/</span>
-│   ├── <span class="dir">roleplay/</span>              <span class="desc"># GIFs via Giphy API</span>
-│   ├── <span class="dir">economy/</span>               <span class="desc"># Monedas, niveles, mascotas, matrimonios</span>
-│   ├── <span class="dir">adult/</span>                 <span class="desc"># Gelbooru con sistema de verificación</span>
-│   ├── <span class="dir">ai/</span>                    <span class="desc"># Ollama (llama3.2) + Pollinations.ai</span>
-│   └── <span class="dir">moderation/</span>            <span class="desc"># Warn, ban, clear, logs</span>
-├── <span class="dir">web/</span>                       <span class="desc"># Next.js — landing + admin + monitor (→ Vercel)</span>
-│   └── <span class="dir">app/</span>
-│       ├── <span class="file">page.tsx</span>               <span class="desc"># Landing pública</span>
-│       ├── <span class="dir">admin/</span>                 <span class="desc"># Panel de administración</span>
-│       ├── <span class="dir">admin/verifications/</span>   <span class="desc"># Aprobar solicitudes +18</span>
-│       └── <span class="dir">monitor/</span>               <span class="desc"># Métricas en tiempo real</span>
-├── <span class="dir">db/</span>                        <span class="desc"># Schema Drizzle ORM (Neon PostgreSQL)</span>
-│   ├── <span class="file">schema.ts</span>              <span class="desc"># users, groups, economy, adult, logs...</span>
-│   └── <span class="file">index.ts</span>               <span class="desc"># Cliente Drizzle con connection pool</span>
-├── <span class="dir">ssh-cli/</span>                   <span class="desc"># CLI remota para gestionar el bot desde Arch</span>
-├── <span class="dir">docker/</span>                    <span class="desc"># Dockerfile.bot, prometheus.yml, lavalink.yml</span>
-├── <span class="dir">scripts/</span>                   <span class="desc"># setup, dev, health-check, backup, ngrok...</span>
-├── <span class="dir">docs/</span>                      <span class="desc"># Esta documentación (GitHub Pages)</span>
-│   └── <span class="file">index.html</span>             <span class="desc"># ← Estás aquí</span>
-└── <span class="dir">.github/workflows/</span>
-    └── <span class="file">deploy.yml</span>             <span class="desc"># CI/CD: lint → Vercel + SSH homelab + Pages</span>
+        <span class="root">yukiko/</span>
+        ├── <span class="dir">core/</span> <span class="desc"># Tipos, registry y utils compartidos entre
+          plataformas</span>
+        │ └── <span class="dir">src/</span>
+        │ ├── <span class="file">types.ts</span> <span class="desc"># CommandContext, Command, YukikoUser,
+          YukikoGroup...</span>
+        │ ├── <span class="file">registry.ts</span> <span class="desc"># Registro global de comandos con
+          cooldowns</span>
+        │ └── <span class="file">utils.ts</span> <span class="desc"># Helpers compartidos</span>
+        ├── <span class="dir">platforms/</span>
+        │ ├── <span class="dir">discord/src/index.ts</span> <span class="desc"># Discord.js — slash commands, embeds,
+          música</span>
+        │ ├── <span class="dir">telegram/src/index.ts</span> <span class="desc"># Grammy — comandos Telegram,
+          BotFather</span>
+        │ └── <span class="dir">mobile/src/index.ts</span> <span class="desc"># WebSocket server — puerto 3002, React
+          Native</span>
+        ├── <span class="dir">modules/</span>
+        │ ├── <span class="dir">roleplay/</span> <span class="desc"># GIFs via Giphy API</span>
+        │ ├── <span class="dir">economy/</span> <span class="desc"># Monedas, niveles, mascotas, matrimonios</span>
+        │ ├── <span class="dir">adult/</span> <span class="desc"># Gelbooru con sistema de verificación</span>
+        │ ├── <span class="dir">ai/</span> <span class="desc"># Ollama (llama3.2) + Pollinations.ai</span>
+        │ └── <span class="dir">moderation/</span> <span class="desc"># Warn, ban, clear, logs</span>
+        ├── <span class="dir">web/</span> <span class="desc"># Next.js — landing + admin + monitor (→ Vercel)</span>
+        │ └── <span class="dir">app/</span>
+        │ ├── <span class="file">page.tsx</span> <span class="desc"># Landing pública</span>
+        │ ├── <span class="dir">admin/</span> <span class="desc"># Panel de administración</span>
+        │ ├── <span class="dir">admin/verifications/</span> <span class="desc"># Aprobar solicitudes +18</span>
+        │ └── <span class="dir">monitor/</span> <span class="desc"># Métricas en tiempo real</span>
+        ├── <span class="dir">db/</span> <span class="desc"># Schema Drizzle ORM (Neon PostgreSQL)</span>
+        │ ├── <span class="file">schema.ts</span> <span class="desc"># users, groups, economy, adult, logs...</span>
+        │ └── <span class="file">index.ts</span> <span class="desc"># Cliente Drizzle con connection pool</span>
+        ├── <span class="dir">ssh-cli/</span> <span class="desc"># CLI remota para gestionar el bot desde Arch</span>
+        ├── <span class="dir">docker/</span> <span class="desc"># Dockerfile.bot, prometheus.yml, lavalink.yml</span>
+        ├── <span class="dir">scripts/</span> <span class="desc"># setup, dev, health-check, backup, ngrok...</span>
+        ├── <span class="dir">docs/</span> <span class="desc"># Esta documentación (GitHub Pages)</span>
+        │ └── <span class="file">index.html</span> <span class="desc"># ← Estás aquí</span>
+        └── <span class="dir">.github/workflows/</span>
+        └── <span class="file">deploy.yml</span> <span class="desc"># CI/CD: lint → Vercel + SSH homelab + Pages</span>
       </div>
     </div>
   </section>
@@ -1293,16 +1758,46 @@ cd web && npx vercel --prod</pre>
   <!-- ─── FOOTER ───────────────────────────────────────────────── -->
   <footer>
     <div class="footer-logo">
-      <img src="assets/yukiko-logo-128.png" alt="Yukiko" style="height:56px;width:56px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,107,157,0.4);" />
+      <img src="assets/yukiko-logo-128.png" alt="Yukiko"
+        style="height:56px;width:56px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,107,157,0.4);" />
     </div>
     <div class="footer-name">Yukiko Bot</div>
-    <div class="footer-sub">Hecho con <svg fill="none" viewBox="0 0 24 24" width="18" height="18"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="1" fill="none"/></svg>️ por <a href="https://github.com/joseangelalejo" style="color:var(--pink);text-decoration:none;">joseangelalejo</a></div>
+    <div class="footer-sub">Hecho con <svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+        <path
+          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+          stroke="currentColor" stroke-width="1" fill="none" />
+      </svg>️ por <a href="https://github.com/joseangelalejo"
+        style="color:var(--pink);text-decoration:none;">joseangelalejo</a></div>
     <div class="footer-links">
-      <a href="https://github.com/joseangelalejo/yukiko"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><path d="M12 2L3 6v6c0 4 9 6 9 6s9-2 9-6V6l-9-4z" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 12v8M3 6l9 5M21 6l-9 5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Repositorio</a>
-      <a href="https://github.com/joseangelalejo/yukiko/blob/main/docs/PLATFORM_SETUP.md"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><path d="M4 3h16v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V3z" stroke="currentColor" stroke-width="1"/><path d="M12 6v12M12 6h1M12 6H7M12 10h1M12 10H7M12 14h1M12 14H7" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> Guía completa</a>
-      <a href="https://github.com/joseangelalejo"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1"/><path d="M4 20c0-3.31 3.58-6 8-6s8 2.69 8 6" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> GitHub</a>
-      <a href="https://joseangelhub.miniserver.online/"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1"/><path d="M12 2a15.3 15.3 0 0 1 4.7 10" stroke="currentColor" stroke-width="1"/><path d="M12 22c4.5 0 8.2-7 10-10" stroke="currentColor" stroke-width="1"/><path d="M2 12h20" stroke="currentColor" stroke-width="1"/><path d="M12 2a15 15 0 0 0-4.7 10m0 0a15 15 0 0 0 4.7 10" stroke="currentColor" stroke-width="1"/></svg> Hub personal</a>
-      <a href="https://github.com/joseangelalejo/yukiko/issues"><svg fill="none" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="6" r="2" stroke="currentColor" stroke-width="1"/><path d="M12 8v10M8 12h8M10 16h4M10 10c-2 0-3 1-3 3M14 10c2 0 3 1 3 3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> Issues</a>
+      <a href="https://github.com/joseangelalejo/yukiko"><svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+          <path d="M12 2L3 6v6c0 4 9 6 9 6s9-2 9-6V6l-9-4z" stroke="currentColor" stroke-width="1"
+            stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M12 12v8M3 6l9 5M21 6l-9 5" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg> Repositorio</a>
+      <a href="https://github.com/joseangelalejo/yukiko/blob/main/docs/PLATFORM_SETUP.md"><svg fill="none"
+          viewBox="0 0 24 24" width="18" height="18">
+          <path d="M4 3h16v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V3z" stroke="currentColor" stroke-width="1" />
+          <path d="M12 6v12M12 6h1M12 6H7M12 10h1M12 10H7M12 14h1M12 14H7" stroke="currentColor" stroke-width="1"
+            stroke-linecap="round" />
+        </svg> Guía completa</a>
+      <a href="https://github.com/joseangelalejo"><svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+          <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1" />
+          <path d="M4 20c0-3.31 3.58-6 8-6s8 2.69 8 6" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
+        </svg> GitHub</a>
+      <a href="https://joseangelhub.miniserver.online/"><svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1" />
+          <path d="M12 2a15.3 15.3 0 0 1 4.7 10" stroke="currentColor" stroke-width="1" />
+          <path d="M12 22c4.5 0 8.2-7 10-10" stroke="currentColor" stroke-width="1" />
+          <path d="M2 12h20" stroke="currentColor" stroke-width="1" />
+          <path d="M12 2a15 15 0 0 0-4.7 10m0 0a15 15 0 0 0 4.7 10" stroke="currentColor" stroke-width="1" />
+        </svg> Hub personal</a>
+      <a href="https://github.com/joseangelalejo/yukiko/issues"><svg fill="none" viewBox="0 0 24 24" width="18"
+          height="18">
+          <circle cx="12" cy="6" r="2" stroke="currentColor" stroke-width="1" />
+          <path d="M12 8v10M8 12h8M10 16h4M10 10c-2 0-3 1-3 3M14 10c2 0 3 1 3 3" stroke="currentColor" stroke-width="1"
+            stroke-linecap="round" />
+        </svg> Issues</a>
     </div>
     <div class="footer-copy">MIT License — 2025 · Yukiko Bot · Documentación generada automáticamente</div>
   </footer>
@@ -1330,32 +1825,32 @@ cd web && npx vercel --prod</pre>
     }
   </script>
   <script>
-        (function() {
-            const THEME_KEY = 'app-theme';
-            const LANG_KEY = 'app-language';
-            const LIGHT = 'light';
-            const DARK = 'dark';
-            const ES = 'es';
-            const EN = 'en';
-            const sunIcon = '<svg fill="currentColor" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
-            const moonIcon = '<svg fill="currentColor" viewBox="0 0 24 24" width="18" height="18"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-            function getTheme() {
-                const saved = localStorage.getItem(THEME_KEY);
-                return saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? DARK : LIGHT);
-            }
-            function getLang() {
-                return localStorage.getItem(LANG_KEY) || (document.documentElement.lang || 'es');
-            }
-            function setTheme(t) {
-                localStorage.setItem(THEME_KEY, t);
-                document.documentElement.setAttribute('data-theme', t);
-                const darkBtn = document.getElementById('theme-toggle-btn');
-                if (darkBtn) {
-                    darkBtn.innerHTML = t === DARK ? sunIcon : moonIcon;
-                    darkBtn.title = t === DARK ? 'Switch to Light Mode' : 'Switch to Dark Mode';
-                }
-                if (t === DARK) {
-                    const styles = `
+    (function () {
+      const THEME_KEY = 'app-theme';
+      const LANG_KEY = 'app-language';
+      const LIGHT = 'light';
+      const DARK = 'dark';
+      const ES = 'es';
+      const EN = 'en';
+      const sunIcon = '<svg fill="currentColor" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+      const moonIcon = '<svg fill="currentColor" viewBox="0 0 24 24" width="18" height="18"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      function getTheme() {
+        const saved = localStorage.getItem(THEME_KEY);
+        return saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? DARK : LIGHT);
+      }
+      function getLang() {
+        return localStorage.getItem(LANG_KEY) || (document.documentElement.lang || 'es');
+      }
+      function setTheme(t) {
+        localStorage.setItem(THEME_KEY, t);
+        document.documentElement.setAttribute('data-theme', t);
+        const darkBtn = document.getElementById('theme-toggle-btn');
+        if (darkBtn) {
+          darkBtn.innerHTML = t === DARK ? sunIcon : moonIcon;
+          darkBtn.title = t === DARK ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+        }
+        if (t === DARK) {
+          const styles = `
                         [data-theme="dark"] body { background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%) !important; color: #f0f4ff !important; }
                         [data-theme="dark"] header { background: linear-gradient(135deg, #4c63d2 0%, #6b46c1 100%) !important; }
                         [data-theme="dark"] nav { background-color: rgba(26, 31, 58, 0.95) !important; border-bottom: 1px solid rgba(102, 126, 234, 0.2) !important; }
@@ -1366,100 +1861,131 @@ cd web && npx vercel --prod</pre>
                         [data-theme="dark"] .info-item { background-color: #242d4a !important; }
                         [data-theme="dark"] footer { background: linear-gradient(135deg, #4c63d2 0%, #6b46c1 100%) !important; }
                     `;
-                    if (!document.getElementById('dark-theme-style')) {
-                        const s = document.createElement('style');
-                        s.id = 'dark-theme-style';
-                        s.textContent = styles;
-                        document.head.appendChild(s);
-                    }
-                }
+          if (!document.getElementById('dark-theme-style')) {
+            const s = document.createElement('style');
+            s.id = 'dark-theme-style';
+            s.textContent = styles;
+            document.head.appendChild(s);
+          }
+        }
+      }
+
+      function updateContent(lang) {
+        // Función simple: actualizar elementos preservando SVG
+        const updateEl = (el, lang) => {
+          if (!el) return;
+          const esText = el.getAttribute('data-es');
+          const enText = el.getAttribute('data-en');
+          const text = lang === 'es' ? esText : enText;
+          if (!text) return;
+
+          const svg = el.querySelector('svg');
+          if (svg) {
+            // Preservar SVG, actualizar solo texto
+            for (let node of el.childNodes) {
+              if (node.nodeType === 3 && node.textContent.trim()) {
+                node.textContent = ' ' + text;
+                break;
+              }
             }
-            function setLang(l) {
-                localStorage.setItem(LANG_KEY, l);
-                document.documentElement.lang = l;
-            }
-            function createToolbar() {
-                if (document.getElementById('theme-lang-toolbar')) return;
-                const tb = document.createElement('div');
-                tb.id = 'theme-lang-toolbar';
-                tb.style.cssText = `
+          } else {
+            el.textContent = text;
+          }
+        };
+
+        // Actualizar todos con data-es/data-en
+        document.querySelectorAll('[data-es][data-en]').forEach(el => updateEl(el, lang));
+      }
+
+      function setLang(l) {
+        localStorage.setItem(LANG_KEY, l);
+        document.documentElement.lang = l;
+        updateContent(l);
+      }
+      function createToolbar() {
+        if (document.getElementById('theme-lang-toolbar')) return;
+        const tb = document.createElement('div');
+        tb.id = 'theme-lang-toolbar';
+        tb.style.cssText = `
                     position: fixed; bottom: 20px; right: 20px; display: flex; gap: 8px; align-items: center;
                     background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 6px 8px;
                     box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 10000; font-family: system-ui;
                     backdrop-filter: blur(10px);
                 `;
-                const darkBtn = document.createElement('button');
-                darkBtn.id = 'theme-toggle-btn';
-                darkBtn.innerHTML = getTheme() === DARK ? sunIcon : moonIcon;
-                darkBtn.title = getTheme() === DARK ? 'Switch to Light Mode' : 'Switch to Dark Mode';
-                darkBtn.style.cssText = `
+        const darkBtn = document.createElement('button');
+        darkBtn.id = 'theme-toggle-btn';
+        darkBtn.innerHTML = getTheme() === DARK ? sunIcon : moonIcon;
+        darkBtn.title = getTheme() === DARK ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+        darkBtn.style.cssText = `
                     background: none; border: none; cursor: pointer; padding: 6px;
                     border-radius: 6px; transition: all 0.2s; display: flex; align-items: center; justify-content: center;
                     color: #667eea; width: 32px; height: 32px;
                 `;
-                darkBtn.onmouseenter = (e) => e.target.style.backgroundColor = '#f3f4f6';
-                darkBtn.onmouseleave = (e) => e.target.style.backgroundColor = 'transparent';
-                darkBtn.onclick = () => {
-                    setTheme(getTheme() === LIGHT ? DARK : LIGHT);
-                    updateToolbar();
-                };
-                const separator = document.createElement('div');
-                separator.style.cssText = 'width: 1px; height: 20px; background: #e5e7eb;';
-                const langBtn = document.createElement('button');
-                const currentLang = getLang();
-                langBtn.textContent = currentLang === ES ? 'ES' : 'EN';
-                langBtn.title = currentLang === ES ? 'Switch to English' : 'Cambiar a Español';
-                langBtn.style.cssText = `
+        darkBtn.onmouseenter = (e) => e.target.style.backgroundColor = '#f3f4f6';
+        darkBtn.onmouseleave = (e) => e.target.style.backgroundColor = 'transparent';
+        darkBtn.onclick = () => {
+          setTheme(getTheme() === LIGHT ? DARK : LIGHT);
+          updateToolbar();
+        };
+        const separator = document.createElement('div');
+        separator.style.cssText = 'width: 1px; height: 20px; background: #e5e7eb;';
+        const langBtn = document.createElement('button');
+        const currentLang = getLang();
+        langBtn.textContent = currentLang === ES ? 'ES' : 'EN';
+        langBtn.title = currentLang === ES ? 'Switch to English' : 'Cambiar a Español';
+        langBtn.style.cssText = `
                     background: none; border: none; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
                     cursor: pointer; padding: 6px 8px; border-radius: 6px; transition: all 0.2s;
                     color: #667eea; text-transform: uppercase;
                 `;
-                langBtn.onmouseenter = (e) => {
-                    e.target.style.backgroundColor = '#f3f4f6';
-                    e.target.style.color = '#764ba2';
-                };
-                langBtn.onmouseleave = (e) => {
-                    e.target.style.backgroundColor = 'transparent';
-                    e.target.style.color = '#667eea';
-                };
-                langBtn.onclick = () => {
-                    const newL = getLang() === ES ? EN : ES;
-                    setLang(newL);
-                    langBtn.textContent = newL === ES ? 'ES' : 'EN';
-                    langBtn.title = newL === ES ? 'Switch to English' : 'Cambiar a Español';
-                };
-                tb.appendChild(darkBtn);
-                tb.appendChild(separator);
-                tb.appendChild(langBtn);
-                document.body.appendChild(tb);
-            }
-            function updateToolbar() {
-                const tb = document.getElementById('theme-lang-toolbar');
-                if (getTheme() === DARK) {
-                    tb.style.backgroundColor = '#1a1f3a';
-                    tb.style.borderColor = 'rgba(102, 126, 234, 0.3)';
-                    const darkBtn = document.getElementById('theme-toggle-btn');
-                    if (darkBtn) darkBtn.style.color = '#9db4f4';
-                } else {
-                    tb.style.backgroundColor = 'white';
-                    tb.style.borderColor = '#e5e7eb';
-                    const darkBtn = document.getElementById('theme-toggle-btn');
-                    if (darkBtn) darkBtn.style.color = '#667eea';
-                }
-            }
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', () => {
-                    setTheme(getTheme());
-                    setLang(getLang());
-                    createToolbar();
-                });
-            } else {
-                setTheme(getTheme());
-                setLang(getLang());
-                createToolbar();
-            }
-        })();
-    </script>
+        langBtn.onmouseenter = (e) => {
+          e.target.style.backgroundColor = '#f3f4f6';
+          e.target.style.color = '#764ba2';
+        };
+        langBtn.onmouseleave = (e) => {
+          e.target.style.backgroundColor = 'transparent';
+          e.target.style.color = '#667eea';
+        };
+        langBtn.onclick = () => {
+          const newL = getLang() === ES ? EN : ES;
+          setLang(newL);
+          langBtn.textContent = newL === ES ? 'ES' : 'EN';
+          langBtn.title = newL === ES ? 'Switch to English' : 'Cambiar a Español';
+          updateContent(newL);
+        };
+        tb.appendChild(darkBtn);
+        tb.appendChild(separator);
+        tb.appendChild(langBtn);
+        document.body.appendChild(tb);
+      }
+      function updateToolbar() {
+        const tb = document.getElementById('theme-lang-toolbar');
+        if (getTheme() === DARK) {
+          tb.style.backgroundColor = '#1a1f3a';
+          tb.style.borderColor = 'rgba(102, 126, 234, 0.3)';
+          const darkBtn = document.getElementById('theme-toggle-btn');
+          if (darkBtn) darkBtn.style.color = '#9db4f4';
+        } else {
+          tb.style.backgroundColor = 'white';
+          tb.style.borderColor = '#e5e7eb';
+          const darkBtn = document.getElementById('theme-toggle-btn');
+          if (darkBtn) darkBtn.style.color = '#667eea';
+        }
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+          setTheme(getTheme());
+          setLang(getLang());
+          createToolbar();
+        });
+      } else {
+        setTheme(getTheme());
+        setLang(getLang());
+        createToolbar();
+      }
+    })();
+  </script>
 
 </body>
+
 </html>

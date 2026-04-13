@@ -32,6 +32,7 @@ Thumbs.db
 .idea/
 *.sublime-workspace
 *.sublime-project
+.markdownlint.json
 
 # Logs
 logs/

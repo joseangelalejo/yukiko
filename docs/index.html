@@ -1329,6 +1329,104 @@ cd web && npx vercel --prod</pre>
       });
     }
   </script>
+  <script>
+    (function() {
+      const THEME_KEY = 'app-theme';
+      const LANG_KEY = 'app-language';
+      const LIGHT = 'light';
+      const DARK = 'dark';
+      const ES = 'es';
+      const EN = 'en';
+      function getTheme() {
+        const saved = localStorage.getItem(THEME_KEY);
+        return saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? DARK : LIGHT);
+      }
+      function getLang() {
+        return localStorage.getItem(LANG_KEY) || (document.documentElement.lang || 'es');
+      }
+      function setTheme(t) {
+        localStorage.setItem(THEME_KEY, t);
+        document.documentElement.setAttribute('data-theme', t);
+        if (t === DARK) {
+          const styles = `
+            [data-theme="dark"] :root { --bg: #0a0d17 !important; --bg2: #11151d !important; --text: #f0f4ff !important; }
+            [data-theme="dark"] body { opacity: 0.95; }
+            [data-theme="dark"] .cmd-card { background: #11151d !important; border-color: rgba(255,107,157,0.1) !important; }
+          `;
+          if (!document.getElementById('dark-theme-style')) {
+            const s = document.createElement('style');
+            s.id = 'dark-theme-style';
+            s.textContent = styles;
+            document.head.appendChild(s);
+          }
+        }
+      }
+      function setLang(l) {
+        localStorage.setItem(LANG_KEY, l);
+        document.documentElement.lang = l;
+      }
+      function createToolbar() {
+        if (document.getElementById('theme-lang-toolbar')) return;
+        const tb = document.createElement('div');
+        tb.id = 'theme-lang-toolbar';
+        tb.style.cssText = `
+          position: fixed; bottom: 20px; right: 20px; display: flex; gap: 10px;
+          background: white; border: 1px solid #ddd; border-radius: 12px; padding: 8px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 10000; font-family: system-ui;
+        `;
+        const darkBtn = document.createElement('button');
+        darkBtn.innerHTML = '🌙';
+        darkBtn.title = 'Toggle Dark Mode';
+        darkBtn.style.cssText = `
+          background: none; border: none; font-size: 18px; cursor: pointer; padding: 6px 8px;
+          border-radius: 8px; transition: all 0.3s;
+        `;
+        darkBtn.onclick = () => {
+          setTheme(getTheme() === LIGHT ? DARK : LIGHT);
+          updateToolbar();
+        };
+        const langBtn = document.createElement('button');
+        const currentLang = getLang();
+        langBtn.textContent = currentLang === ES ? 'ES' : 'EN';
+        langBtn.title = currentLang === ES ? 'Switch to English' : 'Cambiar a Español';
+        langBtn.style.cssText = `
+          background: none; border: 1px solid #ddd; font-size: 12px; font-weight: 600;
+          cursor: pointer; padding: 6px 8px; border-radius: 8px; transition: all 0.3s;
+          min-width: 30px; color: #ff6b9d;
+        `;
+        langBtn.onclick = () => {
+          const newL = getLang() === ES ? EN : ES;
+          setLang(newL);
+          langBtn.textContent = newL === ES ? 'ES' : 'EN';
+          langBtn.title = newL === ES ? 'Switch to English' : 'Cambiar a Español';
+        };
+        tb.appendChild(darkBtn);
+        tb.appendChild(langBtn);
+        document.body.appendChild(tb);
+      }
+      function updateToolbar() {
+        const tb = document.getElementById('theme-lang-toolbar');
+        if (getTheme() === DARK) {
+          tb.style.backgroundColor = '#11151d';
+          tb.style.borderColor = 'rgba(255,107,157,0.2)';
+        } else {
+          tb.style.backgroundColor = 'white';
+          tb.style.borderColor = '#ddd';
+        }
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+          setTheme(getTheme());
+          setLang(getLang());
+          createToolbar();
+        });
+      } else {
+        setTheme(getTheme());
+        setLang(getLang());
+        createToolbar();
+      }
+    })();
+  </script>
 
 </body>
 </html>

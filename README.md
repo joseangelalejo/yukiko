@@ -16,8 +16,8 @@
 
 ## 🚀 Estado actual
 
-| Plataforma        | Status    | Detalles                                                                 |
-| ----------------- | --------- | ------------------------------------------------------------------------ |
+| Plataforma        | Status   | Detalles                                                                 |
+|-------------------|----------|--------------------------------------------------------------------------|
 | **Discord**       | ✅ ONLINE | Yukiko#3557 (slash commands)                                             |
 | **Telegram**      | ✅ ONLINE | [@YukikoNeko_bot](https://t.me/YukikoNeko_bot)                           |
 | **Mobile**        | ✅ ONLINE | WebSocket puerto 3002                                                    |
@@ -198,7 +198,13 @@ yk-undeploy    # Elimina todos los deployments
 
 Disponible en [your-app-domain.com/chat](https://your-app-domain.com/chat)
 
-Interfaz de chat estilo ChatGPT que conecta con el homelab via API Route de Next.js → agente en puerto 3001.
+Interfaz de chat estilo ChatGPT que conecta con el homelab via **Tailscale Funnel** para máxima estabilidad y seguridad.
+
+**Arquitectura:**
+
+```
+Browser → Vercel (Next.js web) → Tailscale Funnel → Homelab Agent (3001) → Ollama/Pollinations
+```
 
 **Comandos disponibles:**
 

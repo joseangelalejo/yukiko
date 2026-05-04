@@ -2,15 +2,18 @@ import http from 'http';
 import { execSync } from 'child_process';
 import { config } from 'dotenv';
 
-config({ path: 'your-home-path/yukiko/.env' });
+config();
 
 const SECRET = process.env.ADMIN_SECRET;
 const PORT = 3001;
-const CWD = 'your-home-path/yukiko';
+const CWD = process.cwd();
+const OLLAMA_URL = process.env.OLLAMA_URL ?? 'http://localhost:11434';
 
 // ── Ollama ────────────────────────────────────────────────────
+const OLLAMA_ENDPOINT = `${OLLAMA_URL}/v1/chat/completions`;
+
 async function askOllama(prompt: string): Promise<string> {
-  const res = await fetch('http://127.0.0.1:11434/v1/chat/completions', {
+  const res = await fetch(OLLAMA_ENDPOINT, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

@@ -61,7 +61,7 @@ Opción: Hacer Deploy a Vercel HOY 🚀
 ```bash
 ================================================================================
 Paso 1: Verificar en local que todo está listo
-cd /home/miniature/gitrepositories/yukiko
+cd $(git rev-parse --show-toplevel)
 chmod +x verify-vercel-ready.sh
 ./verify-vercel-ready.sh
 
@@ -106,7 +106,7 @@ Opción 2: Preparar todo hoy, deploy mañana
 ```bash
 ================================================================================
 1. Abre terminal en la carpeta del proyecto
-cd /home/miniature/gitrepositories/yukiko
+cd $(git rev-parse --show-toplevel)
 
 ================================================================================
 2. Verifica que build funciona
@@ -326,7 +326,7 @@ NEXT WEEK: Monitorear estabilidad ✅ → Agregar features nuevas
 ---
 
 ¿Preguntas?  
-Todos los documentos están en `/home/miniature/gitrepositories/yukiko/`
+Todos los documentos están en la raíz del proyecto:
 
 - `README_VERCEL_DEPLOYMENT.md` - Resumen ejecutivo
 - `TESTING_LOCAL_Y_VERCEL.md` - Guía detallada

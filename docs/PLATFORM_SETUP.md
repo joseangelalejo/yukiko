@@ -208,13 +208,14 @@ NEXTAUTH_URL=https://your-app-domain.com
 NEXT_PUBLIC_APP_URL=https://your-app-domain.com
 GITHUB_CLIENT_ID=xxxx
 GITHUB_CLIENT_SECRET=xxxx
-HOMELAB_AGENT_URL=http://100.66.214.108:3001
+HOMELAB_AGENT_URL=http://localhost:3001
 ADMIN_SECRET=tu-secret-aqui
+WOL_ENDPOINT=https://your-wol-service.com/wake/device-name
 ```
 
 ### Dominio personalizado
 
-En Vercel → Settings → Domains → añade `your-app-domain.com`
+En Vercel → Settings → Domains → añade tu dominio personalizado
 Sigue las instrucciones DNS de Vercel.
 
 ---
@@ -246,8 +247,9 @@ Browser → /chat (Next.js page)
 
 En Vercel (ya deberían estar del paso anterior):
 ```env
-HOMELAB_AGENT_URL=http://100.66.214.108:3001
+HOMELAB_AGENT_URL=http://localhost:3001
 ADMIN_SECRET=tu-secret-aqui
+WOL_ENDPOINT=https://your-wol-service.com/wake/device-name
 ```
 
 ---
@@ -263,7 +265,7 @@ sudo apt-get install -y nodejs
 
 # Instalar PM2
 npm install -g pm2
-pm2 startup systemd -u dockerja --hp /home/dockerja
+pm2 startup systemd -u your-username --hp /home/your-username
 
 # Clonar repo
 git clone git@github.com:joseangelalejo/yukiko.git
@@ -337,11 +339,11 @@ sudo nginx -t && sudo systemctl reload nginx
 Ve a **Settings → Secrets and variables → Actions**:
 
 | Secret | Valor |
-|---|---|
+| --- | --- |
 | `HOMELAB_SSH_KEY` | Clave privada SSH para el homelab |
 | `HOMELAB_HOST` | IP o hostname del homelab |
-| `HOMELAB_USER` | `dockerja` |
-| `HOMELAB_PATH` | `your-home-path/yukiko` |
+| `HOMELAB_USER` | `your-username` |
+| `HOMELAB_PATH` | `/home/your-username/projects/yukiko` |
 
 ### Flujo de trabajo
 

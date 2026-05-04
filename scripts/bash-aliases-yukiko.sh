@@ -3,7 +3,7 @@
 # Reemplaza el bloque existente con este contenido
 # ─────────────────────────────────────────────
 
-YK_DIR="/home/dockerja/docker-compose-files/yukiko"
+YK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Estado
 alias yk-status='pm2 list'

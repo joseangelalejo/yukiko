@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+const HOMELAB_AGENT_URL = process.env.HOMELAB_AGENT_URL ?? 'http://localhost:3001';
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const res = await fetch('http://127.0.0.1:3001/chat', {
+    const res = await fetch(`${HOMELAB_AGENT_URL}/chat`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

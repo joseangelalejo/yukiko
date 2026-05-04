@@ -12,11 +12,13 @@ cd "$ROOT_DIR"
 
 REPORT_DIR="$ROOT_DIR/logs/reports"
 mkdir -p "$REPORT_DIR"
+TEST_TMPDIR="$ROOT_DIR/logs/.test-tmp"
+mkdir -p "$TEST_TMPDIR"
 TEST_ID="$(date +%Y%m%d-%H%M%S)"
 REPORT_FILE="$REPORT_DIR/pre-test-$TEST_ID.md"
 
 # Guardar test ID para que post-test lo use
-echo "$TEST_ID" > /tmp/yukiko-test-id
+echo "$TEST_ID" > "$TEST_TMPDIR/yukiko-test-id"
 
 success() { echo -e "${GREEN}[OK]${RESET}    $*"; }
 fail()    { echo -e "${RED}[FAIL]${RESET}  $*"; }
@@ -89,7 +91,7 @@ EOF
 
 # ── 5. Guardar PIDs activos ───────────────────────────────────────────────────
 step "Registrando procesos activos"
-ps aux | grep -E "discord|telegram|whatsapp|next" | grep -v grep > /tmp/yukiko-procs-before || true
+ps aux | grep -E "discord|telegram|whatsapp|next" | grep -v grep > "$TEST_TMPDIR/yukiko-procs-before" || true
 success "Procesos registrados"
 
 echo -e "\n${GREEN}${BOLD}✅ Entorno de test listo${RESET}"

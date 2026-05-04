@@ -49,6 +49,9 @@ backups/
 *.backup
 *.tar.gz
 
+# Scripts (temporales y específicos del usuario)
+scripts/
+
 # Vercel
 .vercel
 .vercelignore

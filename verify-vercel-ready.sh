@@ -71,11 +71,11 @@ echo ""
 
 # 4. BUILD TEST
 echo "🔨 Compilando proyecto..."
-npm run build > /tmp/build.log 2>&1
-if grep -q "error" /tmp/build.log || [ $? -ne 0 ]; then
+npm run build > ./logs/build.log 2>&1
+if grep -q "error" ./logs/build.log || [ $? -ne 0 ]; then
     echo -e "${RED}❌ Build falló${NC}"
     echo "   Últimas líneas del log:"
-    tail -5 /tmp/build.log | sed 's/^/   /'
+    tail -5 ./logs/build.log | sed 's/^/   /'
     ((failed++))
 else
     echo -e "${GREEN}✅ Build exitoso${NC}"
@@ -85,10 +85,10 @@ echo ""
 
 # 5. TYPESCRIPT CHECK
 echo "📝 Verificando TypeScript..."
-npx tsc --noEmit > /tmp/tsc.log 2>&1
-if grep -q "error" /tmp/tsc.log; then
+npx tsc --noEmit > ./logs/tsc.log 2>&1
+if grep -q "error" ./logs/tsc.log; then
     echo -e "${RED}❌ TypeScript errors encontrados${NC}"
-    grep "error" /tmp/tsc.log | head -3 | sed 's/^/   /'
+    grep "error" ./logs/tsc.log | head -3 | sed 's/^/   /'
     ((failed++))
 else
     echo -e "${GREEN}✅ Sin TypeScript errors${NC}"

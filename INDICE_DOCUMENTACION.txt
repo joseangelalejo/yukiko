@@ -149,7 +149,7 @@ Próximas 24 horas:
 
 📍 UBICACIÓN DE ARCHIVOS
 
-Todos en: /home/miniature/gitrepositories/yukiko/
+Todos en la raíz del proyecto yukiko/
 
 ```
 yukiko/

@@ -65,3 +65,16 @@ coverage/
 .nyc_output/
 test-results/
 playwright-report/
+
+# Configuration files with sensitive data (use .example versions instead)
+ecosystem.config.cjs
+verify-vercel-ready.sh
+GUIA_RAPIDA_VERCEL.txt
+INDICE_DOCUMENTACION.txt
+README_VERCEL_DEPLOYMENT.txt
+ALIASES_YUKIKO.md
+README.md
+TROUBLESHOOTING.md
+docs/PLATFORM_SETUP.md
+yukiko-final.sh
+yukiko-mobile/README.md

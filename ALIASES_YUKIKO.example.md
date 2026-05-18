@@ -1,7 +1,7 @@
 # 🌨️ Yukiko — Aliases y configuración del servidor
 
 **Usuario:** `dockerja`  
-**Servidor:** `dockerja@dockerja`  
+**Servidor:** `your-username@your-hostname`  
 **Archivos:** `~/.bash_aliases` (aliases) + `~/.bashrc` (funciones)
 
 ---

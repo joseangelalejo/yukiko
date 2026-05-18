@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const AGENT_URL = process.env.HOMELAB_AGENT_URL ?? 'http://100.66.214.108:3001';
+const AGENT_URL = process.env.HOMELAB_AGENT_URL ?? 'http://localhost:3001';
 const ADMIN_SECRET = process.env.ADMIN_SECRET ?? '';
 
 export async function POST(req: NextRequest) {

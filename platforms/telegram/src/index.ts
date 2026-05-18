@@ -121,14 +121,20 @@ async function wakeHomelabIfNeeded(): Promise<boolean> {
     });
     if (res.ok) return true;
     // Homelab caído — WoL en background, no bloqueamos
-    fetch('https://wol.juanje.net/wake/proxmox.miniserver.online', {
-      signal: AbortSignal.timeout(4000),
-    }).then(() => console.log('🔌 WoL enviado')).catch(() => {});
+    const wolEndpoint = process.env.WOL_ENDPOINT;
+    if (wolEndpoint) {
+      fetch(wolEndpoint, {
+        signal: AbortSignal.timeout(4000),
+      }).then(() => console.log('🔌 WoL enviado')).catch(() => {});
+    }
     return false;
   } catch {
-    fetch('https://wol.juanje.net/wake/proxmox.miniserver.online', {
-      signal: AbortSignal.timeout(4000),
-    }).then(() => console.log('🔌 WoL enviado')).catch(() => {});
+    const wolEndpoint = process.env.WOL_ENDPOINT;
+    if (wolEndpoint) {
+      fetch(wolEndpoint, {
+        signal: AbortSignal.timeout(4000),
+      }).then(() => console.log('🔌 WoL enviado')).catch(() => {});
+    }
     return false;
   }
 }

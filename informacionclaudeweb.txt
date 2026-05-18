@@ -1,4 +1,4 @@
-your-username@your-hostname:~/projects/yukiko$ cd ~/projects/yukiko
+dockerja@dockerja:~/docker-compose-files/yukiko$ cd ~/docker-compose-files/yukiko
 
 echo "=== ESTRUCTURA ===" && find . -not -path '*/node_modules/*' -not -path '*/.next/*' -not -path '*/.git/*' -not -path '*/logs/*' -name "*.ts" -o -name "*.tsx" -o -name "*.cjs" -o -name "*.json" | grep -v node_modules | sort
 
@@ -3496,11 +3496,11 @@ import http from 'http';
 import { execSync } from 'child_process';
 import { config } from 'dotenv';
 
-config({ path: 'your-home-path/yukiko/.env' });
+config({ path: '/home/dockerja/docker-compose-files/yukiko/.env' });
 
 const SECRET = process.env.ADMIN_SECRET;
 const PORT = 3001;
-const CWD = 'your-home-path/yukiko';
+const CWD = '/home/dockerja/docker-compose-files/yukiko';
 
 const server = http.createServer((req, res) => {
   const auth = req.headers['authorization']?.replace('Bearer ', '');
@@ -3582,7 +3582,7 @@ cat: 'web/app/api/**/*.ts': No existe el fichero o el directorio
 └────┴────────────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
 === LOGS DISCORD ===
 [TAILING] Tailing last 30 lines for [yukiko-discord] process (change the value with --lines option)
-your-home-path/yukiko/logs/discord-error.log last 30 lines:
+/home/dockerja/docker-compose-files/yukiko/logs/discord-error.log last 30 lines:
 0|yukiko-d | (node:151051) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
 0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
 0|yukiko-d | (node:151232) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
@@ -3614,7 +3614,7 @@ your-home-path/yukiko/logs/discord-error.log last 30 lines:
 0|yukiko-d | (node:158915) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
 0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
 
-your-home-path/yukiko/logs/discord-out.log last 30 lines:
+/home/dockerja/docker-compose-files/yukiko/logs/discord-out.log last 30 lines:
 0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
 0|yukiko-d | ✅ Discord slash commands registered (global)
 0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
@@ -3648,7 +3648,7 @@ your-home-path/yukiko/logs/discord-out.log last 30 lines:
 
 === LOGS TELEGRAM ===
 [TAILING] Tailing last 30 lines for [yukiko-telegram] process (change the value with --lines option)
-your-home-path/yukiko/logs/telegram-out.log last 30 lines:
+/home/dockerja/docker-compose-files/yukiko/logs/telegram-out.log last 30 lines:
 1|yukiko-t | 🌨️ Yukiko Telegram bot started
 1|yukiko-t | 🌨️ Yukiko Telegram bot started
 1|yukiko-t | 🌨️ Yukiko Telegram bot started
@@ -3680,7 +3680,7 @@ your-home-path/yukiko/logs/telegram-out.log last 30 lines:
 1|yukiko-t | 🌨️ Yukiko Telegram bot started
 1|yukiko-t | 🌨️ Yukiko Telegram bot started
 
-your-home-path/yukiko/logs/telegram-error.log last 30 lines:
+/home/dockerja/docker-compose-files/yukiko/logs/telegram-error.log last 30 lines:
 1|yukiko-t | (node:151078) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
 1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
 1|yukiko-t | (node:151258) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
@@ -3714,7 +3714,7 @@ your-home-path/yukiko/logs/telegram-error.log last 30 lines:
 
 === LOGS WHATSAPP ===
 [TAILING] Tailing last 20 lines for [yukiko-whatsapp] process (change the value with --lines option)
-your-home-path/yukiko/logs/whatsapp-out.log last 20 lines:
+/home/dockerja/docker-compose-files/yukiko/logs/whatsapp-out.log last 20 lines:
 2|yukiko-w | aJ6leAnylMgzUljWql14lctS87vXwqrGcjxkRCThOkfJIkULSN0FWtRZWdJpjZgF8AmjAj7D+N/R51yFWfVmUQmY0P9Jt++F3LlRBxY3PtBkTOy3t8e+LrWJg91rbPUI258DjLW/YE+kWBHZc8Jij21/DifZ5k9DRWFYqHGqIgqcwCkUlGlWFHSWVhS59bK37O84aGOPjaI9exBRpJuw8Y+C3m/9N1OHPh+39ccBF1ccTp7d8+ef5rr+uupiItkM3rYAhomCWIomB/pe/e9uDMT8aNSDjMRwIi9xEDIMBW3/q3ThC8I6c/diK1OgKGuSrtECIpiOCIIygWgmKBzLe5T/B1MaqUmVR65+sm/x2qbpW3rWfftxA9HrxqLylvvSUphG9w/73cttpriQ7EbaGpEITYBIa5WRjhLCqSIaICQPz+oi4/GoGqXKqiJRusaxKnRvumMQWn2bCfYtHZhgphAHu7w/oUioGbDo2HP6vsXuyXNeanh9+msrD+dtZaXyZrDsNhMoEdmzyN4jExxLvjgG70VDjudEFiLFYCDilTX/XgP4ZdszHRZjkWdCWYGKJLOo8hTjQbOfrmlEOf5cUtDI8RohsjAQJHMC/uICb44RRAaTEygg04OBEu/UBDIdrb1s/DYQjCenGOUFgRAZMrJNtL/+A38AfZlr+tH/jLLiXOvTsL8MWfeOf+yMj57J29F/4NEFaYlLzuct2ftit0MD5kVPCk6Tu7obrEyjokfa2Oq1gZlp8x7uWvHnM5uHJP28PfOYMcLy2mOAaAH4SXs0cgJuNz8lS4zG0DSjenTUDTykkIlovKryiipzxGAcaLYlxjUMuvHPGUz8q0dK6pZ+I1VMr5xWzWO+mqH7R5jYkFVT3AdsckRT9tXticjpTHvV/am915ruI4WNyOqjgNgM8LWdV1dXFVmUGEGQZEamdBHNfE/g0dYMYWMb3XgqcfXO2KYh+4Xvs86NOKz9ofhZuSkn9S8De8+uzc/p6977xo8NVjkibWwtx3dnr2TkbLtvztcJ5UOHN0wf8F6mVY7Dbf3nlBi7GCqvCyz0yIrKsDLkPRKyb12RKUlA/4bu3Xf0X6PVf8B+idhZtfoP/OIlEvbx+19M3Rq7MOZINbALhOT51bnJ48ftmTp4z4f9NzaVH+mzqseNvtmJ/tWv/O03VVmHHh/X3LrTfp6wLMUJjATv0ccdkBET8YdpSDE8shgaTSUQOTIvJeYlFIfa7r+9ZlNdl/yuqT7Db+QaoSBOD1e9Y0enpAW09qguAGyNC7v1IiImtwWnoIA8i5U4JP93BF+/cw0K3k0NoEcr6mY07FnxvXR22dTsbKrz+AqWQn6+MG/j8vN+uHql+dPQVUkZk1LPdBc+3f+mOLvlUHAGUZXenFVO49ZbroOhh3Aab1o/6UD00Cd3a3Q5ZZ/SwYuRcHgb3rqXcxEJJ61sPaQDWyYcpq7ZgJySnhmcMGpcWtaTQW+QTpOp0uTx5mjWP600Lc1Xqnj+C33WXKo="},"process":true,"id":"AC590538860590E54B959A894C9AAD51","isLatest":false,"msg":"got history notification"}
 2|yukiko-w | {"level":30,"time":"2026-03-12T16:13:38.790Z","pid":159130,"hostname":"dockerja","class":"baileys","newAppStateSyncKeyId":"AAAAAFH/","newKeys":["AAAAAFH/"],"msg":"injecting new app state sync keys"}
 2|yukiko-w | {"level":30,"time":"2026-03-12T16:13:39.399Z","pid":159130,"hostname":"dockerja","class":"baileys","histNotification":{"fileSha256":"Qy9qE2/m1lc+Jf5n3DJ3CKXe2Y+HnksTWSJMGCh8Bic=","fileLength":"2977","mediaKey":"Ch0VqYWwmuiPCvC2gCgBlTkJ9iAS/+GfMZ9SfIVQ3FA=","fileEncSha256":"JRb/pv9iVtNYd0fe99lIg6IUvDOCmBP9DPgwBdxuYis=","directPath":"/v/t62.31111-24/604840287_1471058104630534_4840483070675737298_n.enc?ccb=11-4&oh=01_Q5Aa4AH7bQjPJ447Isvd1bL1k_xrVlCSxnIxtwk3F1bPLN1qvg&oe=69DA3E3E&_nc_sid=5e03e0","syncType":"RECENT","chunkOrder":1,"progress":100,"oldestMsgInChunkTimestampSec":"1771882948","encHandle":"AQKaXTNUqKfbX4lDqldC2CAXT31I9oG_Y2aveBMhQXuXUighkvPZr2_-bCI9cfaYq-2MhVxkUX1EeKK7cQbXygLK_CupFmNAPq-HXoRwt_d8y9paYQLdbEBP560kEs2fjpE"},"process":true,"id":"AC12D047CC7670F2A5754050B1009D37","isLatest":false,"msg":"got history notification"}
@@ -3724,29 +3724,29 @@ your-home-path/yukiko/logs/whatsapp-out.log last 20 lines:
 2|yukiko-w | {"level":30,"time":"2026-03-12T16:13:40.588Z","pid":159130,"hostname":"dockerja","class":"baileys","msg":"resyncing regular from v0"}
 2|yukiko-w | {"level":30,"time":"2026-03-12T16:13:40.763Z","pid":159130,"hostname":"dockerja","class":"baileys","msg":"synced regular to v1"}
 
-your-home-path/yukiko/logs/whatsapp-error.log last 20 lines:
-2|yukiko-w |     at <anonymous> (your-home-path/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
+/home/dockerja/docker-compose-files/yukiko/logs/whatsapp-error.log last 20 lines:
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
 2|yukiko-w | Trace: { items: 1 } loading from store
-2|yukiko-w |     at <anonymous> (your-home-path/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
 2|yukiko-w |     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
 2|yukiko-w | Trace: { items: 1 } loading from store
-2|yukiko-w |     at <anonymous> (your-home-path/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
 2|yukiko-w | Trace: { keys: 6 } updated cache
-2|yukiko-w |     at <anonymous> (your-home-path/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:65:25)
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:65:25)
 2|yukiko-w | Trace: { keys: 4 } updated cache
-2|yukiko-w |     at <anonymous> (your-home-path/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:65:25)
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:65:25)
 2|yukiko-w | Trace: { keys: 1 } updated cache
-2|yukiko-w |     at <anonymous> (your-home-path/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:65:25)
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:65:25)
 2|yukiko-w |     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
 2|yukiko-w | Trace: { items: 1 } loading from store
-2|yukiko-w |     at <anonymous> (your-home-path/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
 2|yukiko-w |     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
 2|yukiko-w | Trace: { items: 1 } loading from store
-2|yukiko-w |     at <anonymous> (your-home-path/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
 2|yukiko-w | Trace: { keys: 2 } updated cache
-2|yukiko-w |     at <anonymous> (your-home-path/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:65:25)
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:65:25)
 
-your-username@your-hostname:~/projects/yukiko$
+dockerja@dockerja:~/docker-compose-files/yukiko$
 
 ---
 
@@ -3780,7 +3780,7 @@ Omitir
 
 Output:
 
-your-username@your-hostname:~/projects/yukiko$ echo "=== PM2 STATUS ===" && pm2 list
+dockerja@dockerja:~/docker-compose-files/yukiko$ echo "=== PM2 STATUS ===" && pm2 list
 
 
 
@@ -3801,7 +3801,7 @@ echo "=== LOGS WHATSAPP ===" && pm2 logs yukiko-whatsapp --lines 20 --nostream
 └────┴────────────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
 === LOGS DISCORD ===
 [TAILING] Tailing last 30 lines for [yukiko-discord] process (change the value with --lines option)
-your-home-path/yukiko/logs/discord-error.log last 30 lines:
+/home/dockerja/docker-compose-files/yukiko/logs/discord-error.log last 30 lines:
 0|yukiko-d | (node:151051) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
 0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
 0|yukiko-d | (node:151232) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
@@ -3833,7 +3833,7 @@ your-home-path/yukiko/logs/discord-error.log last 30 lines:
 0|yukiko-d | (node:158915) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
 0|yukiko-d | (Use `node --trace-deprecation ...` to show where the warning was created)
 
-your-home-path/yukiko/logs/discord-out.log last 30 lines:
+/home/dockerja/docker-compose-files/yukiko/logs/discord-out.log last 30 lines:
 0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
 0|yukiko-d | ✅ Discord slash commands registered (global)
 0|yukiko-d | 🌨️ Yukiko Discord ready as Yukiko#3557
@@ -3867,7 +3867,7 @@ your-home-path/yukiko/logs/discord-out.log last 30 lines:
 
 === LOGS TELEGRAM ===
 [TAILING] Tailing last 30 lines for [yukiko-telegram] process (change the value with --lines option)
-your-home-path/yukiko/logs/telegram-out.log last 30 lines:
+/home/dockerja/docker-compose-files/yukiko/logs/telegram-out.log last 30 lines:
 1|yukiko-t | 🌨️ Yukiko Telegram bot started
 1|yukiko-t | 🌨️ Yukiko Telegram bot started
 1|yukiko-t | 🌨️ Yukiko Telegram bot started
@@ -3899,7 +3899,7 @@ your-home-path/yukiko/logs/telegram-out.log last 30 lines:
 1|yukiko-t | 🌨️ Yukiko Telegram bot started
 1|yukiko-t | 🌨️ Yukiko Telegram bot started
 
-your-home-path/yukiko/logs/telegram-error.log last 30 lines:
+/home/dockerja/docker-compose-files/yukiko/logs/telegram-error.log last 30 lines:
 1|yukiko-t | (node:151078) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
 1|yukiko-t | (Use `node --trace-deprecation ...` to show where the warning was created)
 1|yukiko-t | (node:151258) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
@@ -3933,7 +3933,7 @@ your-home-path/yukiko/logs/telegram-error.log last 30 lines:
 
 === LOGS WHATSAPP ===
 [TAILING] Tailing last 20 lines for [yukiko-whatsapp] process (change the value with --lines option)
-your-home-path/yukiko/logs/whatsapp-out.log last 20 lines:
+/home/dockerja/docker-compose-files/yukiko/logs/whatsapp-out.log last 20 lines:
 2|yukiko-w | aJ6leAnylMgzUljWql14lctS87vXwqrGcjxkRCThOkfJIkULSN0FWtRZWdJpjZgF8AmjAj7D+N/R51yFWfVmUQmY0P9Jt++F3LlRBxY3PtBkTOy3t8e+LrWJg91rbPUI258DjLW/YE+kWBHZc8Jij21/DifZ5k9DRWFYqHGqIgqcwCkUlGlWFHSWVhS59bK37O84aGOPjaI9exBRpJuw8Y+C3m/9N1OHPh+39ccBF1ccTp7d8+ef5rr+uupiItkM3rYAhomCWIomB/pe/e9uDMT8aNSDjMRwIi9xEDIMBW3/q3ThC8I6c/diK1OgKGuSrtECIpiOCIIygWgmKBzLe5T/B1MaqUmVR65+sm/x2qbpW3rWfftxA9HrxqLylvvSUphG9w/73cttpriQ7EbaGpEITYBIa5WRjhLCqSIaICQPz+oi4/GoGqXKqiJRusaxKnRvumMQWn2bCfYtHZhgphAHu7w/oUioGbDo2HP6vsXuyXNeanh9+msrD+dtZaXyZrDsNhMoEdmzyN4jExxLvjgG70VDjudEFiLFYCDilTX/XgP4ZdszHRZjkWdCWYGKJLOo8hTjQbOfrmlEOf5cUtDI8RohsjAQJHMC/uICb44RRAaTEygg04OBEu/UBDIdrb1s/DYQjCenGOUFgRAZMrJNtL/+A38AfZlr+tH/jLLiXOvTsL8MWfeOf+yMj57J29F/4NEFaYlLzuct2ftit0MD5kVPCk6Tu7obrEyjokfa2Oq1gZlp8x7uWvHnM5uHJP28PfOYMcLy2mOAaAH4SXs0cgJuNz8lS4zG0DSjenTUDTykkIlovKryiipzxGAcaLYlxjUMuvHPGUz8q0dK6pZ+I1VMr5xWzWO+mqH7R5jYkFVT3AdsckRT9tXticjpTHvV/am915ruI4WNyOqjgNgM8LWdV1dXFVmUGEGQZEamdBHNfE/g0dYMYWMb3XgqcfXO2KYh+4Xvs86NOKz9ofhZuSkn9S8De8+uzc/p6977xo8NVjkibWwtx3dnr2TkbLtvztcJ5UOHN0wf8F6mVY7Dbf3nlBi7GCqvCyz0yIrKsDLkPRKyb12RKUlA/4bu3Xf0X6PVf8B+idhZtfoP/OIlEvbx+19M3Rq7MOZINbALhOT51bnJ48ftmTp4z4f9NzaVH+mzqseNvtmJ/tWv/O03VVmHHh/X3LrTfp6wLMUJjATv0ccdkBET8YdpSDE8shgaTSUQOTIvJeYlFIfa7r+9ZlNdl/yuqT7Db+QaoSBOD1e9Y0enpAW09qguAGyNC7v1IiImtwWnoIA8i5U4JP93BF+/cw0K3k0NoEcr6mY07FnxvXR22dTsbKrz+AqWQn6+MG/j8vN+uHql+dPQVUkZk1LPdBc+3f+mOLvlUHAGUZXenFVO49ZbroOhh3Aab1o/6UD00Cd3a3Q5ZZ/SwYuRcHgb3rqXcxEJJ61sPaQDWyYcpq7ZgJySnhmcMGpcWtaTQW+QTpOp0uTx5mjWP600Lc1Xqnj+C33WXKo="},"process":true,"id":"AC590538860590E54B959A894C9AAD51","isLatest":false,"msg":"got history notification"}
 2|yukiko-w | {"level":30,"time":"2026-03-12T16:13:38.790Z","pid":159130,"hostname":"dockerja","class":"baileys","newAppStateSyncKeyId":"AAAAAFH/","newKeys":["AAAAAFH/"],"msg":"injecting new app state sync keys"}
 2|yukiko-w | {"level":30,"time":"2026-03-12T16:13:39.399Z","pid":159130,"hostname":"dockerja","class":"baileys","histNotification":{"fileSha256":"Qy9qE2/m1lc+Jf5n3DJ3CKXe2Y+HnksTWSJMGCh8Bic=","fileLength":"2977","mediaKey":"Ch0VqYWwmuiPCvC2gCgBlTkJ9iAS/+GfMZ9SfIVQ3FA=","fileEncSha256":"JRb/pv9iVtNYd0fe99lIg6IUvDOCmBP9DPgwBdxuYis=","directPath":"/v/t62.31111-24/604840287_1471058104630534_4840483070675737298_n.enc?ccb=11-4&oh=01_Q5Aa4AH7bQjPJ447Isvd1bL1k_xrVlCSxnIxtwk3F1bPLN1qvg&oe=69DA3E3E&_nc_sid=5e03e0","syncType":"RECENT","chunkOrder":1,"progress":100,"oldestMsgInChunkTimestampSec":"1771882948","encHandle":"AQKaXTNUqKfbX4lDqldC2CAXT31I9oG_Y2aveBMhQXuXUighkvPZr2_-bCI9cfaYq-2MhVxkUX1EeKK7cQbXygLK_CupFmNAPq-HXoRwt_d8y9paYQLdbEBP560kEs2fjpE"},"process":true,"id":"AC12D047CC7670F2A5754050B1009D37","isLatest":false,"msg":"got history notification"}
@@ -3943,26 +3943,26 @@ your-home-path/yukiko/logs/whatsapp-out.log last 20 lines:
 2|yukiko-w | {"level":30,"time":"2026-03-12T16:13:40.588Z","pid":159130,"hostname":"dockerja","class":"baileys","msg":"resyncing regular from v0"}
 2|yukiko-w | {"level":30,"time":"2026-03-12T16:13:40.763Z","pid":159130,"hostname":"dockerja","class":"baileys","msg":"synced regular to v1"}
 
-your-home-path/yukiko/logs/whatsapp-error.log last 20 lines:
-2|yukiko-w |     at <anonymous> (your-home-path/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
+/home/dockerja/docker-compose-files/yukiko/logs/whatsapp-error.log last 20 lines:
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
 2|yukiko-w | Trace: { items: 1 } loading from store
-2|yukiko-w |     at <anonymous> (your-home-path/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
 2|yukiko-w |     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
 2|yukiko-w | Trace: { items: 1 } loading from store
-2|yukiko-w |     at <anonymous> (your-home-path/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
 2|yukiko-w | Trace: { keys: 6 } updated cache
-2|yukiko-w |     at <anonymous> (your-home-path/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:65:25)
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:65:25)
 2|yukiko-w | Trace: { keys: 4 } updated cache
-2|yukiko-w |     at <anonymous> (your-home-path/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:65:25)
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:65:25)
 2|yukiko-w | Trace: { keys: 1 } updated cache
-2|yukiko-w |     at <anonymous> (your-home-path/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:65:25)
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:65:25)
 2|yukiko-w |     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
 2|yukiko-w | Trace: { items: 1 } loading from store
-2|yukiko-w |     at <anonymous> (your-home-path/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
 2|yukiko-w |     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
 2|yukiko-w | Trace: { items: 1 } loading from store
-2|yukiko-w |     at <anonymous> (your-home-path/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:43:29)
 2|yukiko-w | Trace: { keys: 2 } updated cache
-2|yukiko-w |     at <anonymous> (your-home-path/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:65:25)
+2|yukiko-w |     at <anonymous> (/home/dockerja/docker-compose-files/yukiko/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:65:25)
 
-your-username@your-hostname:~/projects/yukiko$ 
+dockerja@dockerja:~/docker-compose-files/yukiko$ 

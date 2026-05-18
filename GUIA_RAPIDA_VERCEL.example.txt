@@ -36,10 +36,10 @@ Status: ✅ LISTO PARA VERCEL (Todos los fixes aplicados)
 ---
 🎯 LO PRÓXIMO - PRÓXIMOS PASOS EN SERVIDOR
 
-Paso 1: En servidor 192.168.24.103 (YA INICIO)
+Paso 1: En servidor your-homelab-ip (YA INICIO)
 ```bash
 ================================================================================
-cd ~/docker-compose-files/yukiko
+cd ~/projects/yukiko
 git pull origin main              ✅ COMPLETADO
 
 Paso 2: Reinstalar dependencias (incluyendo workspace db)
@@ -232,7 +232,7 @@ En Admin Dashboard:
 
 1. Los bots NO se despliegan a Vercel
 - Vercel solo corre: `web/` (Next.js admin)
-- Los bots siguen corriendo en: servidor 192.168.24.103
+- Los bots siguen corriendo en: servidor your-homelab-ip
 - Vercel solo es el frontend
 
 2. La BD es compartida
@@ -286,7 +286,7 @@ Deployments → Select previous → Promote
 | Neon DB | https://console.neon.tech |
 | Vercel | https://dashboard.vercel.com |
 | GitHub | github.com/tu-usuario/yukiko |
-| Servidor | `ssh dockerja@192.168.24.103` |
+| Servidor | `ssh dockerja@your-homelab-ip` |
 | PM2 logs | `pm2 logs --lines 50` |
 
 ---

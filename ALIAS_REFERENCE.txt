@@ -148,7 +148,7 @@ Solucion:
 ---
 ESTRUCTURA ESPERADA VERCEL
 
-Vercel solo deploya `web/` (Next.js). Bots corren en servidor your-homelab-ip:
+Vercel solo deploya `web/` (Next.js). Bots corren en servidor 192.168.24.103:
 
 ```
 Vercel (web/ únicamente):

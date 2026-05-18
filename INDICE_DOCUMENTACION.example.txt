@@ -19,7 +19,7 @@ Status: ✅ DESARROLLO OPERATIVO (npm run dev) + PRODUCCIÓN PREPARADA (PM2 paus
 1. README.md ⭐ PRINCIPAL
 - ✅ Actualizado con status de producción
 - ✅ Incluye enlace al informe de implementación (`INFORME_SESION_IMPLEMENTACION.txt`)
-- Status: Servidor 192.168.24.103, 5 procesos ONLINE, Build exitoso
+- Status: Servidor your-homelab-ip, 5 procesos ONLINE, Build exitoso
 - Incluye: Comandos, inicio rápido, stack tecnológico
 
 2. INFORME_SESION_IMPLEMENTACION.txt 📈 SESIÓN IMPLEMENTACIÓN
@@ -76,7 +76,7 @@ Status: ✅ DESARROLLO OPERATIVO (npm run dev) + PRODUCCIÓN PREPARADA (PM2 paus
 ```
 Sistema OPERATIVO en producción:
 
-Servidor (192.168.24.103)
+Servidor (your-homelab-ip)
 ├─ PM2 Manager (5 procesos)
 │  ├─ yukiko-discord (pid 186427) ✅ ONLINE
 │  ├─ yukiko-telegram (pid 186428) ✅ ONLINE
@@ -125,7 +125,7 @@ DUDAS ESPECÍFICAS:
 
 ```
 Inmediato (ahora):
-- [ ] SSH dockerja@192.168.24.103
+- [ ] SSH your-username@your-homelab-ip
 - [ ]pm2 list → Verificar los 5 procesos ONLINE
 - [ ] pm2 logs --lines 100 → Buscar errores
 
@@ -212,7 +212,7 @@ ORM:         Drizzle v0.45.1
 
 Server Production
 ```
-Host:     192.168.24.103
+Host:     your-homelab-ip
 Procesos: 5 (discord, telegram, whatsapp, agent, web)
 Status:   ✅ TODOS ONLINE
 ```
@@ -232,7 +232,7 @@ Este proyecto tiene DOS partes:
 
 2. Bots Backend (Servidor homelab)
    - Código: `/platforms`, `/modules`, `/core`
-   - Deploy: Manual en 192.168.24.103
+   - Deploy: Manual en your-homelab-ip
    - Protocolo: WebSocket (Discord, Telegram, WhatsApp)
    - Status: `pm2 status`
 
@@ -246,7 +246,7 @@ Se comunican via BD común (Neon PostgreSQL)
 💬 PREGUNTAS FRECUENTES
 
 P: ¿Cuándo se despliegan los bots?  
-R: No se despliegan automáticamente. Corren en servidor 192.168.24.103.  
+R: No se despliegan automáticamente. Corren en servidor your-homelab-ip.  
 Cambios en `/platforms`, `/modules` se actualizan haciendo `git pull` + `npm run build` en servidor.
 
 P: ¿Vercel necesita tokens de bots?  
@@ -274,7 +274,7 @@ R: Ver TESTING_LOCAL_Y_VERCEL.md → Sección "Rollback"
 |---------|-----------|
 | Vercel Logs | `vercel logs [project]` |
 | Neon Status | https://console.neon.tech → Monitoring |
-| Server Logs | `ssh dockerja@192.168.24.103 && pm2 logs` |
+| Server Logs | `ssh dockerja@your-homelab-ip && pm2 logs` |
 | Build Local | `npm run build` |
 | Unidad Docker | `docker-compose ps` en servidor |
 
@@ -297,7 +297,7 @@ Commits: a1e701d (documentación actualizada)
 INMEDIATO (Ahora):
 1. [] Revisar README.md sección "🚀 Estado Actual"
 2. [] Revisar INFORME_SESION.txt para contexto completo
-3. [] Monitorear servidor: ssh dockerja@192.168.24.103 && pm2 list
+3. [] Monitorear servidor: ssh dockerja@your-homelab-ip && pm2 list
 
 PRÓXIMAS HORAS:
 1. [] Verificar uptime sostenido (10-15 min de logs estables)
@@ -315,7 +315,7 @@ PRÓXIMAS SESIONES:
 
 Comando | Propósito
 ---------|----------
-`ssh dockerja@192.168.24.103` | Conexión a servidor
+`ssh dockerja@your-homelab-ip` | Conexión a servidor
 `pm2 list` | Ver estado de procesos
 `pm2 logs --lines 100` | Ver últimos 100 logs
 `pm2 restart all` | Reiniciar todos (después de pull)

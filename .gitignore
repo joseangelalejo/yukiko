@@ -49,6 +49,14 @@ backups/
 *.backup
 *.tar.gz
 
+# Local copies and duplicates (files/dirs with " copy" suffix)
+*\ copy
+*\ copy/
+*\ copy.*
+
+# Scripts (temporales y específicos del usuario)
+scripts/
+
 # Vercel
 .vercel
 .vercelignore

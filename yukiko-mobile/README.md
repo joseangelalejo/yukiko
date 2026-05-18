@@ -42,7 +42,7 @@ MOBILE_WS_PORT=3002
   name: 'yukiko-mobile',
   script: './node_modules/.bin/tsx',
   args: '--env-file=.env platforms/mobile/src/index.ts',
-  cwd: 'your-home-path/yukiko',
+  cwd: '/home/dockerja/docker-compose-files/yukiko',
   watch: false,
   env: { NODE_ENV: 'production', PLATFORM: 'mobile' },
   error_file: './logs/mobile-error.log',
@@ -92,7 +92,7 @@ const WS_URL = 'ws://YOUR_HOMELAB_IP:3002';
 
 Por la IP de tu homelab, por ejemplo:
 ```ts
-const WS_URL = 'ws://your-homelab-ip:3002';
+const WS_URL = 'ws://192.168.24.103:3002';
 ```
 
 > Para acceso externo, puedes usar Tailscale o exponer el puerto con nginx + SSL.

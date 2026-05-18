@@ -21,8 +21,8 @@
 | **Discord**       | ✅ ONLINE | Yukiko#3557 (slash commands)                                             |
 | **Telegram**      | ✅ ONLINE | [@YukikoNeko_bot](https://t.me/YukikoNeko_bot)                           |
 | **Mobile**        | ✅ ONLINE | WebSocket puerto 3002                                                    |
-| **Web Chat**      | ✅ ONLINE | [your-app-domain.com/chat](https://your-app-domain.com/chat)   |
-| **Web Dashboard** | ✅ ONLINE | [your-app-domain.com/admin](https://your-app-domain.com/admin) |
+| **Web Chat**      | ✅ ONLINE | [yukiko.miniserver.online/chat](https://yukiko.miniserver.online/chat)   |
+| **Web Dashboard** | ✅ ONLINE | [yukiko.miniserver.online/admin](https://yukiko.miniserver.online/admin) |
 | **Base de datos** | ✅ READY  | Neon PostgreSQL con Drizzle ORM                                          |
 
 ## 🎯 Características principales
@@ -85,7 +85,7 @@ npm start
 
 ## 🔗 Enlaces
 
-- 🌐 [Web](https://your-app-domain.com)
+- 🌐 [Web](https://yukiko.miniserver.online)
 - 💬 [Discord](https://discord.gg/your_server)
 - 📱 [Telegram](https://t.me/YukikoNeko_bot)
 - ♻️ [GitHub](https://github.com/joseangelalejo/yukiko)
@@ -196,7 +196,7 @@ yk-undeploy    # Elimina todos los deployments
 
 ## 💬 Chat Web
 
-Disponible en [your-app-domain.com/chat](https://your-app-domain.com/chat)
+Disponible en [yukiko.miniserver.online/chat](https://yukiko.miniserver.online/chat)
 
 Interfaz de chat estilo ChatGPT que conecta con el homelab via **Tailscale Funnel** para máxima estabilidad y seguridad.
 
@@ -218,7 +218,7 @@ Browser → Vercel (Next.js web) → Tailscale Funnel → Homelab Agent (3001) �
 
 ## 📊 Panel de Administración
 
-Disponible en [your-app-domain.com/admin](https://your-app-domain.com/admin)
+Disponible en [yukiko.miniserver.online/admin](https://yukiko.miniserver.online/admin)
 
 - Estado de plataformas en tiempo real (Discord, Telegram, Mobile)
 - Gestión de usuarios y grupos
@@ -260,4 +260,4 @@ MIT © [joseangelalejo](https://github.com/joseangelalejo)
 
 ---
 
-*[Hub personal](https://your-domain.com/) · [GitHub](https://github.com/joseangelalejo) · [Documentación](https://joseangelalejo.github.io/yukiko/) · [Panel web](https://your-app-domain.com)*
+*[Hub personal](https://joseangelhub.miniserver.online/) · [GitHub](https://github.com/joseangelalejo) · [Documentación](https://joseangelalejo.github.io/yukiko/) · [Panel web](https://yukiko.miniserver.online)*

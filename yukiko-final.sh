@@ -7,7 +7,7 @@
 
 set -euo pipefail
 
-REPO="$HOME/projects/yukiko"
+REPO="$HOME/docker-compose-files/yukiko"
 DIAG="$HOME/yukiko-final-diag.txt"
 ERRORS=()
 LOG=()
@@ -83,7 +83,7 @@ pm2 save 2>&1 && log "PM2: estado guardado (pm2 save) ✓" || warn "PM2: pm2 sav
 # ═════════════════════════════════════════════════════════════
 
 python3 << 'PYEOF'
-path = 'your-home-path/yukiko/core/src/types.ts'
+path = '/home/dockerja/docker-compose-files/yukiko/core/src/types.ts'
 with open(path) as f:
     content = f.read()
 
@@ -115,7 +115,7 @@ log "core/src/types.ts: Platform whatsapp → mobile ✓"
 # ═════════════════════════════════════════════════════════════
 
 python3 << 'PYEOF'
-path = 'your-home-path/yukiko/modules/link/index.ts'
+path = '/home/dockerja/docker-compose-files/yukiko/modules/link/index.ts'
 with open(path) as f:
     content = f.read()
 
@@ -156,7 +156,7 @@ log "modules/link/index.ts: whatsapp → mobile en PLATFORM_NAMES/EMOJIS/platfor
 python3 << 'PYEOF'
 import os, glob
 
-base = 'your-home-path/yukiko/modules'
+base = '/home/dockerja/docker-compose-files/yukiko/modules'
 files = glob.glob(f'{base}/*/index.ts')
 changed_files = []
 
@@ -203,7 +203,7 @@ fi
 
 # Añadir musicCommands al registro de Discord
 python3 << 'PYEOF'
-path = 'your-home-path/yukiko/platforms/discord/src/index.ts'
+path = '/home/dockerja/docker-compose-files/yukiko/platforms/discord/src/index.ts'
 with open(path) as f:
     content = f.read()
 
@@ -233,7 +233,7 @@ log "platforms/discord/src/index.ts: musicCommands registrado ✓"
 
 # Añadir musicCommands al registro de Telegram
 python3 << 'PYEOF'
-path = 'your-home-path/yukiko/platforms/telegram/src/index.ts'
+path = '/home/dockerja/docker-compose-files/yukiko/platforms/telegram/src/index.ts'
 with open(path) as f:
     content = f.read()
 
@@ -259,7 +259,7 @@ log "platforms/telegram/src/index.ts: musicCommands registrado ✓"
 # Añadir package.json de music al workspace raíz si no está
 python3 << 'PYEOF'
 import json
-path = 'your-home-path/yukiko/package.json'
+path = '/home/dockerja/docker-compose-files/yukiko/package.json'
 with open(path) as f:
     pkg = json.load(f)
 
@@ -305,9 +305,9 @@ cat > "$REPO/README.md" << 'ENDREADME'
 | **Discord** | ✅ ONLINE | Yukiko#3557 (slash commands) |
 | **Telegram** | ✅ ONLINE | @YukikoNeko_bot |
 | **Mobile** | ✅ ONLINE | WebSocket puerto 3002 |
-| **Web Chat** | ✅ ONLINE | [your-app-domain.com/chat](https://your-app-domain.com/chat) |
-| **Web (Next.js)** | ✅ ONLINE | [yukiko.vercel.app](https://yukiko.vercel.app) · [your-app-domain.com](https://your-app-domain.com) |
-| **Admin dashboard** | ✅ ONLINE | [your-app-domain.com/admin](https://your-app-domain.com/admin) |
+| **Web Chat** | ✅ ONLINE | [yukiko.miniserver.online/chat](https://yukiko.miniserver.online/chat) |
+| **Web (Next.js)** | ✅ ONLINE | [yukiko.vercel.app](https://yukiko.vercel.app) · [yukiko.miniserver.online](https://yukiko.miniserver.online) |
+| **Admin dashboard** | ✅ ONLINE | [yukiko.miniserver.online/admin](https://yukiko.miniserver.online/admin) |
 | **Base de datos** | ✅ READY | Neon PostgreSQL |
 | **Último commit** | ✅ Ver [commits](https://github.com/joseangelalejo/yukiko/commits/main) | — |
 
@@ -391,7 +391,7 @@ yukiko/
 ## 🖥️ Deploy en homelab con PM2
 
 ```bash
-ssh your-username@your-hostname
+ssh dockerja@dockerja
 
 # Ver estado
 yk-status
@@ -433,7 +433,7 @@ yk-undeploy    # Elimina todos los deployments
 
 ## 💬 Chat Web
 
-Disponible en [your-app-domain.com/chat](https://your-app-domain.com/chat)
+Disponible en [yukiko.miniserver.online/chat](https://yukiko.miniserver.online/chat)
 
 Interfaz de chat estilo ChatGPT que conecta con el homelab via API Route de Next.js → agente en puerto 3001.
 
@@ -448,7 +448,7 @@ Interfaz de chat estilo ChatGPT que conecta con el homelab via API Route de Next
 
 ## 📊 Panel de Administración
 
-Disponible en [your-app-domain.com/admin](https://your-app-domain.com/admin)
+Disponible en [yukiko.miniserver.online/admin](https://yukiko.miniserver.online/admin)
 
 - Estado de plataformas en tiempo real (Discord, Telegram, Mobile)
 - Gestión de usuarios y grupos
@@ -490,7 +490,7 @@ MIT © [joseangelalejo](https://github.com/joseangelalejo)
 
 ---
 
-*[Hub personal](https://your-domain.com/) · [GitHub](https://github.com/joseangelalejo) · [Documentación](https://joseangelalejo.github.io/yukiko/) · [Panel web](https://your-app-domain.com)*
+*[Hub personal](https://joseangelhub.miniserver.online/) · [GitHub](https://github.com/joseangelalejo) · [Documentación](https://joseangelalejo.github.io/yukiko/) · [Panel web](https://yukiko.miniserver.online)*
 ENDREADME
 log "README.md: actualizado ✓"
 

@@ -11,7 +11,8 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
 
 # Recuperar test ID
-TEST_ID=$(cat /tmp/yukiko-test-id 2>/dev/null || date +%Y%m%d-%H%M%S)
+TEST_TMPDIR="$ROOT_DIR/logs/.test-tmp"
+TEST_ID=$(cat "$TEST_TMPDIR/yukiko-test-id" 2>/dev/null || date +%Y%m%d-%H%M%S)
 REPORT_DIR="$ROOT_DIR/logs/reports"
 PRE_REPORT="$REPORT_DIR/pre-test-$TEST_ID.md"
 POST_REPORT="$REPORT_DIR/post-test-$TEST_ID.md"
@@ -120,4 +121,4 @@ echo -e "  Errores en log: ${RED}$ERROR_COUNT${RESET}"
 echo -e "  Informe:        ${CYAN}$FULL_REPORT${RESET}"
 echo -e "${BOLD}────────────────────────────────────────────${RESET}\n"
 
-rm -f /tmp/yukiko-test-id /tmp/yukiko-procs-before
+rm -rf "$TEST_TMPDIR"

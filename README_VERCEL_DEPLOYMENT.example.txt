@@ -6,7 +6,7 @@
 
 Estado: ✅ LISTO PARA VERCEL & SERVIDOR  
 Última actualización: 12 de marzo de 2026 (ACTUALIZADO)  
-Servidor Producción: 192.168.24.103 (En sincronización)
+Servidor Producción: your-homelab-ip (En sincronización)
 Últimos fixes: Sintaxis Telegram ✅, imports .ts removidos ✅, @YukikoNeko_bot ✅, @yukiko/db workspace ✅
 
 ---
@@ -24,10 +24,10 @@ Servidor Producción: 192.168.24.103 (En sincronización)
 - ✅ FIXED: Bot Telegram link a @YukikoNeko_bot en web/app/page.tsx
 - ✅ FIXED: db no en workspaces (agregado a package.json + db/package.json creado)
 - 4 documentos de referencia generados
-- Servidor 192.168.24.103: git pull completado, listo para npm install && npm run build
+- Servidor your-homelab-ip: git pull completado, listo para npm install && npm run build
 
 ⏭️ LISTO PARA HACER (EN ORDEN):
-1. En servidor 192.168.24.103: `npm install && npm run build && pm2 restart all`
+1. En servidor your-homelab-ip: `npm install && npm run build && pm2 restart all`
 2. Esperar que build pase sin errores
 3. Deploy a Vercel con `git push origin main` (o ya está sincronizado)
 
@@ -133,7 +133,7 @@ git push origin main
 
 ================================================================================
 Conectar a servidor homelab
-ssh dockerja@192.168.24.103
+ssh dockerja@your-homelab-ip
 pm2 logs --lines 50
 
 ================================================================================
@@ -153,7 +153,7 @@ pm2 restart yukiko-web
 | Vercel Dashboard | https://dashboard.vercel.com | Monitorear deploy |
 | Neon PostgreSQL | https://console.neon.tech | Base de datos |
 | GitHub Repo | github.com/tu-usuario/yukiko | Source code |
-| Servidor Homelab | 192.168.24.103 | SSH access |
+| Servidor Homelab | your-homelab-ip | SSH access |
 
 ---
 
@@ -168,7 +168,7 @@ Si falla el deploy:
 5. Si es type error → revisar TypeScript en `npm run build`
 
 Si algo en producción falla después de deploy:
-1. Echar un vistazo a: `ssh dockerja@192.168.24.103 && pm2 logs`
+1. Echar un vistazo a: `ssh dockerja@your-homelab-ip && pm2 logs`
 2. Los bots corren en servidor, no en Vercel
 3. Vercel solo corre web (Next.js)
 4. Si web falla → revisar `/api/` routes

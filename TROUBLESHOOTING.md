@@ -28,7 +28,7 @@ Guía completa de resolución de problemas comunes en Yukiko.
     - [❌ Error: "Error del agente" + logs muestren queries fallidas](#-error-error-del-agente--logs-muestren-queries-fallidas)
     - [⚠️ Discos / Backups](#️-discos--backups)
   - [🔐 Certificados SSL](#-certificados-ssl)
-    - [❌ Firefox: "Certificado no válido para your-app-domain.com"](#-firefox-certificado-no-válido-para-yukikominiserveronline)
+    - [❌ Firefox: "Certificado no válido para yukiko.miniserver.online"](#-firefox-certificado-no-válido-para-yukikominiserveronline)
   - [🔄 Re-sincronizar después de cambios](#-re-sincronizar-después-de-cambios)
   - [📊 Logs útiles](#-logs-útiles)
     - [Ver logs en tiempo real](#ver-logs-en-tiempo-real)
@@ -55,7 +55,7 @@ Guía completa de resolución de problemas comunes en Yukiko.
 2. Debería mostrar:
 
    ```
-   https://your-homelab-domain.ts.net (Funnel on)
+   https://dockerja.tailabf51b.ts.net (Funnel on)
    |-- / proxy http://127.0.0.1:3001
    ```
 
@@ -68,7 +68,7 @@ Guía completa de resolución de problemas comunes en Yukiko.
 
 4. Verifica que Vercel tiene la URL correcta:
    - Ve a `vercel.com` → Proyecto **yukiko** → Settings → Environment Variables
-   - `HOMELAB_AGENT_URL` debe ser: `https://your-homelab-domain.ts.net`
+   - `HOMELAB_AGENT_URL` debe ser: `https://dockerja.tailabf51b.ts.net`
 
 ---
 
@@ -108,7 +108,7 @@ Guía completa de resolución de problemas comunes en Yukiko.
 **Solución:** No es necesario si usas Tailscale Funnel. Si aún ves este error:
 
 1. Limpia la caché del navegador (Ctrl+Shift+Supr)
-2. Accede de nuevo a `https://your-app-domain.com/chat`
+2. Accede de nuevo a `https://yukiko.miniserver.online/chat`
 
 Si persiste, el certificado de `miniserver.online` necesita actualización (contacta con tu hermano).
 
@@ -256,7 +256,7 @@ Si persiste, el certificado de `miniserver.online` necesita actualización (cont
 3. Testea Funnel:
 
    ```bash
-   curl https://your-homelab-domain.ts.net/health
+   curl https://dockerja.tailabf51b.ts.net/health
    ```
 
 4. Si Funnel no responde, reinicia:
@@ -363,7 +363,7 @@ Settings → Backups → Enable automated backups
 
 ## 🔐 Certificados SSL
 
-### ❌ Firefox: "Certificado no válido para your-app-domain.com"
+### ❌ Firefox: "Certificado no válido para yukiko.miniserver.online"
 
 **Causa:** El certificado solo cubre `*.juanje.net`, no `miniserver.online`
 
@@ -371,15 +371,15 @@ Settings → Backups → Enable automated backups
 
 - **Opción 1 (Recomendada): Usar Tailscale Funnel**
   - El certificado de Tailscale es válido y se auto-renueva
-  - Ya está configurado (`https://your-homelab-domain.ts.net`)
+  - Ya está configurado (`https://dockerja.tailabf51b.ts.net`)
   - No requiere acción adicional
 
 - **Opción 2: Solicitar a tu hermano**
-  - El certificado necesita incluir `your-app-domain.com`
+  - El certificado necesita incluir `yukiko.miniserver.online`
   - Comando (en el servidor):
 
     ```bash
-    certbot expand -d your-app-domain.com
+    certbot expand -d yukiko.miniserver.online
     ```
 
 ---

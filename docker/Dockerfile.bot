@@ -10,7 +10,6 @@ COPY package*.json ./
 COPY core/package*.json ./core/
 COPY platforms/discord/package*.json ./platforms/discord/
 COPY platforms/telegram/package*.json ./platforms/telegram/
-COPY platforms/whatsapp/package*.json ./platforms/whatsapp/
 COPY modules/*/package*.json ./modules/
 
 # Install dependencies

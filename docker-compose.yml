@@ -1,7 +1,4 @@
-version: '3.9'
-
 services:
-  # ── Redis (cache & rate limiting) ──────────────────────────
   redis:
     image: redis:7-alpine
     restart: unless-stopped
@@ -10,35 +7,6 @@ services:
     volumes:
       - redis_data:/data
 
-  # ── Discord Bot ────────────────────────────────────────────
-  yukiko-discord:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile.bot
-    restart: unless-stopped
-    environment:
-      - PLATFORM=discord
-    env_file: .env
-    depends_on:
-      - redis
-    volumes:
-      - ./sessions:/app/sessions
-    command: tsx platforms/discord/src/index.ts
-
-  # ── Telegram Bot ───────────────────────────────────────────
-  yukiko-telegram:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile.bot
-    restart: unless-stopped
-    environment:
-      - PLATFORM=telegram
-    env_file: .env
-    depends_on:
-      - redis
-    command: tsx platforms/telegram/src/index.ts
-
-  # ── Lavalink (music) ───────────────────────────────────────
   lavalink:
     image: ghcr.io/lavalink-devs/lavalink:4
     restart: unless-stopped
@@ -50,7 +18,6 @@ services:
       - SERVER_PORT=2333
       - LAVALINK_SERVER_PASSWORD=${LAVALINK_PASSWORD}
 
-  # ── Prometheus (metrics) ───────────────────────────────────
   prometheus:
     image: prom/prometheus:latest
     restart: unless-stopped
@@ -60,12 +27,11 @@ services:
       - ./docker/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus_data:/prometheus
 
-  # ── Grafana (dashboards) ───────────────────────────────────
   grafana:
     image: grafana/grafana:latest
     restart: unless-stopped
     ports:
-      - '3001:3000'
+      - '3004:3000'
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
     volumes:

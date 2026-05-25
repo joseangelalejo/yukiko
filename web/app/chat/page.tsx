@@ -1,5 +1,6 @@
 'use client';
 import { useState, useRef, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 
 // ── Types ─────────────────────────────────────────────────────
 type Role = 'user' | 'yukiko';
@@ -120,6 +121,12 @@ export default function ChatPage() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [showQuick, setShowQuick] = useState(false);
+  const router = useRouter();
+
+  const logout = useCallback(async () => {
+    await fetch('/api/chat-auth', { method: 'DELETE' });
+    router.push('/chat/login');
+  }, [router]);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -184,9 +191,19 @@ export default function ChatPage() {
           <p className="text-white font-semibold text-sm leading-none">Yukiko</p>
           <p className="text-white/40 text-xs mt-0.5">Tu compañera neko kawaii</p>
         </div>
-        <div className="ml-auto flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-white/40 text-xs">Online</span>
+        <div className="ml-auto flex items-center gap-3">
+          <span className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="text-white/40 text-xs">Online</span>
+          </span>
+          <button
+            onClick={logout}
+            className="text-white/30 hover:text-white/60 transition-colors text-xs px-2 py-1 rounded-lg"
+            style={{ border: '1px solid rgba(255,255,255,0.08)' }}
+            title="Cerrar sesión"
+          >
+            Salir
+          </button>
         </div>
       </div>
 

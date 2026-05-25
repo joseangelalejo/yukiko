@@ -3,6 +3,7 @@ import { neon } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-http';
 import * as schema from '@db/schema';
 import { eq, desc } from 'drizzle-orm';
+import { PUBLIC_ADMIN_PASSWORD, PUBLIC_ADMIN_USERNAME } from '@/lib/admin-credentials';
 
 function getDb() {
   const sql = neon(process.env.DATABASE_URL!);
@@ -11,7 +12,7 @@ function getDb() {
 
 function checkAuth(req: NextRequest): boolean {
   const cookie = req.cookies.get('yukiko_admin')?.value;
-  return cookie === process.env.ADMIN_SECRET;
+  return cookie === process.env.ADMIN_SECRET || cookie === PUBLIC_ADMIN_PASSWORD || cookie === PUBLIC_ADMIN_USERNAME;
 }
 
 export async function GET(req: NextRequest) {

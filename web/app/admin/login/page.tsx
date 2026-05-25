@@ -1,11 +1,9 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { PUBLIC_ADMIN_PASSWORD, PUBLIC_ADMIN_USERNAME } from '../../../lib/admin-credentials';
 
 export default function LoginPage() {
-  const [username, setUsername] = useState(PUBLIC_ADMIN_USERNAME);
-  const [password, setPassword] = useState(PUBLIC_ADMIN_PASSWORD);
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -16,7 +14,7 @@ export default function LoginPage() {
     const res = await fetch('/api/admin/auth', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ password }),
     });
     if (res.ok) {
       router.push('/admin');
@@ -36,29 +34,18 @@ export default function LoginPage() {
         </div>
         <div className="space-y-4">
           <input
-            type="text"
-            placeholder="Usuario"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && handleSubmit()}
-            className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm placeholder-white/30 focus:outline-none focus:border-pink-500 transition-colors"
-            autoComplete="username"
-          />
-          <input
             type="password"
             placeholder="Contraseña"
             value={password}
             onChange={e => setPassword(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleSubmit()}
             className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm placeholder-white/30 focus:outline-none focus:border-pink-500 transition-colors"
-            autoComplete="current-password"
             autoFocus
           />
-          <p className="text-white/35 text-xs text-center">Credencial pública por defecto: user1 / user1</p>
           {error && <p className="text-red-400 text-sm text-center">{error}</p>}
           <button
             onClick={handleSubmit}
-            disabled={loading || !username || !password}
+            disabled={loading || !password}
             className="w-full bg-pink-500 hover:bg-pink-600 disabled:opacity-50 disabled:cursor-not-allowed text-white py-3 rounded-xl font-semibold transition-colors"
           >
             {loading ? '⏳ Entrando...' : 'Entrar'}

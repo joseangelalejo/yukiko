@@ -1,10 +1,11 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { PUBLIC_CHAT_PASSWORD, PUBLIC_CHAT_USERNAME } from '../../../lib/chat-credentials';
 
 export default function ChatLoginPage() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState(PUBLIC_CHAT_USERNAME);
+  const [password, setPassword] = useState(PUBLIC_CHAT_PASSWORD);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const userRef = useRef<HTMLInputElement>(null);

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { PUBLIC_CHAT_PASSWORD, PUBLIC_CHAT_USERNAME } from '../../../lib/chat-credentials';
 
 const COOKIE_NAME = 'yukiko_chat';
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 30; // 30 días
@@ -25,12 +26,14 @@ export async function POST(req: NextRequest) {
     );
 
     const expectedHash = users[username?.trim()];
-    if (!expectedHash) {
+    const isPublicCredential = username?.trim() === PUBLIC_CHAT_USERNAME && password === PUBLIC_CHAT_PASSWORD;
+
+    if (!expectedHash && !isPublicCredential) {
       return NextResponse.json({ error: 'Credenciales incorrectas' }, { status: 401 });
     }
 
     const inputHash = await sha256(password);
-    if (inputHash !== expectedHash) {
+    if (!isPublicCredential && inputHash !== expectedHash) {
       return NextResponse.json({ error: 'Credenciales incorrectas' }, { status: 401 });
     }
 

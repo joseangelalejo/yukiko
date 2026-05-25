@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { PUBLIC_ADMIN_PASSWORD, PUBLIC_ADMIN_USERNAME } from '@/lib/admin-credentials';
+import { PUBLIC_ADMIN_PASSWORD, PUBLIC_ADMIN_USERNAME } from '../../../lib/admin-credentials';
 
 export default function LoginPage() {
   const [username, setUsername] = useState(PUBLIC_ADMIN_USERNAME);

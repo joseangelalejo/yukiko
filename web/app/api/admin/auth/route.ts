@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PUBLIC_ADMIN_PASSWORD, PUBLIC_ADMIN_USERNAME } from '@/lib/admin-credentials';
+import { PUBLIC_ADMIN_PASSWORD, PUBLIC_ADMIN_USERNAME } from '../../../../lib/admin-credentials';
 
 export async function POST(req: NextRequest) {
   const { username = PUBLIC_ADMIN_USERNAME, password } = await req.json() as { username?: string; password: string };

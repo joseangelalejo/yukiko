@@ -3,7 +3,7 @@ import { neon } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-http';
 import * as schema from '@db/schema';
 import { eq, desc } from 'drizzle-orm';
-import { PUBLIC_ADMIN_PASSWORD, PUBLIC_ADMIN_USERNAME } from '@/lib/admin-credentials';
+import { PUBLIC_ADMIN_PASSWORD, PUBLIC_ADMIN_USERNAME } from '../../../../lib/admin-credentials';
 
 function getDb() {
   const sql = neon(process.env.DATABASE_URL!);
